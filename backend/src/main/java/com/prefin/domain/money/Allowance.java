@@ -18,11 +18,11 @@ public class Allowance {
     @GeneratedValue
     Long id;
 
-    Integer allowanceAmount;
+    int allowanceAmount;
 
     Long payDay;
 
-    Integer loanAmount;
+    int loanAmount;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")

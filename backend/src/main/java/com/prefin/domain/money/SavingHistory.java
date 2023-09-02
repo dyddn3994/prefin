@@ -17,7 +17,7 @@ public class SavingHistory {
     @GeneratedValue
     Long id;
 
-    Integer savingAmount;
+    int savingAmount;
 
     Long savingDate;
 

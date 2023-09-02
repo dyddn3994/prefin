@@ -18,7 +18,7 @@ public class Quest {
 
     String title;
 
-    Integer reward;
+    int reward;
 
     long startDate;
 

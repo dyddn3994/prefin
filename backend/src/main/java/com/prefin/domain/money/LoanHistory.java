@@ -17,7 +17,7 @@ public class LoanHistory {
     @GeneratedValue
     Long id;
 
-    Integer loanAMount;
+    int loanAmount;
 
     Long loanDate;
 

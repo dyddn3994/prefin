@@ -17,7 +17,7 @@ public class Mascot {
 
     String name;
 
-    Integer level;
+    int level;
 
     String image;
 }

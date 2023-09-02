@@ -18,7 +18,7 @@ public class Quiz {
 
     String question;
 
-    Integer answer;
+    int answer;
 
     String description;
 }
