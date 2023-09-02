@@ -50,4 +50,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     //framework ktx dependency 추가 23.09.02 (viewModel DI)
     implementation "androidx.fragment:fragment-ktx:1.4.1"
+
+    // Jetpack Navigation Kotlin 추가 23.09.02
+    def nav_version = "2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
