@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+
+
+    <!-- Bold -->
+    <style name="Title.Bold.Size32" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">32dp</item>
+        <item name="fontFamily">@font/maplestory_bold</item>
+    </style>
+
+
+    <!-- light -->
+    <style name="Text.regular.Size12" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12dp</item>
+        <item name="fontFamily">@font/maplestory_light</item>
+    </style>
+
+    <style name="Text.regular.Size20" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20dp</item>
+        <item name="fontFamily">@font/maplestory_light</item>
+    </style>
+
+    <style name="Text.regular.Size32" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">32dp</item>
+        <item name="fontFamily">@font/maplestory_light</item>
+    </style>
+</resources>

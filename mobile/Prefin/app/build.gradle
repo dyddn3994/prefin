@@ -45,4 +45,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // ViewModel - 추가 23.09.02
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    //framework ktx dependency 추가 23.09.02 (viewModel DI)
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
 }
