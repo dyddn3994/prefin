@@ -6,4 +6,5 @@
     <color name="colorSub">#F5F8FF</color>
     <color name="colorBackground">#F5F8FF</color>
     <color name="colorRed">#FF3D71</color>
+    <color name="colorGray">#979799</color>
 </resources>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:backgroundTint="@color/colorSub"
+    tools:context=".ui.login.LoginFragment">
+
+  <ImageView
+      android:layout_marginTop="96dp"
+      android:id="@+id/fragment_login_logo_image_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/PreFin_text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:layout_marginTop="24dp"
+      android:id="@+id/fragment_login_id_text_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="아이디"
+      style="@style/Text.regular.Size20"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_logo_image_view"
+      app:layout_constraintStart_toStartOf="parent"
+      />
+  <EditText
+      android:layout_marginTop="8dp"
+      android:id="@+id/fragment_login_id_edit_text"
+      android:padding="16dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="이메일을 입력해주세요"
+      android:background="@drawable/edittext_rectangle_24"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_id_text_view"
+      app:layout_constraintStart_toStartOf="@+id/fragment_login_id_text_view"
+      />
+
+  <TextView
+      android:layout_marginTop="24dp"
+      android:id="@+id/fragment_login_password_text_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="비밀번호"
+      style="@style/Text.regular.Size20"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_id_edit_text"
+      app:layout_constraintStart_toStartOf="parent"
+      />
+  <EditText
+      android:layout_marginTop="8dp"
+      android:id="@+id/fragment_login_password_edit_text"
+      android:padding="16dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="비밀번호를 입력해주세요"
+      android:inputType="textPassword"
+      android:background="@drawable/edittext_rectangle_24"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_text_view"
+      app:layout_constraintStart_toStartOf="@+id/fragment_login_password_text_view"
+      />
+  <TextView
+      android:layout_marginTop="8dp"
+      android:id="@+id/fragment_login_id_password_seach_text_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="아이디/비밀번호 찾기"
+      style="@style/Text.regular.Size16"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_edit_text"
+      app:layout_constraintEnd_toEndOf="@+id/fragment_login_password_edit_text"
+      />
+
+  <android.widget.Button
+      android:layout_marginTop="32dp"
+      android:id="@+id/fragment_login_login_button"
+      style="@style/Text.regular.Size20"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@drawable/button_rectangle_81"
+      android:backgroundTint="@color/colorPrimary"
+      android:text="로그인"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_id_password_seach_text_view" />
+
+  <android.widget.Button
+      android:layout_marginTop="32dp"
+      android:id="@+id/fragment_login_signup_button"
+      style="@style/Text.regular.Size20"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="회원가입"
+      android:backgroundTint="@color/colorGray"
+      android:background="@drawable/button_rectangle_81"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_login_button" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
