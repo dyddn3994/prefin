@@ -10,6 +10,7 @@ import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSignUpBinding
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,7 +42,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
             // 뒤로가기
             fragmentSignUpBackButton.setOnClickListener{
-
+                findNavController().navigateUp()
             }
 
             // 회원가입 버튼 클릭
@@ -55,7 +56,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 }
                 else{
                     if(android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()
-                        && fragmentSignUpPasswordEditText.text == fragmentSignUpPasswordCheckEditText.text) {
+                        && fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
                         // 회원가입 구현
                         fragmentSignUpEmailCheckTextView.visibility = View.GONE
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
@@ -63,18 +64,23 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     }
 
 
-                    else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()){
+                    if(!android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()){
                         fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE
+                    }
+                    else{
+                        fragmentSignUpEmailCheckTextView.visibility = View.GONE
                     }
 
 
-                    else if(fragmentSignUpPasswordEditText.text != fragmentSignUpPasswordCheckEditText.text){
+                    if(fragmentSignUpPasswordEditText.text.toString() != fragmentSignUpPasswordCheckEditText.text.toString()){
                         fragmentSignUpPasswordConfirmTextView.visibility = View.VISIBLE
                         fragmentSignUpPasswordCheckConfirmTextView.visibility = View.VISIBLE
                     }
                     else{
-
+                        fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
+                        fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
                     }
+
 
                 }
 

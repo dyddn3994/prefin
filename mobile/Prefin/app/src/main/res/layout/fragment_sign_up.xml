@@ -161,18 +161,17 @@
         />
 
     <android.widget.Button
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/fragment_sign_up_register_button"
         style="@style/Text.regular.Size20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:text="회원가입"
-        android:backgroundTint="@color/colorPrimary"
         android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="회원가입"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_sign_up_password_check_edit_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

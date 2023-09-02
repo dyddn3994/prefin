@@ -13,7 +13,7 @@
       android:id="@+id/fragment_login_logo_image_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:src="@drawable/PreFin_text"
+      android:src="@drawable/prefin_text"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />

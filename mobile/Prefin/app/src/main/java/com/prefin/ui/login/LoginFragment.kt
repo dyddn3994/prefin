@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentLoginBinding
@@ -34,6 +36,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            // 로그인 버튼 클릭 시
+            fragmentLoginLoginButton.setOnClickListener {
+                if(fragmentLoginIdEditText.text.isNullOrEmpty() || fragmentLoginPasswordEditText.text.isNullOrEmpty()){
+                    Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    //로그인 절차 진행
+
+                }
+            }
+
+            // 회원가입 버튼 클릭시
+            fragmentLoginSignupButton.setOnClickListener {
+                findNavController().navigate(R.id.action_LoginFragment_to_SignUpFragment)
+            }
+        }
     }
 
     companion object {
