@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:backgroundTint="@color/colorSub"
+    tools:context=".ui.parentHome.ParentHomeFragment">
+
+    <ImageView
+        android:layout_marginStart="16dp"
+        android:id="@+id/fragment_parent_home_logo_text_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/prefin_text"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_noti"
+        app:layout_constraintTop_toTopOf="@+id/fragment_parent_home_setting_image_view"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_parent_home_setting_image_view"
+         />
+
+    <ImageView
+        android:layout_marginTop="8dp"
+        android:id="@+id/fragment_parent_home_setting_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_setting"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_marginTop="24dp"
+        android:id="@+id/fragment_parent_home_my_account_text_view"
+        style="@style/Title.Bold.Size32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내 계좌"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_logo_text_image_view" />
+
+    <LinearLayout
+        android:id="@+id/fragment_parent_home_my_account_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_my_account_text_view">
+
+        <ImageView
+            android:id="@+id/fragment_parent_home_my_account_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sinhan" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fragment_parent_home_my_account_name_text_view"
+                style="@style/Text.regular.Size16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="용돈 계좌" />
+
+            <TextView
+                android:id="@+id/fragment_parent_home_my_account_money_text_view"
+                style="@style/Text.regular.Size16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0원" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:id="@+id/fragment_parent_home_child_account_text_view"
+        style="@style/Title.Bold.Size32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자녀 계좌"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_my_account_linearLayout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="16dp"
+        android:id="@+id/fragment_parent_home_child_account_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_child_account_text_view"
+        tools:listitem="@layout/item_child_account"
+        tools:itemCount="2"
+        />
+
+    <TextView
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:id="@+id/fragment_parent_home_quest_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_block_red"
+        android:text="퀘스트"
+        android:gravity="center"
+        style="@style/Text.regular.Size20"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_child_account_recycler_view"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+    </TextView>
+
+    <TextView
+
+        android:layout_marginStart="16dp"
+        android:id="@+id/fragment_parent_home_saving_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_block_purple"
+        android:text="자녀 저축"
+        android:gravity="center"
+        style="@style/Text.regular.Size20"
+        app:layout_constraintTop_toTopOf="@+id/fragment_parent_home_quest_text_view"
+        app:layout_constraintStart_toEndOf="@+id/fragment_parent_home_quest_text_view"
+        >
+    </TextView>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:id="@+id/fragment_parent_home_loan_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_block_blue"
+        android:text="자녀 대출"
+        android:gravity="center"
+        style="@style/Text.regular.Size20"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_quest_text_view"
+        app:layout_constraintStart_toStartOf="@+id/fragment_parent_home_quest_text_view"
+        >
+    </TextView>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/fragment_parent_home_setting_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_block_green"
+        android:text="설정"
+        android:gravity="center"
+        style="@style/Text.regular.Size20"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_parent_home_quest_text_view"
+        app:layout_constraintStart_toEndOf="@+id/fragment_parent_home_loan_text_view"
+        >
+    </TextView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
