@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="총 금액"
         style="@style/Text.regular.Size20"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_withdraw_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_withdraw_amount_edit_text"
         />
@@ -85,15 +85,26 @@
         app:layout_constraintTop_toTopOf="@+id/fragment_withdraw_before_interest_title_text_view"
         />
 
+    <ImageView
+        android:id="@+id/fragment_withdraw_arrow_downward_image_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_arrow_downward"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_withdraw_before_interest_text_view"
+        />
+
     <TextView
         android:id="@+id/fragment_withdraw_after_total_amount_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="총 금액"
         style="@style/Text.regular.Size20"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_withdraw_before_interest_title_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_withdraw_before_interest_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_withdraw_arrow_downward_image_view"
         />
 
     <TextView
