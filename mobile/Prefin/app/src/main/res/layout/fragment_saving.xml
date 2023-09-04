@@ -7,7 +7,7 @@
     tools:context=".ui.saving.SavingFragment">
 
     <ImageView
-        android:id="@+id/fragment_sign_up_back_button"
+        android:id="@+id/fragment_saving_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_arrow_back"
