@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.quest.QuestParentHomeFragment"
+    >
+
+    <ImageView
+        android:id="@+id/fragment_quest_parent_home_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/fragment_quest_parent_home_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="퀘스트 목록"
+        style="@style/Text.regular.Size20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_quest_parent_home_back_button"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_quest_parent_home_back_button"
+        />
+
+    <ImageView
+        android:id="@+id/fragment_quest_parent_home_quest_item_list_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_round_menu_24"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@+id/fragment_quest_parent_home_back_button"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_quest_parent_home_back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_quest_parent_home_quest_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_quest_parent_home_title_text_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
