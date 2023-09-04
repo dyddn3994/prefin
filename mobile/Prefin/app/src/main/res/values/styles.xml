@@ -38,4 +38,13 @@
         <item name="android:textSize">32sp</item>
         <item name="fontFamily">@font/maplestory_light</item>
     </style>
+
+    <!-- BottomSheetDialog -->
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/dialog_top_border_radius</item>
+    </style>
 </resources>
