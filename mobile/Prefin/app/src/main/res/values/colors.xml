@@ -7,4 +7,8 @@
     <color name="colorBackground">#F5F8FF</color>
     <color name="colorRed">#FF3D71</color>
     <color name="colorGray">#979799</color>
+    <color name="gray">#FF808080</color>
+    <color name="light_gray">#FFD9D9D9</color>
+    <color name="light_light_gray">#f5f5f5</color>
+    <color name="skyblue">#D8F2FF</color>
 </resources>

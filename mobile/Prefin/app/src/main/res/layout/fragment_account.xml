@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.account.AccountFragment">
 
+    <ImageView
+        android:id="@+id/fragment_sign_up_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:id="@+id/fragment_account_name_text_view"
         android:layout_width="wrap_content"
@@ -82,6 +93,16 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_account_balance_title_text_view"
         />
 
+    <ImageView
+        android:id="@+id/fragment_account_pinmoney_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_right_with_circle"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_account_pinmoney_title_text_view"
+        app:layout_constraintTop_toTopOf="@+id/fragment_account_pinmoney_title_text_view"
+        />
+
     <TextView
         android:id="@+id/fragment_account_pinmoney_month_text_view"
         android:layout_width="wrap_content"
@@ -113,6 +134,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:layout_marginBottom="32dp"
         android:layout_marginHorizontal="32dp"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
