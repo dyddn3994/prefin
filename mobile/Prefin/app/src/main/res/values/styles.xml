@@ -45,6 +45,6 @@
     </style>
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/dialog_top_border_radius</item>
+        <item name="android:background">@drawable/custom_top_border_radius</item>
     </style>
 </resources>
