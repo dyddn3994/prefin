@@ -14,11 +14,11 @@ import javax.persistence.Id;
 @Setter
 public class Quiz {
     @Id @GeneratedValue
-    Long id;
+    private Long id;
 
-    String question;
+    private String question;
 
-    int answer;
+    private int answer;
 
-    String description;
+    private String description;
 }

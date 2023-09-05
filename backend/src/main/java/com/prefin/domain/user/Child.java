@@ -14,27 +14,29 @@ import javax.persistence.*;
 public class Child {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    String fcmToken;
+    private String fcmToken;
 
-    String account;
+    private String account;
 
-    Boolean isQuizSolved;
+    private Boolean isQuizSolved;
 
-    Long quizId;
+    private Long quizId;
 
-    int trustScore;
+    private int trustScore;
 
-    int savingAccount;
+    private int savingAccount;
+
+    private int balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    Parent parent;
+    private Parent parent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MASCOT_ID")
-    Mascot mascot;
+    private Mascot mascot;
 }

@@ -15,17 +15,17 @@ import javax.persistence.*;
 public class SavingHistory {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    int savingAmount;
+    private int savingAmount;
 
-    Long savingDate;
+    private Long savingDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    Parent parent;
+    private Parent parent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
-    Child child;
+    private Child child;
 }

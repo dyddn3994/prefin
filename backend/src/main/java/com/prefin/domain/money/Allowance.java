@@ -16,19 +16,19 @@ import javax.persistence.*;
 public class Allowance {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    int allowanceAmount;
+    private int allowanceAmount;
 
-    Long payDay;
+    private Long payDay;
 
-    int loanAmount;
+    private int loanAmount;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    Parent parent;
+    private Parent parent;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
-    Child child;
+    private Child child;
 }
