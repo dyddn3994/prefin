@@ -16,11 +16,17 @@ public class Child {
     @GeneratedValue
     private Long id;
 
+    private String userId;
+
+    private String password;
+
     private String name;
 
     private String fcmToken;
 
     private String account;
+
+    private String simplePass;
 
     private Boolean isQuizSolved;
 
@@ -38,9 +44,36 @@ public class Child {
     @JoinColumn(name = "MASCOT_ID")
     private Mascot mascot;
 
-    private String userId;
+    public void updateToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
 
-    private String password;
+    public void updateAccount(String account) {
+        this.account = account;
+    }
 
-    private String simplePass;
+    public void updateSimplePass(String simplePass) {
+        this.simplePass = simplePass;
+    }
+
+    public void updateTrustScore(int score) {
+        this.trustScore += score;
+    }
+
+    public void updateParent(Parent parent) {
+        this.parent = parent;
+    }
+
+    public void updateMascot(Mascot mascot) {
+        this.mascot = mascot;
+    }
+
+    public void quizSolved() {
+        this.isQuizSolved = true;
+    }
+
+    public void increateQuizId() {
+        this.quizId++;
+        this.isQuizSolved = false;
+    }
 }
