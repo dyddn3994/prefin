@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_parent_home_child_account_linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/fragment_parent_home_child_account_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_sinhan" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fragment_parent_home_child_account_name_text_view"
+            style="@style/Text.regular.Size16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자녀 계좌 1" />
+
+        <TextView
+            android:id="@+id/fragment_parent_home_child_account_money_text_view"
+            style="@style/Text.regular.Size16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0원" />
+
+    </LinearLayout>
+
+</LinearLayout>

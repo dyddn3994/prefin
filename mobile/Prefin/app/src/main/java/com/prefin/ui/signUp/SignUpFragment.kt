@@ -1,0 +1,111 @@
+package com.prefin.ui.signUp
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import com.prefin.R
+import com.prefin.config.BaseFragment
+import com.prefin.databinding.FragmentSignUpBinding
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [SignUpFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::bind, R.layout.fragment_sign_up) {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+    private val signUpViewModel : SignUpViewModel by viewModels()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+
+            // 뒤로가기
+            fragmentSignUpBackButton.setOnClickListener{
+                findNavController().navigateUp()
+            }
+
+            // 회원가입 버튼 클릭
+            fragmentSignUpRegisterButton.setOnClickListener {
+                if(fragmentSignUpEmailEditText.text.isNullOrEmpty()
+                    || fragmentSignUpPasswordEditText.text.isNullOrEmpty()
+                    || fragmentSignUpPasswordCheckEditText.text.isNullOrEmpty()
+                    || fragmentSignUpNameEditText.text.isNullOrEmpty()){
+
+                    Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    if(android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()
+                        && fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
+                        // 회원가입 구현
+                        fragmentSignUpEmailCheckTextView.visibility = View.GONE
+                        fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
+                        fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
+                    }
+
+
+                    if(!android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()){
+                        fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE
+                    }
+                    else{
+                        fragmentSignUpEmailCheckTextView.visibility = View.GONE
+                    }
+
+
+                    if(fragmentSignUpPasswordEditText.text.toString() != fragmentSignUpPasswordCheckEditText.text.toString()){
+                        fragmentSignUpPasswordConfirmTextView.visibility = View.VISIBLE
+                        fragmentSignUpPasswordCheckConfirmTextView.visibility = View.VISIBLE
+                    }
+                    else{
+                        fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
+                        fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
+                    }
+
+
+                }
+
+
+            }
+        }
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment SignUpFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            SignUpFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+}
