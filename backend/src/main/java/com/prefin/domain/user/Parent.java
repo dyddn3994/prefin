@@ -18,18 +18,22 @@ public class Parent {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String email;
+    private String userId;
 
-    String name;
+    private String password;
 
-    String fcmToken;
+    private String name;
 
-    String account;
+    private String fcmToken;
 
-    BigDecimal loanRate;
+    private String account;
 
-    BigDecimal savingRate;
+    private BigDecimal loanRate;
+
+    private BigDecimal savingRate;
+
+    private String simplePass;
 
 }
