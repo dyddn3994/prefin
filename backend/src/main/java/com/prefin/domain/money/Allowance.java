@@ -2,17 +2,15 @@ package com.prefin.domain.money;
 
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Fetch;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class Allowance {
     @Id
     @GeneratedValue

@@ -1,16 +1,15 @@
 package com.prefin.domain.quest;
 
 import com.prefin.domain.user.Child;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class QuestOwned {
     @Id
     @GeneratedValue

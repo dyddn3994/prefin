@@ -2,16 +2,15 @@ package com.prefin.domain.money;
 
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class LoanHistory {
     @Id
     @GeneratedValue
