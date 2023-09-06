@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class AllowanceDto {
+@NoArgsConstructor
+public class LoanDto {
 
-    private int allowanceAmount;
-    private Long payday;
+    private int loanAmount;
+    private Long loanDate;
 
     private Long parentId;
     private Long childId;
+
 }

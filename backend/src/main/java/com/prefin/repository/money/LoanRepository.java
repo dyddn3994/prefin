@@ -4,4 +4,5 @@ import com.prefin.domain.money.LoanHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LoanRepository extends JpaRepository<LoanHistory, Long> {
+    LoanHistory findAllByParentIdAndChildId(Long parentId, Long childId);
 }
