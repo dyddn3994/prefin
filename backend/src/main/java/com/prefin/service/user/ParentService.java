@@ -1,7 +1,7 @@
 package com.prefin.service.user;
 
 import com.prefin.domain.user.Parent;
-import com.prefin.dto.user.ParentDto;
+import com.prefin.dto.user.ParentSignUpDto;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class ParentService {
     private final ParentRepository parentRepository;
 
     // 부모 회원 가입
-    public Long signUp(ParentDto parent) {
+    public Long signUp(ParentSignUpDto parent) {
 
         Parent newParent = Parent.builder().
                 userId(parent.getUserId()).
@@ -25,6 +25,21 @@ public class ParentService {
                 build();
 
         return parentRepository.save(newParent).getId();
+    }
+
+    // 로그인
+    public Parent login(String userId, String password) {
+        // id로 회원 정보 찾기
+        Parent parent = parentRepository.findByUserId(userId).orElse(null);
+
+        if (parent == null) return null;
+
+        // 비밀번호 일치여부 확인
+        if (parent.getPassword().equals(password)) {
+            return parent;
+        }
+
+        return null;
     }
 
     // 계좌 등록 설정
