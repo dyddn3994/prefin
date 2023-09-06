@@ -2,13 +2,11 @@ package com.prefin.dto.user;
 
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParentDto {
+public class ParentSignUpDto {
 
     private String userId;
 
