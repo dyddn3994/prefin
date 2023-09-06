@@ -2,10 +2,7 @@ package com.prefin.domain.user;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -36,6 +33,8 @@ public class Parent {
 
     private BigDecimal savingRate;
 
+    private int balance;
+
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }
@@ -56,5 +55,5 @@ public class Parent {
         this.savingRate = savingRate;
     }
 
-
+    public void updateBalance(int balance) { this.balance += balance; }
 }

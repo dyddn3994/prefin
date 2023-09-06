@@ -36,6 +36,8 @@ public class Child {
 
     private int savingAccount;
 
+    private int balance;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Parent parent;
@@ -60,6 +62,10 @@ public class Child {
         this.trustScore += score;
     }
 
+    public void updateSavingAccount(int savingAccount) {
+        this.savingAccount += savingAccount;
+    }
+
     public void updateParent(Parent parent) {
         this.parent = parent;
     }
@@ -72,8 +78,10 @@ public class Child {
         this.isQuizSolved = true;
     }
 
-    public void increateQuizId() {
+    public void increaseQuizId() {
         this.quizId++;
         this.isQuizSolved = false;
     }
+
+    public void updateBalance(int balance) { this.balance += balance; }
 }
