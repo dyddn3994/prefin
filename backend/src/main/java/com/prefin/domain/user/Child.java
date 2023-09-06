@@ -39,4 +39,8 @@ public class Child {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MASCOT_ID")
     private Mascot mascot;
+
+    public void getAllowance(int money) {
+        this.balance += money;
+    }
 }

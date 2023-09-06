@@ -5,7 +5,6 @@ import com.prefin.domain.user.Parent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
