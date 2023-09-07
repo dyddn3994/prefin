@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SavingService {
     private final SavingRepository savingRepository;
+    
+    // 이자 제공
 }

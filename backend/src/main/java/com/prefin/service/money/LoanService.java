@@ -2,7 +2,7 @@ package com.prefin.service.money;
 
 import com.prefin.domain.money.LoanHistory;
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import com.prefin.dto.money.LoanDto;
 import com.prefin.repository.money.LoanRepository;
 import com.prefin.repository.user.ChildRepository;
@@ -28,7 +28,7 @@ public class LoanService {
         // 부모와 자식의 정보를 가져온다
         // 대출 하는 로직
 
-        Parent parent = null;
+        Parents parent = null;
         Child child = null;
 
         if (loanDto.getParentId() != null) {
