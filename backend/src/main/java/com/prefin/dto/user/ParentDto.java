@@ -1,15 +1,14 @@
 package com.prefin.dto.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChildDto {
+public class ParentDto {
 
     private Long id;
 
@@ -25,13 +24,9 @@ public class ChildDto {
 
     private String simplePass;
 
-    private Boolean isQuizSolved;
+    private BigDecimal loanRate;
 
-    private Long quizId;
-
-    private int trustScore;
-
-    private int savingAccount;
+    private BigDecimal savingRate;
 
     private int balance;
 
