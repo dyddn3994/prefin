@@ -40,111 +40,129 @@ public class ChildService {
     }
 
     // 로그인
-    public Long login(String userId, String password) {
+    public Child login(String userId, String password) {
         // id로 회원 정보 찾기
         Child child = childRepository.findByUserId(userId).orElse(null);
 
-        if (child == null) return -1L;
+        if (child == null) return null;
 
         // 비밀번호 일치여부 확인
         if (child.getPassword().equals(password)) {
-            return child.getId();
+            return child;
         }
 
-        return -1L;
+        return null;
     }
 
     // 계좌 등록
-    public Long setAccount(long id, String account) {
+    public String setAccount(long id, String account) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return -1L;
+        if (child == null) return "child not exist";
 
         child.updateAccount(account);
+        childRepository.save(child);
 
-        return childRepository.save(child).getId();
+        return "set Account: " + account;
     }
 
     // 간편 비밀번호 등록
-    public Long setSimplePassword(long id, String simplePassword) {
+    public String setSimplePassword(long id, String simplePassword) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return -1L;
+        if (child == null) return "child not exist";
 
         child.updateSimplePass(simplePassword);
+        childRepository.save(child);
 
-        return childRepository.save(child).getId();
+        return "set SimplePassword: " + simplePassword;
     }
 
     // 저축 금액 변경
-    public void changeSavingAccount(long id, int savingAccount) {
+    public String changeSavingAccount(long id, int savingAccount) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return;
+        if (child == null) return "child not exist";
 
         child.updateSavingAccount(savingAccount);
-
         childRepository.save(child);
+
+        return "change SavingAccount: " + savingAccount;
     }
 
     // 신뢰 점수 변경
-    public void changeTrustScore(long id, int score) {
+    public String changeTrustScore(long id, int score) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return;
+        if (child == null) return "child not exist";
 
         child.updateTrustScore(score);
-
         childRepository.save(child);
+
+        return "change TrustScore: " + score;
     }
 
     // 부모 설정
-    public void setParent(long childId, long parentId) {
+    public String setParent(long childId, long parentId) {
         Child child = childRepository.findById(childId).orElse(null);
         Parent parent = parentRepository.findById(parentId).orElse(null);
 
-        child.updateParent(parent);
+        if (child == null) return "child not exist";
+        if (parent == null) return "parent not exist";
 
+        child.updateParent(parent);
         childRepository.save(child);
+
+        return "set Parent: " + parent.getName();
     }
 
     // 마스코트 설정
-    public void updateMascot(long childId, long mascotId) {
+    public String updateMascot(long childId, long mascotId) {
         Child child = childRepository.findById(childId).orElse(null);
         Mascot mascot = mascotRepository.findById(mascotId).orElse(null);
 
-        child.updateMascot(mascot);
+        if (child == null) return "child not exist";
+        if (mascot == null) return "mascot not exist";
 
+        child.updateMascot(mascot);
         childRepository.save(child);
+
+        return "change Mascot: " + mascot.getName();
     }
 
     // 퀴즈풀이를 true로 변경
-    public void solveQuiz(long id) {
+    public String solveQuiz(long id) {
         Child child = childRepository.findById(id).orElse(null);
 
-        child.quizSolved();
+        if (child == null) return "child not exist";
 
+        child.quizSolved();
         childRepository.save(child);
+
+        return "Today Quiz Solved";
     }
 
     // 다음날이 지나면 퀴즈 번호를 증가시키고 퀴즈 풀이를 false로 변경
-    public void increaseQuizId(long id) {
+    public String increaseQuizId(long id) {
         Child child = childRepository.findById(id).orElse(null);
 
-        child.increaseQuizId();
+        if (child == null) return "child not exist";
 
+        child.increaseQuizId();
         childRepository.save(child);
+
+        return "Quiz Updated";
     }
 
     // FCM Token 등록
-    public Long setToken(long id, String fcmToken) {
+    public String setToken(long id, String fcmToken) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return -1L;
+        if (child == null) return "child not exist";
 
         child.updateToken(fcmToken);
-
-        return childRepository.save(child).getId();
+        childRepository.save(child);
+        return "set Token: " + fcmToken;
     }
 
     // 저축하거나 출금할 때 가능여부를 체크하는 로직이 필요함.
