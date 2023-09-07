@@ -35,4 +35,7 @@ public class ChildDto {
 
     private int balance;
 
+    private long parentId;
+
+    private long mascotId;
 }
