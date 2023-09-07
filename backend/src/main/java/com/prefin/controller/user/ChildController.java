@@ -36,10 +36,11 @@ public class ChildController {
         return childService.setSimplePassword(id, childDto.getSimplePass());
     }
 
-    @PutMapping("/child/{id}/savingaccount")
-    public String changeSavingAccount(@PathVariable long id, @RequestBody ChildDto childDto) {
-        return  childService.changeSavingAccount(id, childDto.getSavingAccount());
-    }
+    // 필요 없는듯?
+//    @PutMapping("/child/{id}/savingaccount")
+//    public String changeSavingAccount(@PathVariable long id, @RequestBody ChildDto childDto) {
+//        return  childService.changeSavingAccount(id, childDto.getSavingAccount());
+//    }
 
     @PutMapping("/child/{id}/trustscore")
     public String changeTrustScore(@PathVariable long id, @RequestBody ChildDto childDto) {
