@@ -15,12 +15,17 @@ public class AllowanceController {
     private final AllowanceService allowanceService;
 
     // 용돈 수동 이체
-    @PostMapping("/allowance/auto")
-    public ResponseEntity<String> transferAllowance(AllowanceDto requestDto) {
+    @PostMapping("/allowance/set")
+    public ResponseEntity<String> setAllowance(AllowanceDto requestDto) {
         System.out.println("===============  testing  ==============");
-        allowanceService.allowanceSetting(requestDto);
+        return allowanceService.allowanceSetting(requestDto);
+    }
+
+    @PostMapping("/allowance/transfer")
+    public ResponseEntity<String> transferAllowance(AllowanceDto requestDto) {
         System.out.println("===============  testing22222222222  ==============");
         return allowanceService.allowanceTransfer(requestDto);
     }
+
 
 }

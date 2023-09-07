@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class Parents {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String userId;

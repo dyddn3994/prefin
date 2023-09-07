@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 public class QuestOwned {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 public class SavingHistory {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int savingAmount;
