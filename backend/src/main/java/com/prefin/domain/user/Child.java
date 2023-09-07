@@ -36,8 +36,6 @@ public class Child {
 
     private int savingAccount;
 
-    private int loanAccount;
-
     private int balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -67,8 +65,6 @@ public class Child {
     public void updateSavingAccount(int savingAccount) {
         this.savingAccount += savingAccount;
     }
-
-    public void updateLoanAccount(int loanAccount) { this.loanAccount += loanAccount; }
 
     public void updateParent(Parent parent) {
         this.parent = parent;

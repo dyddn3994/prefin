@@ -20,8 +20,6 @@ public class Allowance {
 
     Long payDay;
 
-    int loanAmount;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     Parent parent;
