@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/prefin_nav_graph"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/LoginFragment">
+    app:startDestination="@+id/ParentHomeFragemnt">
 
     <fragment
         android:id="@+id/LoginFragment"
@@ -40,6 +40,14 @@
         android:name="com.prefin.ui.childHome.ChildHomeFragment"
         android:label="childtHome"
         tools:layout="@layout/fragment_child_home">
+
+    </fragment>
+
+    <fragment android:id="@+id/AccountInputFragment"
+        android:name="com.prefin.ui.accountConneting.AccountInputFragment"
+        android:label="accountInput"
+        tools:layout="@layout/fragment_account_input"
+        >
 
     </fragment>
 
