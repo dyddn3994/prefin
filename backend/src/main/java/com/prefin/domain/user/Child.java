@@ -36,7 +36,7 @@ public class Child {
 
     private int savingAccount;
 
-    private int loanAccount;
+    private int loanAmount;
 
     private int balance;
 
@@ -90,6 +90,14 @@ public class Child {
 
     public void addMoney(int money) {
         this.balance += money;
+    }
+
+    public void addLoan(int money) {
+        this.loanAmount += money;
+    }
+
+    public void resetLoan() {
+        this.loanAmount = 0;
     }
 
 }

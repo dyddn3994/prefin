@@ -52,13 +52,12 @@ public class LoanService {
 
         parent.transfer(loanMoney);  // 부모 계좌에서는 빌린 만큼 돈이 빠지고
         child.addMoney(loanMoney);  // 자식 계좌에서는 빌린 만큼 돈이 늘어난다.
+        child.addLoan(loanMoney); // 빌린 금액만큼 자식에게서 loanAmount를 늘린다
 
-        // 현재 시간을 long 타입으로 바꿔준다.
-        long loanDate = LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
         // 이렇게 가져온 정보를 dto를 통해 LoanHistory에 넣는다.
         LoanHistory loanHistory = LoanHistory.builder()
                 .loanAmount(loanDto.getLoanAmount())
-                .loanDate(loanDate)
+                .loanDate(LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli())
                 .parent(parent)
                 .child(child)
                 .build();

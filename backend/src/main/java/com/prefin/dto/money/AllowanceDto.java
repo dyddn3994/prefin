@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class AllowanceDto {
 
     private int allowanceAmount;
-    private Long payday;
 
     private Long parentId;
     private Long childId;
