@@ -1,24 +1,20 @@
-package com.prefin.domain.user;
+package com.prefin.dto.user;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 
-@Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Parent {
+public class ParentDto {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    private String email;
+    private String userId;
+
+    private String password;
 
     private String name;
 
@@ -26,14 +22,12 @@ public class Parent {
 
     private String account;
 
+    private String simplePass;
+
     private BigDecimal loanRate;
 
     private BigDecimal savingRate;
 
     private int balance;
-
-    public void transfer(int money) {
-        this.balance -= money;
-    }
 
 }

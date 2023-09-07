@@ -1,16 +1,15 @@
 package com.prefin.domain.quest;
 
-import com.prefin.domain.user.Parent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.prefin.domain.user.Parents;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class Quest {
     @Id
     @GeneratedValue
@@ -28,5 +27,5 @@ public class Quest {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    private Parent parent;
+    private Parents parent;
 }

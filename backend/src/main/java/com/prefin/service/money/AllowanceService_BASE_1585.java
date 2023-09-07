@@ -2,7 +2,7 @@ package com.prefin.service.money;
 
 import com.prefin.domain.money.Allowance;
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parents;
+import com.prefin.domain.user.Parent;
 import com.prefin.dto.money.AllowanceDto;
 import com.prefin.repository.money.AllowanceRepository;
 import com.prefin.repository.money.LoanRepository;
@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class AllowanceService {
     @Transactional
     public ResponseEntity<String> allowanceSetting(AllowanceDto allowanceDto) {
         // 부모와 자식의 정보를 가져온다
-        Parents parent = null;
+        Parent parent = null;
         Child child = null;
 
         if (allowanceDto.getParentId() != null) {
@@ -63,7 +65,7 @@ public class AllowanceService {
         Allowance newAllowance = allowanceRepository.findByParentId(allowanceDto.getParentId());
 
         // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
-        Parents newParent = newAllowance.getParent();
+        Parent newParent = newAllowance.getParent();
         Child newChild = newAllowance.getChild();
 
         int balance = newParent.getBalance();
@@ -78,8 +80,9 @@ public class AllowanceService {
         // 아래의 식을 계산하면 빌린 돈이 0일 땐 myDebt가 0이고 아니라면 한달치 이자가 나온다.
         BigDecimal loanInterst = newParent.getLoanRate();
 
-        BigDecimal bigDebt = new BigDecimal();
-
+        BigDecimal bigDebt = new BigDecimal(
+                loanRepository.findAllByParentIdAndChildId(newParent.getId(), newChild.getId()).getLoanAmount()
+        );
 
         BigDecimal totalDebt = loanInterst.multiply(bigDebt);
         int myDebt = totalDebt.intValueExact();
@@ -96,7 +99,7 @@ public class AllowanceService {
 
         // 대출 내역 제거?
         // 빌린 날짜로 구분?
-        // 체크하는 로직이 하나 더 필요, 만약 빌린 날짜가 용돈 지급일의 일보다 낮다면
+        // 체크하는 로직이 하나 더 필요
 
         System.out.println("===========================================");
         System.out.println("아이에게 용돈지급 완료");

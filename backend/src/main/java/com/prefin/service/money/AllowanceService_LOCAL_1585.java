@@ -2,7 +2,7 @@ package com.prefin.service.money;
 
 import com.prefin.domain.money.Allowance;
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parents;
+import com.prefin.domain.user.Parent;
 import com.prefin.dto.money.AllowanceDto;
 import com.prefin.repository.money.AllowanceRepository;
 import com.prefin.repository.money.LoanRepository;
@@ -15,7 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +36,7 @@ public class AllowanceService {
     @Transactional
     public ResponseEntity<String> allowanceSetting(AllowanceDto allowanceDto) {
         // 부모와 자식의 정보를 가져온다
-        Parents parent = null;
+        Parent parent = null;
         Child child = null;
 
         if (allowanceDto.getParentId() != null) {
@@ -63,7 +68,7 @@ public class AllowanceService {
         Allowance newAllowance = allowanceRepository.findByParentId(allowanceDto.getParentId());
 
         // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
-        Parents newParent = newAllowance.getParent();
+        Parent newParent = newAllowance.getParent();
         Child newChild = newAllowance.getChild();
 
         int balance = newParent.getBalance();

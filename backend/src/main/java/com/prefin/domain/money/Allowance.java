@@ -1,7 +1,7 @@
 package com.prefin.domain.money;
 
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Allowance {
     @Id
     @GeneratedValue
@@ -20,11 +21,9 @@ public class Allowance {
 
     private Long payday;
 
-    private int loanAmount;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    private Parent parent;
+    private Parents parent;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")

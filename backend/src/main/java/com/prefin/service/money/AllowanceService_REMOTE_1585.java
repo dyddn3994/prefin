@@ -78,8 +78,9 @@ public class AllowanceService {
         // 아래의 식을 계산하면 빌린 돈이 0일 땐 myDebt가 0이고 아니라면 한달치 이자가 나온다.
         BigDecimal loanInterst = newParent.getLoanRate();
 
-        BigDecimal bigDebt = new BigDecimal();
-
+        BigDecimal bigDebt = new BigDecimal(
+                loanRepository.findAllByParentIdAndChildId(newParent.getId(), newChild.getId()).getLoanAmount()
+        );
 
         BigDecimal totalDebt = loanInterst.multiply(bigDebt);
         int myDebt = totalDebt.intValueExact();
@@ -96,7 +97,7 @@ public class AllowanceService {
 
         // 대출 내역 제거?
         // 빌린 날짜로 구분?
-        // 체크하는 로직이 하나 더 필요, 만약 빌린 날짜가 용돈 지급일의 일보다 낮다면
+        // 체크하는 로직이 하나 더 필요
 
         System.out.println("===========================================");
         System.out.println("아이에게 용돈지급 완료");
