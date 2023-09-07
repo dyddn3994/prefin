@@ -1,6 +1,6 @@
 package com.prefin.domain.quest;
 
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,19 +13,19 @@ import javax.persistence.*;
 public class Quest {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String title;
+    private String title;
 
-    int reward;
+    private int reward;
 
-    long startDate;
+    private long startDate;
 
-    long endDate;
+    private long endDate;
 
-    Boolean requestStatus;
+    private Boolean requestStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    Parent parent;
+    private Parents parent;
 }

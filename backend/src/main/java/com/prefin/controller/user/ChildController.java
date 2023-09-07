@@ -1,15 +1,14 @@
 package com.prefin.controller.user;
 
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parent;
 import com.prefin.dto.user.ChildDto;
-import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ChildService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class ChildController {
     private final ChildService childService;
 

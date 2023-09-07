@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 @Table(name = "parents")
-public class Parent {
+public class Parents {
 
     @Id
     @GeneratedValue
@@ -28,6 +28,9 @@ public class Parent {
     private String account;
 
     private String simplePass;
+    public void transfer(int money) {
+        this.balance -= money;
+    }
 
     private BigDecimal loanRate;
 

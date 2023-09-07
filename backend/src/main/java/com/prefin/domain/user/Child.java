@@ -36,15 +36,18 @@ public class Child {
 
     private int savingAccount;
 
+    private int loanAccount;
+
     private int balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    private Parent parent;
+    private Parents parent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MASCOT_ID")
     private Mascot mascot;
+
 
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;
@@ -66,7 +69,7 @@ public class Child {
         this.savingAccount += savingAccount;
     }
 
-    public void updateParent(Parent parent) {
+    public void updateParent(Parents parent) {
         this.parent = parent;
     }
 
@@ -84,4 +87,9 @@ public class Child {
     }
 
     public void updateBalance(int balance) { this.balance += balance; }
+
+    public void addMoney(int money) {
+        this.balance += money;
+    }
+
 }

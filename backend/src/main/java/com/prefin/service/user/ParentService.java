@@ -1,6 +1,6 @@
 package com.prefin.service.user;
 
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class ParentService {
     // 부모 회원 가입
     public Long signUp(ParentDto parent) {
 
-        Parent newParent = Parent.builder().
+        Parents newParent = Parents.builder().
                 userId(parent.getUserId()).
                 password(parent.getPassword()).
                 name(parent.getName()).
@@ -28,9 +28,9 @@ public class ParentService {
     }
 
     // 로그인
-    public Parent login(String userId, String password) {
+    public Parents login(String userId, String password) {
         // id로 회원 정보 찾기
-        Parent parent = parentRepository.findByUserId(userId).orElse(null);
+        Parents parent = parentRepository.findByUserId(userId).orElse(null);
 
         if (parent == null) return null;
 
@@ -44,7 +44,7 @@ public class ParentService {
 
     // 계좌 등록 설정
     public String setAccount(long id, String account) {
-        Parent parent = parentRepository.findById(id).orElse(null);
+        Parents parent = parentRepository.findById(id).orElse(null);
 
         if (parent == null) return "parent not exist";
 
@@ -56,7 +56,7 @@ public class ParentService {
 
     // 간편 비밀번호 설정
     public String setSimplePassword(long id, String simplePassword) {
-        Parent parent = parentRepository.findById(id).orElse(null);
+        Parents parent = parentRepository.findById(id).orElse(null);
 
         if (parent == null) return "parent not exist";
 
@@ -68,7 +68,7 @@ public class ParentService {
 
     // 대출 이율 설정
     public String setLoanRate(long id, BigDecimal loanRate) {
-        Parent parent = parentRepository.findById(id).orElse(null);
+        Parents parent = parentRepository.findById(id).orElse(null);
 
         if (parent == null) return "parent not exist";
 
@@ -80,7 +80,7 @@ public class ParentService {
 
     // 저축 이율 설정
     public String setSavingRate(long id, BigDecimal savingRate) {
-        Parent parent = parentRepository.findById(id).orElse(null);
+        Parents parent = parentRepository.findById(id).orElse(null);
 
         if (parent == null) return "parent not exist";
 
@@ -92,7 +92,7 @@ public class ParentService {
 
     // FCM Token 등록
     public String setToken(long id, String fcmToken) {
-        Parent parent = parentRepository.findById(id).orElse(null);
+        Parents parent = parentRepository.findById(id).orElse(null);
 
         if (parent == null) return "parent not exist";
 

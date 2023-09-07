@@ -13,15 +13,15 @@ import javax.persistence.*;
 public class QuestOwned {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "QUEST_ID")
-    Quest quest;
+    private Quest quest;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
-    Child child;
+    private Child child;
 
 
 }

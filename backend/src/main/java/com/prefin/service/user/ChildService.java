@@ -3,7 +3,7 @@ package com.prefin.service.user;
 import com.prefin.domain.entertainment.Mascot;
 import com.prefin.domain.money.SavingHistory;
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ChildDto;
 import com.prefin.repository.entertainment.MascotRepository;
 import com.prefin.repository.money.SavingRepository;
@@ -106,7 +106,7 @@ public class ChildService {
     // 부모 설정
     public String setParent(long childId, long parentId) {
         Child child = childRepository.findById(childId).orElse(null);
-        Parent parent = parentRepository.findById(parentId).orElse(null);
+        Parents parent = parentRepository.findById(parentId).orElse(null);
 
         if (child == null) return "child not exist";
         if (parent == null) return "parent not exist";

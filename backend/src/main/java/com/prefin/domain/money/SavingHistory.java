@@ -1,7 +1,7 @@
 package com.prefin.domain.money;
 
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,11 +22,12 @@ public class SavingHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    private Parent parent;
+    private Parents parent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
     private Child child;
 
     private String savingType;
+
 }

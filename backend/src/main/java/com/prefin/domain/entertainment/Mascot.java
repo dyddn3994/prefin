@@ -12,11 +12,11 @@ import javax.persistence.*;
 public class Mascot {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    int level;
+    private int level;
 
-    String image;
+    private String image;
 }

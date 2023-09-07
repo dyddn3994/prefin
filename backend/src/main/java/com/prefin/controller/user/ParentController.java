@@ -1,16 +1,14 @@
 package com.prefin.controller.user;
 
-import com.prefin.domain.user.Parent;
+import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class ParentController {
     private final ParentService parentService;
 
@@ -20,7 +18,7 @@ public class ParentController {
     }
 
     @PostMapping("/parent/login")
-    public Parent login(@RequestBody ParentDto parentDto) {
+    public Parents login(@RequestBody ParentDto parentDto) {
         String userId = parentDto.getUserId();
         String password = parentDto.getPassword();
 
