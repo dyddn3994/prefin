@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class LoanDto {
 
     private int loanAmount;
-    private Long loanDate;
 
     private Long parentId;
     private Long childId;
