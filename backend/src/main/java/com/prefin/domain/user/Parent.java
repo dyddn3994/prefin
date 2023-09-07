@@ -1,35 +1,39 @@
 package com.prefin.domain.user;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
-@NoArgsConstructor
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Parent {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String email;
+    private String email;
 
-    String name;
+    private String name;
 
-    String fcmToken;
+    private String fcmToken;
 
-    String account;
+    private String account;
 
-    BigDecimal loanRate;
+    private BigDecimal loanRate;
 
-    BigDecimal savingRate;
+    private BigDecimal savingRate;
+
+    private int balance;
+
+    public void transfer(int money) {
+        this.balance -= money;
+    }
 
 }
