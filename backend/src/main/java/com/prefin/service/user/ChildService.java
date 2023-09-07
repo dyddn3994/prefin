@@ -32,6 +32,7 @@ public class ChildService {
                 userId(child.getUserId()).
                 password(child.getPassword()).
                 name(child.getName()).
+                parent(parentRepository.findById(child.getParentId()).orElse(null)).
                 isQuizSolved(false).
                 quizId(0L).
                 build();
