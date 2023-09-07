@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +51,7 @@ public class AllowanceService {
                 .parent(parent)
                 .child(child)
                 .allowanceAmount(allowanceDto.getAllowanceAmount())
-                .payday(allowanceDto.getPayday())
+                .payday(LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli())
                 .build();
 
         allowanceRepository.save(newAllowance);
@@ -78,15 +80,14 @@ public class AllowanceService {
         // 아래의 식을 계산하면 빌린 돈이 0일 땐 myDebt가 0이고 아니라면 한달치 이자가 나온다.
         BigDecimal loanInterst = newParent.getLoanRate();
 
-        BigDecimal bigDebt = new BigDecimal(
-                loanRepository.findAllByParentIdAndChildId(newParent.getId(), newChild.getId()).getLoanAmount()
-        );
+        BigDecimal bigDebt = new BigDecimal(newChild.getLoanAmount());
+
 
         BigDecimal totalDebt = loanInterst.multiply(bigDebt);
         int myDebt = totalDebt.intValueExact();
         // 만약 빌린 돈이 있다면 용돈에서 해당 원금과 한달 이자를 더한 금액을 용돈에서 뺀다.
         if (myDebt != 0) {
-            allowance = allowance - myDebt;
+            allowance -= myDebt;
         }
 
         // 부모 계좌 잔액 차감
@@ -94,10 +95,7 @@ public class AllowanceService {
 
         // 자식 계좌 잔액 증가시키기
         newChild.addMoney(allowance);
-
-        // 대출 내역 제거?
-        // 빌린 날짜로 구분?
-        // 체크하는 로직이 하나 더 필요
+        newChild.resetLoan();
 
         System.out.println("===========================================");
         System.out.println("아이에게 용돈지급 완료");

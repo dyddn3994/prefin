@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 public class Allowance {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int allowanceAmount;
