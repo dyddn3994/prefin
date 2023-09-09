@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.accountConnecting.AccountInputFragment">
+    tools:context=".ui.accountConnecting.AccountInputChildFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/fragment_account_input_text_view"
+        android:id="@+id/fragment_account_input_child_text_view"
         style="@style/Text.regular.Size32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:text="사용할 본인 계좌를 \n입력해주세요"
+        android:text="사용할 자녀 계좌를 \n입력해주세요"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,11 +26,11 @@
         card_view:cardElevation="4dp"
         card_view:strokeWidth="0dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_account_input_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_input_child_text_view"
         >
 
         <EditText
-            android:id="@+id/fragment_account_input_edit_text"
+            android:id="@+id/fragment_account_input_child_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="계좌번호 입력"
@@ -40,10 +39,8 @@
             />
     </com.google.android.material.card.MaterialCardView>
 
-
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_account_input_setting_button"
+        android:id="@+id/fragment_account_input_child_setting_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rectangle_81"

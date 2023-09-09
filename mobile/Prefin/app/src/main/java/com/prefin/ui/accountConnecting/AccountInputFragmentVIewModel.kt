@@ -1,4 +1,4 @@
-package com.prefin.ui.accountConneting
+package com.prefin.ui.accountConnecting
 
 import androidx.lifecycle.ViewModel
 

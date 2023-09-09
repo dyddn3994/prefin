@@ -1,4 +1,4 @@
-package com.prefin.ui.accountConneting
+package com.prefin.ui.accountConnecting
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.prefin.R
 import com.prefin.config.BaseFragment
-import com.prefin.databinding.FragmentAccountInputBinding
+import com.prefin.databinding.FragmentChildJoinBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +16,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [AccountInputFragment.newInstance] factory method to
+ * Use the [ChildJoinFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentAccountInputBinding::bind, R.layout.fragment_account_input) {
+class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJoinBinding::bind, R.layout.fragment_child_join) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -43,12 +43,12 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment AccountInputFragment.
+         * @return A new instance of fragment ChildJoinFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            AccountInputFragment().apply {
+            ChildJoinFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

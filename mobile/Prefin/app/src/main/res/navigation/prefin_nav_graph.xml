@@ -44,7 +44,7 @@
     </fragment>
 
     <fragment android:id="@+id/AccountInputFragment"
-        android:name="com.prefin.ui.accountConneting.AccountInputFragment"
+        android:name="com.prefin.ui.accountConnecting.AccountInputFragment"
         android:label="accountInput"
         tools:layout="@layout/fragment_account_input"
         >
