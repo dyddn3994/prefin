@@ -47,7 +47,7 @@ public class LoanService {
 
         // 잔액과 대츨금을 비교한다. 잔액 부족시 BAD_REQUEST를 실행
         if (loanMoney > parentBalance) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not Enough Money");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("부모계좌의 잔액이 부족합니다.");
         }
 
         parent.transfer(loanMoney);  // 부모 계좌에서는 빌린 만큼 돈이 빠지고
@@ -63,6 +63,6 @@ public class LoanService {
                 .build();
 
         loanRepository.save(loanHistory);
-        return ResponseEntity.ok("Loan Completed");
+        return ResponseEntity.ok("대출 완료");
     }
 }
