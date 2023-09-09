@@ -26,7 +26,6 @@ public class AllowanceService {
     private final AllowanceRepository allowanceRepository;
     private final ParentRepository parentRepository;
     private final ChildRepository childRepository;
-    private final LoanRepository loanRepository;
 
 
     // 용돈을 얼마 줄지, 언제 줄지 설정하는 로직
@@ -87,18 +86,26 @@ public class AllowanceService {
         int myDebt = totalDebt.intValueExact();
 
         // 만약 빌린 돈이 있다면 용돈에서 해당 원금과 한달 이자를 더한 금액을 용돈에서 뺀다.
-        if (myDebt != 0) {
+        if (allowance >= myDebt) {  // 용돈이 빚보다 크다면
             allowance -= myDebt;
+            // 부모 계좌 잔액 차감
+            newParent.transfer(allowance);
+
+            // 자식 계좌 잔액 증가시키기
+            newChild.addMoney(allowance);
+            newChild.resetLoan();
+
+            return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급");
+        } else if (allowance < myDebt) {  // 만약 빚이 용돈보다 크다면
+            // 부모 계좌 잔액 차감
+            newParent.transfer(allowance);
+
+            // 자식 계좌에서 빚 탕감
+            newChild.subtractLoan(allowance);
+
+            return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급되었지만 대출 빚이 아직 남아있습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("알 수 없는 오류");
         }
-
-        // 부모 계좌 잔액 차감
-        newParent.transfer(allowance);
-
-        // 자식 계좌 잔액 증가시키기
-        newChild.addMoney(allowance);
-        newChild.resetLoan();
-
-        return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급");
-
     }
 }

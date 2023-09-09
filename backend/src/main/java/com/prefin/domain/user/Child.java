@@ -100,4 +100,8 @@ public class Child {
         this.loanAmount = 0;
     }
 
+    public void subtractLoan(int money) {
+        this.loanAmount -= money;
+    }
+
 }
