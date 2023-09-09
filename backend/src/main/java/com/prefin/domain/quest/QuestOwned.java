@@ -15,6 +15,14 @@ public class QuestOwned {
     @GeneratedValue
     private Long id;
 
+    private boolean requested;
+
+    private boolean completed;
+
+    private long startDate;
+
+    private long endDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "QUEST_ID")
     private Quest quest;
@@ -23,5 +31,7 @@ public class QuestOwned {
     @JoinColumn(name = "CHILD_ID")
     private Child child;
 
+    public void updateRequested(boolean requested) {this.requested = requested;}
 
+    public void updateCompleted(boolean completed) {this.completed = completed;}
 }
