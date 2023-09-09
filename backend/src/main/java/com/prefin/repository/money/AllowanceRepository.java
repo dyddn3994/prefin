@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AllowanceRepository extends JpaRepository<Allowance, Long> {
-    Allowance findByChildId(Long parentId);
+    Allowance findByParentId(Long parentId);
 }

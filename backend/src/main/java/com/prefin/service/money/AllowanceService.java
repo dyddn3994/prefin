@@ -60,9 +60,9 @@ public class AllowanceService {
     }
 
     @Transactional  // 용돈 이체 로직
-    public ResponseEntity<String> allowanceTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
+    public ResponseEntity<String> allowanceTransfer(AllowanceDto allowanceDto) {  // AllowanceDto 로 받고
         // 받은 Dto 에서 부모 id로 해당 용돈 정보를 찾는다.
-        Allowance newAllowance = allowanceRepository.findByChildId(requestDto.getChildId());
+        Allowance newAllowance = allowanceRepository.findByParentId(allowanceDto.getParentId());
 
         // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
         Parents newParent = newAllowance.getParent();
@@ -85,7 +85,6 @@ public class AllowanceService {
 
         BigDecimal totalDebt = loanInterst.multiply(bigDebt);
         int myDebt = totalDebt.intValueExact();
-
         // 만약 빌린 돈이 있다면 용돈에서 해당 원금과 한달 이자를 더한 금액을 용돈에서 뺀다.
         if (myDebt != 0) {
             allowance -= myDebt;
@@ -98,7 +97,12 @@ public class AllowanceService {
         newChild.addMoney(allowance);
         newChild.resetLoan();
 
+        System.out.println("===========================================");
+        System.out.println("아이에게 용돈지급 완료");
+        System.out.println(newChild.getBalance());
+        System.out.println("===========================================");
         return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급");
+
 
     }
 }
