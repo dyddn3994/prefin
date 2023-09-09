@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildAddBinding
@@ -23,7 +24,7 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var count = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,6 +35,22 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    fun init() {
+        binding.apply {
+            // 자녀 계좌 등록 화면
+            fragmentChildAddChildAddButton.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildAddFragment_to_AccountInputChildFragment)
+            }
+            // 바로 부모 홈 화면
+            fragmentChildAddChildCancelButton.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildAddFragment_to_LoginFragment)
+            }
+            fragmentChildAddCountTextView.text = "현재 등록된 자녀의 계정은 \n총 ${count}개 입니다."
+        }
+
     }
 
     companion object {
