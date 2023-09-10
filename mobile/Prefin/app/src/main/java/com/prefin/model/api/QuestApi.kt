@@ -21,11 +21,10 @@ interface QuestApi {
     
     
     // 자녀에게 등록된 퀘스트 조회
-    // TODO: 반환값 설정 필요
     @GET("questowned/{id}")
     suspend fun childQuestList(
         @Path("id") id: Long,
-    )
+    ): List<>
 
     // 퀘스트 등록
     @POST("questowned")

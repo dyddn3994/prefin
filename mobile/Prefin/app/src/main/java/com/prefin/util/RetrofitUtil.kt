@@ -3,10 +3,10 @@ package com.prefin.util
 import com.prefin.config.ApplicationClass
 import com.prefin.model.api.LoanApi
 import com.prefin.model.api.LoginApi
+import com.prefin.model.api.ParentHomeApi
 import com.prefin.model.api.PinMoneyApi
 import com.prefin.model.api.QuestApi
 import com.prefin.model.api.SavingApi
-import com.prefin.model.api.ParentHomeApi
 import com.prefin.model.api.SignUpApi
 
 class RetrofitUtil {
