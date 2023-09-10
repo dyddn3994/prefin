@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:hint="금액 입력"
         android:gravity="end|center_vertical"
+        android:inputType="number"
         android:paddingEnd="12dp"
         android:background="@drawable/edittext_rectangle_24"
         android:layout_marginHorizontal="24dp"

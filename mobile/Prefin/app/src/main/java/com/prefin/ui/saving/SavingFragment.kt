@@ -1,60 +1,58 @@
 package com.prefin.ui.saving
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.prefin.R
+import com.prefin.config.BaseFragment
+import com.prefin.databinding.FragmentSavingBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding::bind, R.layout.fragment_saving) {
+    private val savingViewModel by viewModels<SavingViewModel>()
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SavingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SavingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        init()
+    }
+
+    private fun init() = with(binding) {
+        // TODO: 총 저축 금액 default 값 입력
+
+        // 뒤로가기 버튼 클릭
+        fragmentSavingBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        // 저축하기 버튼 클릭
+        fragmentSavingSavingButton.setOnClickListener {
+            if (invalidInput()) {
+                // 입력 오류
+                showSnackbar("입력값을 확인해주세요.")
+            } else {
+                // 저축 요청
+//                savingViewModel.saving()
+            }
+        }
+
+        // 저축 observe
+        savingViewModel.isSavingSuccess.observe(viewLifecycleOwner) {
+            if (!it) {
+                // 저축 실패
+                showSnackbar("저축에 실패하였습니다.")
+            } else {
+                // 저축 성공
+                showSnackbar("성공적으로 저축되었습니다.")
+                findNavController().navigateUp()
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saving, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SavingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SavingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun invalidInput(): Boolean = with(binding) {
+        return (
+            fragmentSavingAmountEditText.text.isNullOrBlank() ||
+                fragmentSavingAmountEditText.text.toString().toInt() <= 0
+            )
     }
 }

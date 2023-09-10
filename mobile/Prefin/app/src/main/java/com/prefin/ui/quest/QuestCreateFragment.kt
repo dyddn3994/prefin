@@ -1,60 +1,57 @@
 package com.prefin.ui.quest
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.prefin.R
+import com.prefin.config.BaseFragment
+import com.prefin.databinding.FragmentQuestCreateBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class QuestCreateFragment : BaseFragment<FragmentQuestCreateBinding>(FragmentQuestCreateBinding::bind, R.layout.fragment_quest_create) {
+    private val questCreateViewModel by viewModels<QuestCreateViewModel>()
 
-/**
- * A simple [Fragment] subclass.
- * Use the [QuestCreateFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class QuestCreateFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+    }
+
+    private fun init() = with(binding) {
+        // 뒤로가기 버튼 클릭
+        fragmentQuestCreateBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        // 퀘스트 생성 버튼 클릭
+        fragmentQuestCreateCreateButton.setOnClickListener {
+            if (isInvalidInput()) {
+                // 입력 오류
+                showSnackbar("입력값을 확인해주세요.")
+            } else {
+                // 퀘스트 생성 요청
+//                questCreateViewModel.createQuest()
+            }
+        }
+
+        // 퀘스트 생성 observe
+        questCreateViewModel.isQuestCreateSuccess.observe(viewLifecycleOwner) {
+            if (!it) {
+                // 퀘스트 생성 실패
+                showSnackbar("퀘스트 생성에 실패하였습니다.")
+            } else {
+                // 퀘스트 생성 성공
+                showSnackbar("성공적으로 퀘스트가 생성되었습니다.")
+                findNavController().navigateUp()
+            }
         }
     }
-    
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quest_create, container, false)
-    }
-    
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment QuestCreateFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            QuestCreateFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    private fun isInvalidInput(): Boolean = with(binding) {
+        return (
+            fragmentQuestCreateQuestNameEditText.text.isNullOrBlank() ||
+                fragmentQuestCreateAmountEditText.text.isNullOrBlank() ||
+                fragmentQuestCreateAmountEditText.text.toString().toInt() <= 0
+            )
     }
 }
