@@ -2,12 +2,10 @@ package com.prefin.controller.money;
 
 import com.prefin.dto.money.AllowanceDto;
 import com.prefin.service.money.AllowanceService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,5 +30,14 @@ public class AllowanceController {
         return allowanceService.allowanceTransfer(requestDto);
     }
 
+    @GetMapping("/parentBalance/{parentId}")
+    public ResponseEntity<Integer> parentBalance(@PathVariable Long parentId) {
+        return allowanceService.parentBalance(parentId);
+    }
+
+    @GetMapping("/childBalance/{childId}")
+    public ResponseEntity<Integer> childBalance(@PathVariable Long childId) {
+        return allowanceService.childBalance(childId);
+    }
 
 }
