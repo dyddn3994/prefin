@@ -38,6 +38,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        signUpViewModel.signUpSuccess.observe(viewLifecycleOwner){
+            if(signUpViewModel.signUpSuccess.value == true){
+                findNavController().navigate(R.id.action_SignUpFragment_to_LoginFragment)
+            }
+        }
+
+
         binding.apply {
 
             // 뒤로가기
@@ -60,6 +68,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         fragmentSignUpEmailCheckTextView.visibility = View.GONE
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
                         fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
+
+                        signUpViewModel.parentUser.userId = fragmentSignUpIdEditText.text.toString()
+                        signUpViewModel.parentUser.password = fragmentSignUpPasswordCheckEditText.text.toString()
+                        signUpViewModel.parentUser.name = fragmentSignUpNameEditText.text.toString()
+
+                        signUpViewModel.signUp()
+
+
                     }
 
 

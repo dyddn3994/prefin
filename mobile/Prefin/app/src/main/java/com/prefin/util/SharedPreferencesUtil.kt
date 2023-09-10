@@ -3,6 +3,8 @@ package com.prefin.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.prefin.config.ApplicationClass
+import com.prefin.model.dto.Child
+import com.prefin.model.dto.Parent
 
 class SharedPreferencesUtil(context: Context) {
     private var preferences: SharedPreferences =
@@ -10,6 +12,9 @@ class SharedPreferencesUtil(context: Context) {
     
     fun getString(key: String): String {
         return preferences.getString(key, null) ?: ""
+    }
+    fun getLong(key : String) : Long {
+        return preferences.getLong(key, -1)
     }
     
 //    fun addUser(userLoginInfoDto: UserLoginInfoDto) {
@@ -25,5 +30,24 @@ class SharedPreferencesUtil(context: Context) {
     
     fun removeUser() {
         preferences.edit().clear().apply()
+    }
+
+    fun addParentUser(parent : Parent) {
+        val editor = preferences.edit()
+        editor.putLong("id", parent.id)
+        editor.putString("userName", parent.name)
+        editor.putString("userId", parent.userId)
+        editor.putString("userFCMToken", parent.fcmToken)
+        editor.putString("type", "parent")
+
+    }
+    fun addChildUser(child : Child) {
+        val editor = preferences.edit()
+        editor.putLong("id", child.id)
+        editor.putString("userName", child.name)
+        editor.putString("userId", child.userId)
+        editor.putString("userFCMToken", child.fcmToken)
+        editor.putString("type", "child")
+
     }
 }

@@ -1,4 +1,4 @@
-package com.prefin.ui.parentHome
+package com.prefin.ui.saving
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prefin.R
 import com.prefin.config.BaseFragment
-import com.prefin.databinding.FragmentParentHomeBinding
+import com.prefin.databinding.FragmentChildAccountChooseBinding
+import com.prefin.ui.parentHome.ChildAccountAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,15 +20,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ParentHomeFragment.newInstance] factory method to
+ * Use the [ChildAccountChooseFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParentHomeBinding::bind, R.layout.fragment_parent_home) {
+class ChildAccountChooseFragment : BaseFragment<FragmentChildAccountChooseBinding>(FragmentChildAccountChooseBinding::bind, R.layout.fragment_child_account_choose) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var adpater : ChildAccountAdapter
-    private val parentHomeViewModel : ParentHomeFragmentViewModel by viewModels()
+    private val childAccountChooseFragmentViewModel : ChildAccountChooseFragmentViewModel by viewModels()
+    private lateinit var adpater : SavingAccountAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -38,60 +39,28 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
     }
 
-    fun init(){
 
-        parentHomeViewModel.getParentData()
-        parentHomeViewModel.getChildData()
+    fun init() {
+        childAccountChooseFragmentViewModel.getChildList()
 
-        parentHomeViewModel.parent.observe(viewLifecycleOwner){
-            binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
-            binding.fragmentParentHomeMyAccountMoneyTextView.text = "${it.balance} 원"
+        childAccountChooseFragmentViewModel.childList.observe(viewLifecycleOwner){
+
         }
-
-        parentHomeViewModel.childs.observe(viewLifecycleOwner){
-            adpater.submitList(it)
-        }
-
-
         binding.apply {
-
-            // 눌렀을 때 계좌 거래 내역 조회
-            fragmentParentHomeMyAccountLinearLayout.setOnClickListener {
-
+            fragmentChildAccountChooseBackButton.setOnClickListener {
+                findNavController().navigateUp()
             }
 
-            // adapter 연결
-            adpater = ChildAccountAdapter(requireContext())
-            fragmentParentHomeChildAccountRecyclerView.adapter = adpater
+            adpater = SavingAccountAdapter(requireContext())
+            fragmentChildAccountChooseRecyclerView.adapter = adpater
             val layoutManager = LinearLayoutManager(requireContext())
-            fragmentParentHomeChildAccountRecyclerView.layoutManager = layoutManager
-
-            // 퀘스트 화면 이동
-            fragmentParentHomeQuestTextView.setOnClickListener {
-
-            }
-
-            // 자녀 저축 내역 보기
-            fragmentParentHomeSavingTextView.setOnClickListener {
-
-            }
-
-            // 자녀 대출 내역 및 승인
-            fragmentParentHomeLoanTextView.setOnClickListener {
-
-            }
-
-            // 설정 화면
-            fragmentParentHomeSettingTextView.setOnClickListener {
-
-            }
+            fragmentChildAccountChooseRecyclerView.layoutManager = layoutManager
         }
-    }
 
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -99,12 +68,12 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ParentHomeFragment.
+         * @return A new instance of fragment ChildAccountChooseFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ParentHomeFragment().apply {
+            ChildAccountChooseFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
