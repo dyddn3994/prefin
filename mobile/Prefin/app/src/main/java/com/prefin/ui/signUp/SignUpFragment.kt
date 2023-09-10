@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSignUpBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +29,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     private var param1: String? = null
     private var param2: String? = null
     private val signUpViewModel : SignUpViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,7 +44,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
         signUpViewModel.signUpSuccess.observe(viewLifecycleOwner){
             if(signUpViewModel.signUpSuccess.value == true){
-                findNavController().navigate(R.id.action_SignUpFragment_to_LoginFragment)
+                val id = signUpViewModel.userId
+                signUpViewModel.parentUser.id = id
+                mainActivityViewModel.parentUser = signUpViewModel.parentUser
+                findNavController().navigate(R.id.action_SignUpFragment_to_AccountInputFragment)
             }
         }
 

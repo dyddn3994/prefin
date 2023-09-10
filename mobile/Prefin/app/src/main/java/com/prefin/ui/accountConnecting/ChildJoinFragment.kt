@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildJoinBinding
+import com.prefin.model.dto.Child
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +30,9 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
     private var param1: String? = null
     private var param2: String? = null
 
+    private val childJoinFragmentViewModel : ChildJoinFragmentViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,9 +43,16 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
     }
 
     fun init() {
+
+        childJoinFragmentViewModel.childJoinSuccess.observe(viewLifecycleOwner){
+            if(it){
+                findNavController().navigate(R.id.action_ChildJoinFragment_to_AccountInputChildFragment)
+            }
+        }
         binding.apply {
             fragmentChildJoinJoinButton.setOnClickListener {
                 if(fragmentChildJoinIdEditText.text.isNullOrEmpty() || fragmentChildJoinPasswordEditText.text.isNullOrEmpty()){
@@ -48,6 +63,12 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
                 }
                 else {
                     // 등록 후 화면 이동
+                    val newChild = Child()
+                    newChild.name = fragmentChildJoinNameEditText.text.toString()
+                    newChild.userId = fragmentChildJoinIdEditText.text.toString()
+                    newChild.password = fragmentChildJoinPasswordEditText.text.toString()
+                    newChild.parentId = mainActivityViewModel.parentUser!!.id
+                    childJoinFragmentViewModel.childJoin(newChild)
                 }
             }
         }

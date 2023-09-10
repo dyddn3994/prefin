@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_SignUpFragment_to_LoginFragment"
             app:destination="@+id/LoginFragment"/>
+        <action
+            android:id="@+id/action_SignUpFragment_to_AccountInputFragment"
+            app:destination="@id/AccountInputFragment" />
 
     </fragment>
 
@@ -40,6 +43,9 @@
         android:label="parentHome"
         tools:layout="@layout/fragment_parent_home">
 
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_ChildAccountChooseFragment"
+            app:destination="@id/ChildAccountChooseFragment" />
     </fragment>
 
     <fragment android:id="@+id/ChildHomeFragment"
@@ -58,15 +64,15 @@
             app:destination="@+id/ChildAddFragment"/>
 
     </fragment>
+    
     <fragment android:id="@+id/AccountInputChildFragment"
         android:name="com.prefin.ui.accountConnecting.AccountInputChildFragment"
         android:label="accountInputChild"
         tools:layout="@layout/fragment_account_input_child">
 
-
         <action
-            android:id="@+id/action_AccountInputChildFragment_to_ChildJoinFragment"
-            app:destination="@id/ChildJoinFragment" />
+            android:id="@+id/action_AccountInputChildFragment_to_ChildAddFragment"
+            app:destination="@id/ChildAddFragment" />
     </fragment>
 
     <fragment android:id="@+id/ChildAddFragment"
@@ -75,12 +81,11 @@
         tools:layout="@layout/fragment_child_add">
 
         <action
-            android:id="@+id/action_ChildAddFragment_to_AccountInputChildFragment"
-            app:destination="@+id/AccountInputChildFragment"/>
-
-        <action
             android:id="@+id/action_ChildAddFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_ChildAddFragment_to_ChildJoinFragment"
+            app:destination="@id/ChildJoinFragment" />
 
     </fragment>
 
@@ -90,10 +95,9 @@
         tools:layout="@layout/fragment_child_join">
 
         <action
-            android:id="@+id/action_ChildJoinFragment_to_ChildAddFragment"
-            app:destination="@id/ChildAddFragment" />
+            android:id="@+id/action_ChildJoinFragment_to_AccountInputChildFragment"
+            app:destination="@id/AccountInputChildFragment" />
     </fragment>
-
 
     <fragment android:id="@+id/AccountFragment"
         android:name="com.prefin.ui.account.AccountFragment"
@@ -201,4 +205,10 @@
         tools:layout="@layout/fragment_quest_regist">
     </fragment>
 
+    <fragment android:id="@+id/ChildAccountChooseFragment"
+        android:name="com.prefin.ui.saving.ChildAccountChooseFragment"
+        android:label="childAccountChoose"
+        tools:layout="@layout/fragment_child_account_choose"
+        >
+    </fragment>
 </navigation>

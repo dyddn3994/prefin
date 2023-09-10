@@ -79,7 +79,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
             // 자녀 저축 내역 보기
             fragmentParentHomeSavingTextView.setOnClickListener {
-
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
             }
 
             // 자녀 대출 내역 및 승인

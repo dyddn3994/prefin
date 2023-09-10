@@ -15,7 +15,7 @@ class SignUpViewModel : ViewModel() {
     private val _signUpSuccess = MutableLiveData<Boolean>()
     val signUpSuccess : LiveData<Boolean> get() = _signUpSuccess
     var parentUser : Parent = Parent()
-
+    var userId = 0L;
     fun signUp() {
         viewModelScope.launch {
             try{
@@ -23,6 +23,7 @@ class SignUpViewModel : ViewModel() {
                 if(response.isSuccessful){
                     val id = response.body()
                     if(id != null){
+                        userId = id
                         Log.d(TAG, "signUp: 회원가입 성공")
                         _signUpSuccess.value = true
                     }
