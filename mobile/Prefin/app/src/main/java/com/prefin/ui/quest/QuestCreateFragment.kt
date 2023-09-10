@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentQuestCreateBinding
 
@@ -30,7 +31,11 @@ class QuestCreateFragment : BaseFragment<FragmentQuestCreateBinding>(FragmentQue
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 퀘스트 생성 요청
-//                questCreateViewModel.createQuest()
+                questCreateViewModel.createQuest(
+                    ApplicationClass.sharedPreferences.getLong("id"),
+                    fragmentQuestCreateAmountEditText.text.toString().toInt(),
+                    fragmentQuestCreateQuestNameEditText.text.toString(),
+                )
             }
         }
 

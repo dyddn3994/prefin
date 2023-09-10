@@ -47,4 +47,6 @@ class QuestParentItemAdapter(var context: Context) : ListAdapter<Quest, QuestPar
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
+    
+    
 }
