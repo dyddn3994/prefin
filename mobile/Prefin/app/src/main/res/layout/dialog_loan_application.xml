@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/dialog_loan_application_loan_amount_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대출 금액"
+        style="@style/Text.regular.Size32"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/dialog_loan_application_loan_amount_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="110,000 원"
+        style="@style/Text.regular.Size32"
+        android:textColor="@color/green"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_loan_amount_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/dialog_loan_application_after_pinmoney_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다음 달 예상 용돈"
+        style="@style/Text.regular.Size32"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="@+id/dialog_loan_application_loan_amount_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_loan_amount_text_view"
+        />
+
+    <TextView
+        android:id="@+id/dialog_loan_application_before_pinmoney_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="200,000 원"
+        style="@style/Text.regular.Size32"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_loan_application_loan_amount_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_after_pinmoney_title_text_view"
+        />
+
+    <ImageView
+        android:id="@+id/dialog_loan_application_arrow_downward_image_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_arrow_downward"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_before_pinmoney_text_view"
+        />
+
+    <TextView
+        android:id="@+id/dialog_loan_application_after_pinmoney_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="88,600 원"
+        style="@style/Text.regular.Size32"
+        android:textColor="@color/orange"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_loan_application_before_pinmoney_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_arrow_downward_image_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/dialog_loan_application_apply_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="신청"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_after_pinmoney_text_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/dialog_loan_application_cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="취소"
+        style="@style/Text.regular.Size20"
+        android:background="@drawable/button_rectangle_81_color_reversed"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_loan_application_apply_button"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

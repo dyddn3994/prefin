@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".ui.accountConnecting.ChildAddFragment">
+
+
+    <TextView
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="32dp"
+        android:id="@+id/fragment_child_add_title_text_view"
+        style="@style/Text.regular.Size32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자녀 계정 등록"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:layout_marginTop="64dp"
+        android:id="@+id/fragment_child_add_text_view"
+        style="@style/Text.regular.Size20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자녀 계정을 등록하시겠습니까?"
+        app:layout_constraintStart_toStartOf="@+id/fragment_child_add_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_child_add_title_text_view" />
+
+    <TextView
+        android:layout_marginTop="48dp"
+        android:id="@+id/fragment_child_add_count_text_view"
+        style="@style/Text.regular.Size20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 등록된 자녀의 계정은 \n총 0개 입니다."
+        app:layout_constraintStart_toStartOf="@+id/fragment_child_add_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_child_add_text_view" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_child_add_child_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_rectangle_81"
+        android:fontFamily="@font/maplestory_light"
+        android:text="자녀 계정 등록하기"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="32dp"
+        android:id="@+id/fragment_child_add_child_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/gray"
+        android:fontFamily="@font/maplestory_light"
+        android:text="건너뛰기"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_child_add_child_add_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

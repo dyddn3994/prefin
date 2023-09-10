@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.account.PinMoneySendFragment">
 
+    <ImageView
+        android:id="@+id/fragment_pin_money_send_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:id="@+id/fragment_pin_money_title_text_view"
         android:layout_width="wrap_content"
@@ -36,6 +47,7 @@
         android:layout_height="wrap_content"
         android:text="전송"
         style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
         android:background="@drawable/button_rectangle_81"
         android:backgroundTint="@color/colorPrimary"
         android:layout_marginBottom="32dp"

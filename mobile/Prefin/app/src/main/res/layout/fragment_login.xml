@@ -62,8 +62,34 @@
       app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_text_view"
       app:layout_constraintStart_toStartOf="@+id/fragment_login_password_text_view"
       />
+
+  <RadioGroup
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_edit_text"
+      app:layout_constraintStart_toStartOf="@+id/fragment_login_password_edit_text"
+      android:orientation="horizontal"
+      >
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/fragment_login_parent_radio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="부모"
+        />
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/fragment_login_child_radio_button"
+        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자녀"
+        />
+
+  </RadioGroup>
+
   <TextView
-      android:layout_marginTop="8dp"
+      android:layout_marginTop="16dp"
       android:id="@+id/fragment_login_id_password_seach_text_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

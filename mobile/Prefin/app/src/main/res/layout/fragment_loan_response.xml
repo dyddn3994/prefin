@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.loan.LoanResponseFragment">
+
+    <ImageView
+        android:id="@+id/fragment_loan_response_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_loan_amount_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요청받은 금액은"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/gray"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_loan_amount_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="100,000원 입니다."
+        style="@style/Text.regular.Size20"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_loan_amount_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_loan_amount_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_interest_rate_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 이율은"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/gray"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_loan_amount_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_loan_amount_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_interest_rate_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1.2% 입니다."
+        style="@style/Text.regular.Size20"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_interest_rate_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_interest_rate_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_after_pinmoney_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다음 달 예상 용돈"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/gray"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_interest_rate_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_interest_rate_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_after_pinmoney_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="88,600 원"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/orange"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_after_pinmoney_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_after_pinmoney_title_text_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/fragment_loan_response_apply_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="승낙하기"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="32dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

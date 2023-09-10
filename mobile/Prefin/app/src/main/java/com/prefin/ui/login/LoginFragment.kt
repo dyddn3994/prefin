@@ -1,51 +1,63 @@
 package com.prefin.ui.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentLoginBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(ApplicationClass.sharedPreferences.getString("type") == "parent"){
+            findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
+        }
+        else if(ApplicationClass.sharedPreferences.getString("type") == "child"){
+            findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+        }
+        else{
+
+        }
+
+        loginViewModel.loginSuccess.observe(viewLifecycleOwner){
+            if(loginViewModel.loginSuccess.value == true){
+                if(binding.fragmentLoginParentRadioButton.isChecked){
+                    findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
+                }
+                if(binding.fragmentLoginChildRadioButton.isChecked){
+                    findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+                }
+            }
+        }
         binding.apply {
             // 로그인 버튼 클릭 시
-            fragmentLoginLoginButton.setOnClickListener {
-                if(fragmentLoginIdEditText.text.isNullOrEmpty() || fragmentLoginPasswordEditText.text.isNullOrEmpty()){
-                    Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    //로그인 절차 진행
 
+
+            fragmentLoginLoginButton.setOnClickListener {
+                if (fragmentLoginIdEditText.text.isNullOrEmpty() || fragmentLoginPasswordEditText.text.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    // 로그인 절차 진행
+                    if(fragmentLoginChildRadioButton.isChecked){
+                        loginViewModel.childLogin(
+                            fragmentLoginIdEditText.text.toString(),
+                            fragmentLoginPasswordEditText.text.toString(),
+                        )
+
+
+                    }
+                    if(fragmentLoginParentRadioButton.isChecked){
+                        loginViewModel.parentLogin(fragmentLoginIdEditText.text.toString(),
+                            fragmentLoginPasswordEditText.text.toString())
+                    }
                 }
             }
 
@@ -54,25 +66,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                 findNavController().navigate(R.id.action_LoginFragment_to_SignUpFragment)
             }
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

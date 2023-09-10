@@ -7,19 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prefin.databinding.ItemChildAccountBinding
+import com.prefin.model.dto.Child
 import com.prefin.model.dto.ChildAccount
 
 import com.prefin.util.AdapterUtil
 
 
-class ChildAccountAdapter(var context: Context) : ListAdapter<ChildAccount, ChildAccountAdapter.ItemViewHolder>(AdapterUtil.diffUtilChildAccount) {
+class ChildAccountAdapter(var context: Context) : ListAdapter<Child, ChildAccountAdapter.ItemViewHolder>(AdapterUtil.diffUtilChildAccount) {
 
     inner class ItemViewHolder(var binding: ItemChildAccountBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: ChildAccount) {
+        fun bind(data: Child) {
             binding.apply {
-                fragmentParentHomeChildAccountNameTextView.text = data.accountUserName
-                fragmentParentHomeChildAccountMoneyTextView.text = data.accountMoney
+                fragmentParentHomeChildAccountNameTextView.text = "${data.name}의 계좌 "
+                fragmentParentHomeChildAccountMoneyTextView.text = "${data.balance} 원"
 
                 // 계좌 눌렀을 때 소비 내역으로 가야함
                 fragmentParentHomeChildAccountLinearLayout.setOnClickListener {
@@ -48,7 +49,7 @@ class ChildAccountAdapter(var context: Context) : ListAdapter<ChildAccount, Chil
 
     lateinit var itemClickListener : ItemClickListener
     interface ItemClickListener{
-        fun onClick(view: View, position: Int, data: ChildAccount, checked : Boolean)
+        fun onClick(view: View, position: Int, data: Child, checked : Boolean)
     }
 }
 

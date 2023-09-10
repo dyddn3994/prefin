@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSignUpBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +29,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     private var param1: String? = null
     private var param2: String? = null
     private val signUpViewModel : SignUpViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -38,6 +41,17 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        signUpViewModel.signUpSuccess.observe(viewLifecycleOwner){
+            if(signUpViewModel.signUpSuccess.value == true){
+                val id = signUpViewModel.userId
+                signUpViewModel.parentUser.id = id
+                mainActivityViewModel.parentUser = signUpViewModel.parentUser
+                findNavController().navigate(R.id.action_SignUpFragment_to_AccountInputFragment)
+            }
+        }
+
+
         binding.apply {
 
             // 뒤로가기
@@ -47,7 +61,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
             // 회원가입 버튼 클릭
             fragmentSignUpRegisterButton.setOnClickListener {
-                if(fragmentSignUpEmailEditText.text.isNullOrEmpty()
+                if(fragmentSignUpIdEditText.text.isNullOrEmpty()
                     || fragmentSignUpPasswordEditText.text.isNullOrEmpty()
                     || fragmentSignUpPasswordCheckEditText.text.isNullOrEmpty()
                     || fragmentSignUpNameEditText.text.isNullOrEmpty()){
@@ -55,21 +69,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    if(android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()
-                        && fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
+                    if(fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
                         // 회원가입 구현
                         fragmentSignUpEmailCheckTextView.visibility = View.GONE
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
                         fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
-                    }
+
+                        signUpViewModel.parentUser.userId = fragmentSignUpIdEditText.text.toString()
+                        signUpViewModel.parentUser.password = fragmentSignUpPasswordCheckEditText.text.toString()
+                        signUpViewModel.parentUser.name = fragmentSignUpNameEditText.text.toString()
+
+                        signUpViewModel.signUp()
 
 
-                    if(!android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()){
-                        fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE
                     }
-                    else{
-                        fragmentSignUpEmailCheckTextView.visibility = View.GONE
-                    }
+
 
 
                     if(fragmentSignUpPasswordEditText.text.toString() != fragmentSignUpPasswordCheckEditText.text.toString()){

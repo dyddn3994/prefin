@@ -14,6 +14,12 @@
         <action
             android:id="@+id/action_LoginFragment_to_SignUpFragment"
             app:destination="@+id/SignUpFragment"/>
+        <action
+            android:id="@+id/action_LoginFragment_to_ParentHomeFragemnt"
+            app:destination="@id/ParentHomeFragment" />
+        <action
+            android:id="@+id/action_LoginFragment_to_ChildHomeFragemnt"
+            app:destination="@id/ChildHomeFragment" />
 
     </fragment>
 
@@ -26,7 +32,183 @@
         <action
             android:id="@+id/action_SignUpFragment_to_LoginFragment"
             app:destination="@+id/LoginFragment"/>
+        <action
+            android:id="@+id/action_SignUpFragment_to_AccountInputFragment"
+            app:destination="@id/AccountInputFragment" />
 
     </fragment>
 
+    <fragment android:id="@+id/ParentHomeFragment"
+        android:name="com.prefin.ui.parentHome.ParentHomeFragment"
+        android:label="parentHome"
+        tools:layout="@layout/fragment_parent_home">
+
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_ChildAccountChooseFragment"
+            app:destination="@id/ChildAccountChooseFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/ChildHomeFragment"
+        android:name="com.prefin.ui.childHome.ChildHomeFragment"
+        android:label="childtHome"
+        tools:layout="@layout/fragment_child_home">
+
+    </fragment>
+
+    <fragment android:id="@+id/AccountInputFragment"
+        android:name="com.prefin.ui.accountConnecting.AccountInputFragment"
+        android:label="accountInput"
+        tools:layout="@layout/fragment_account_input"
+        >
+        <action android:id="@+id/action_AccountInputFragment_to_ChildAddFragment"
+            app:destination="@+id/ChildAddFragment"/>
+
+    </fragment>
+    
+    <fragment android:id="@+id/AccountInputChildFragment"
+        android:name="com.prefin.ui.accountConnecting.AccountInputChildFragment"
+        android:label="accountInputChild"
+        tools:layout="@layout/fragment_account_input_child">
+
+        <action
+            android:id="@+id/action_AccountInputChildFragment_to_ChildAddFragment"
+            app:destination="@id/ChildAddFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/ChildAddFragment"
+        android:name="com.prefin.ui.accountConnecting.ChildAddFragment"
+        android:label="childAdd"
+        tools:layout="@layout/fragment_child_add">
+
+        <action
+            android:id="@+id/action_ChildAddFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_ChildAddFragment_to_ChildJoinFragment"
+            app:destination="@id/ChildJoinFragment" />
+
+    </fragment>
+
+    <fragment android:id="@+id/ChildJoinFragment"
+        android:name="com.prefin.ui.accountConnecting.ChildJoinFragment"
+        android:label="childJoin"
+        tools:layout="@layout/fragment_child_join">
+
+        <action
+            android:id="@+id/action_ChildJoinFragment_to_AccountInputChildFragment"
+            app:destination="@id/AccountInputChildFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/AccountFragment"
+        android:name="com.prefin.ui.account.AccountFragment"
+        android:label="account"
+        tools:layout="@layout/fragment_account">
+
+        <action
+            android:id="@+id/action_AccountFragment_to_PinMoneyRegistFragment"
+            app:destination="@+id/PinMoneyRegistFragment" />
+
+        <action
+            android:id="@+id/action_AccountFragment_to_PinMoneySendFragment"
+            app:destination="@+id/PinMoneySendFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/PinMoneyRegistFragment"
+        android:name="com.prefin.ui.account.PinMoneyRegistFragment"
+        android:label="pinMoneyRegist"
+        tools:layout="@layout/fragment_pin_money_regist">
+    </fragment>
+
+    <fragment android:id="@+id/PinMoneySendFragment"
+        android:name="com.prefin.ui.account.PinMoneySendFragment"
+        android:label="pinMoneySendFragment"
+        tools:layout="@layout/fragment_pin_money_send">
+    </fragment>
+
+    <fragment android:id="@+id/SavingHomeFragment"
+        android:name="com.prefin.ui.saving.SavingHomeFragment"
+        android:label="savingHomeFragment"
+        tools:layout="@layout/fragment_saving_home">
+
+        <action
+            android:id="@+id/action_SavingHomeFragment_to_SavingFragment"
+            app:destination="@+id/SavingFragment" />
+
+        <action
+            android:id="@+id/action_SavingHomeFragment_to_WithdrawFragment"
+            app:destination="@+id/WithdrawFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/SavingFragment"
+        android:name="com.prefin.ui.saving.SavingFragment"
+        android:label="savingFragment"
+        tools:layout="@layout/fragment_saving">
+    </fragment>
+
+    <fragment android:id="@+id/WithdrawFragment"
+        android:name="com.prefin.ui.saving.WithdrawFragment"
+        android:label="withdrawFragment"
+        tools:layout="@layout/fragment_withdraw">
+    </fragment>
+
+    <fragment android:id="@+id/LoanApplicationFragment"
+        android:name="com.prefin.ui.loan.LoanApplicationFragment"
+        android:label="loanApplicationFragment"
+        tools:layout="@layout/fragment_loan_application">
+    </fragment>
+
+    <fragment android:id="@+id/LoanResponseFragment"
+        android:name="com.prefin.ui.loan.LoanResponseFragment"
+        android:label="loanResponseFragment"
+        tools:layout="@layout/fragment_loan_response">
+    </fragment>
+
+    <fragment android:id="@+id/QuestChildHomeFragment"
+        android:name="com.prefin.ui.quest.QuestChildHomeFragment"
+        android:label="questChildHomeFragment"
+        tools:layout="@layout/fragment_quest_child_home">
+    </fragment>
+
+    <fragment android:id="@+id/QuestParentHomeFragment"
+        android:name="com.prefin.ui.quest.QuestParentHomeFragment"
+        android:label="questParentHomeFragment"
+        tools:layout="@layout/fragment_quest_parent_home">
+
+        <action
+            android:id="@+id/action_QuestParentHomeFragment_to_QuestParentItemFragment"
+            app:destination="@+id/QuestParentItemFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/QuestParentItemFragment"
+        android:name="com.prefin.ui.quest.QuestParentItemFragment"
+        android:label="questParentItemFragment"
+        tools:layout="@layout/fragment_quest_parent_item">
+
+        <action
+            android:id="@+id/action_QuestParentItemFragment_to_QuestCreateFragment"
+            app:destination="@+id/QuestCreateFragment" />
+
+        <action
+            android:id="@+id/action_QuestParentItemFragment_to_QuestRegistFragment"
+            app:destination="@+id/QuestRegistFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/QuestCreateFragment"
+        android:name="com.prefin.ui.quest.QuestCreateFragment"
+        android:label="questCreateFragment"
+        tools:layout="@layout/fragment_quest_create">
+    </fragment>
+
+    <fragment android:id="@+id/QuestRegistFragment"
+        android:name="com.prefin.ui.quest.QuestRegistFragment"
+        android:label="questRegistFragment"
+        tools:layout="@layout/fragment_quest_regist">
+    </fragment>
+
+    <fragment android:id="@+id/ChildAccountChooseFragment"
+        android:name="com.prefin.ui.saving.ChildAccountChooseFragment"
+        android:label="childAccountChoose"
+        tools:layout="@layout/fragment_child_account_choose"
+        >
+    </fragment>
 </navigation>

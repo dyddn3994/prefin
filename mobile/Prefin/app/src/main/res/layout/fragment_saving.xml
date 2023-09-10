@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.saving.SavingFragment">
 
+    <ImageView
+        android:id="@+id/fragment_saving_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:id="@+id/fragment_saving_title_text_view"
         android:layout_width="wrap_content"
@@ -24,6 +35,7 @@
         android:layout_height="wrap_content"
         android:hint="금액 입력"
         android:gravity="end|center_vertical"
+        android:inputType="number"
         android:paddingEnd="12dp"
         android:background="@drawable/edittext_rectangle_24"
         android:layout_marginHorizontal="24dp"
@@ -37,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="총 금액"
         style="@style/Text.regular.Size20"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_saving_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_saving_amount_edit_text"
         />
@@ -74,15 +86,26 @@
         app:layout_constraintTop_toTopOf="@+id/fragment_saving_before_interest_title_text_view"
         />
 
+    <ImageView
+        android:id="@+id/fragment_saving_arrow_downward_image_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_arrow_downward"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_before_interest_text_view"
+        />
+
     <TextView
         android:id="@+id/fragment_saving_after_total_amount_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="총 금액"
         style="@style/Text.regular.Size20"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_saving_before_interest_title_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_before_interest_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_arrow_downward_image_view"
         />
 
     <TextView
@@ -122,6 +145,7 @@
         android:layout_height="wrap_content"
         android:text="저축하기"
         style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
         android:background="@drawable/button_rectangle_81"
         android:backgroundTint="@color/colorPrimary"
         android:layout_marginBottom="32dp"
