@@ -30,11 +30,18 @@ public class QuestOwnedController {
     @PutMapping("/questowned/complete/{id}")
     public void setQuestCompleted(@PathVariable long id) { questOwnedService.setQuestCompleted(id);}
 
-    @GetMapping("/questowned/{id}")
-    public List<QuestOwned> getQuestOwnedByChild(long id) {
+    @GetMapping("/questowneds/{id}")
+    public List<QuestOwned> getQuestOwnedByChild(@PathVariable long id) {
         Child child = childRepository.findById(id).orElse(null);
 
         return questOwnedRepository.findByChild(child);
+    }
+
+    @GetMapping("questowned/{id}")
+    public QuestOwned getQuestOwnedById(@PathVariable long id) {
+        QuestOwned questOwned = questOwnedRepository.findById(id).orElse(null);
+
+        return questOwned;
     }
 
 }
