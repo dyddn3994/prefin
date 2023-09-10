@@ -124,8 +124,7 @@
         android:text="설정"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintHorizontal_bias="0.495"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

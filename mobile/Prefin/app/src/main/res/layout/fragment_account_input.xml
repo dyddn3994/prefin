@@ -7,7 +7,6 @@
     android:padding="16dp"
     tools:context=".ui.accountConnecting.AccountInputFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/fragment_account_input_text_view"
         style="@style/Text.regular.Size32"
@@ -91,47 +90,46 @@
 
 
     <LinearLayout
-        android:layout_marginEnd="8dp"
+        android:id="@+id/fragment_account_input_timer_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/fragment_account_input_check_card_view"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_account_input_check_card_view"
         android:gravity="end"
-        >
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/fragment_account_input_check_card_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_input_check_card_view">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="남은 시간"
 
-            android:textColor="@color/colorRed"
-            />
+            android:textColor="@color/colorRed" />
 
         <TextView
             android:id="@+id/fragment_account_input_timer_text_view"
-            android:layout_marginStart="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="3 : 00"
-            android:textColor="@color/colorRed"
-             />
+            android:textColor="@color/colorRed" />
 
     </LinearLayout>
-
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_account_input_setting_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
         android:background="@drawable/button_rectangle_81"
         android:fontFamily="@font/maplestory_light"
         android:text="인증"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
