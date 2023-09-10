@@ -1,31 +1,33 @@
 package com.prefin.domain.money;
 
 import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.prefin.domain.user.Parents;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class SavingHistory {
     @Id
-    @GeneratedValue
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    int savingAmount;
+    private int savingAmount;
 
-    Long savingDate;
+    private Long savingDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    Parent parent;
+    private Parents parent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
-    Child child;
+    private Child child;
+
+    private String savingType;
+
 }

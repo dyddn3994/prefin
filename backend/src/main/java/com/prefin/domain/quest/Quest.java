@@ -1,32 +1,29 @@
 package com.prefin.domain.quest;
 
-import com.prefin.domain.user.Parent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.prefin.domain.user.Parents;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class Quest {
     @Id
-    @GeneratedValue
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String title;
+    private String title;
 
-    int reward;
+    private int reward;
 
-    long startDate;
-
-    long endDate;
-
-    Boolean requestStatus;
+    private Boolean registered;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
-    Parent parent;
+    private Parents parent;
+
+    public void updateRegistered(boolean registered) {this.registered = registered;}
 }

@@ -1,24 +1,24 @@
 package com.prefin.domain.entertainment;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class Quiz {
-    @Id @GeneratedValue
-    Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String question;
+    private String question;
 
-    int answer;
+    private int answer;
 
-    String description;
+    private String description;
 }

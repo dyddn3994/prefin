@@ -1,23 +1,22 @@
 package com.prefin.domain.entertainment;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class Mascot {
     @Id
-    @GeneratedValue
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String name;
+    private String name;
 
-    int level;
+    private int level;
 
-    String image;
+    private String image;
 }
