@@ -19,13 +19,11 @@ public class Quest {
 
     private int reward;
 
-    private long startDate;
-
-    private long endDate;
-
-    private Boolean requestStatus;
+    private Boolean registered;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Parents parent;
+
+    public void updateRegistered(boolean registered) {this.registered = registered;}
 }

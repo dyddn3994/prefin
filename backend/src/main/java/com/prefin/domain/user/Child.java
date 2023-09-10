@@ -34,7 +34,7 @@ public class Child {
 
     private int trustScore;
 
-    private int savingAccount;
+    private int savingAmount;
 
     private int loanAmount;
 
@@ -65,8 +65,8 @@ public class Child {
         this.trustScore += score;
     }
 
-    public void updateSavingAccount(int savingAccount) {
-        this.savingAccount += savingAccount;
+    public void updateSavingAmount(int savingAmount) {
+        this.savingAmount += savingAmount;
     }
 
     public void updateParent(Parents parent) {

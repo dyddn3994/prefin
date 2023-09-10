@@ -35,12 +35,6 @@ public class ChildController {
         return childService.setSimplePassword(id, childDto.getSimplePass());
     }
 
-    // 필요 없는듯?
-//    @PutMapping("/child/{id}/savingaccount")
-//    public String changeSavingAccount(@PathVariable long id, @RequestBody ChildDto childDto) {
-//        return  childService.changeSavingAccount(id, childDto.getSavingAccount());
-//    }
-
     @PutMapping("/child/{id}/trustscore")
     public String changeTrustScore(@PathVariable long id, @RequestBody ChildDto childDto) {
         return childService.changeTrustScore(id, childDto.getTrustScore());

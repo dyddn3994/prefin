@@ -31,7 +31,7 @@ public class ChildDto {
 
     private int trustScore;
 
-    private int savingAccount;
+    private int savingAmount;
 
     private int balance;
 

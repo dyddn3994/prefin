@@ -80,15 +80,15 @@ public class ChildService {
     }
 
     // 저축 금액 변경
-    public String changeSavingAccount(long id, int savingAccount) {
+    public String changeSavingAmount(long id, int savingAmount) {
         Child child = childRepository.findById(id).orElse(null);
 
         if (child == null) return "child not exist";
 
-        child.updateSavingAccount(savingAccount);
+        child.updateSavingAmount(savingAmount);
         childRepository.save(child);
 
-        return "change SavingAccount: " + savingAccount;
+        return "change SavingAmount: " + savingAmount;
     }
 
     // 신뢰 점수 변경
@@ -175,7 +175,7 @@ public class ChildService {
 
         child.getParent().updateBalance(balance);
         child.updateBalance(-balance);
-        child.updateSavingAccount(balance);
+        child.updateSavingAmount(balance);
 
         SavingHistory savingHistory = SavingHistory.builder().
                 savingAmount(balance).
@@ -197,7 +197,7 @@ public class ChildService {
 
         child.getParent().updateBalance(-balance);
         child.updateBalance(balance);
-        child.updateSavingAccount(-balance);
+        child.updateSavingAmount(-balance);
 
         SavingHistory savingHistory = SavingHistory.builder().
                 savingAmount(balance).
