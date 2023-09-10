@@ -50,26 +50,27 @@ public class AllowanceService {
                 .parent(parent)
                 .child(child)
                 .allowanceAmount(allowanceDto.getAllowanceAmount())
-                .payday(LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli())
+                .payday(allowanceDto.getPayday())
                 .build();
 
         allowanceRepository.save(newAllowance);
 
-        return ResponseEntity.ok("Allowance Set");
+        return ResponseEntity.ok("용돈 설정 완료");
     }
 
-    @Transactional  // 용돈 이체 로직
-    public ResponseEntity<String> allowanceTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
-        // 받은 Dto 에서 부모 id로 해당 용돈 정보를 찾는다.
-        Allowance newAllowance = allowanceRepository.findByChildId(requestDto.getChildId());
+    @Transactional  // 용돈 자동 이체 로직, 미완
+    public ResponseEntity<String> autoTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
+        // 받은 Dto 에서 부모와 자식 id로 해당 용돈 정보를 찾는다.
+        Allowance newAllowance = allowanceRepository.findByParentIdAndChildId(
+                requestDto.getChildId(), requestDto.getChildId());
 
-        // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
-        Parents newParent = newAllowance.getParent();
-        Child newChild = newAllowance.getChild();
+        Parents parent = newAllowance.getParent();
+        Child child = newAllowance.getChild();
 
-        int balance = newParent.getBalance();
+        int balance = parent.getBalance();
         int allowance = newAllowance.getAllowanceAmount();
 
+        // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
         if (balance < allowance) {
             System.out.println("잔액 부족");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잔액이 부족합니다.");
@@ -77,9 +78,9 @@ public class AllowanceService {
 
 
         // 아래의 식을 계산하면 빌린 돈이 0일 땐 myDebt가 0이고 아니라면 한달치 이자가 나온다.
-        BigDecimal loanInterst = newParent.getLoanRate();
+        BigDecimal loanInterst = parent.getLoanRate();
 
-        BigDecimal bigDebt = new BigDecimal(newChild.getLoanAmount());
+        BigDecimal bigDebt = new BigDecimal(child.getLoanAmount());
 
 
         BigDecimal totalDebt = loanInterst.multiply(bigDebt);
@@ -89,23 +90,42 @@ public class AllowanceService {
         if (allowance >= myDebt) {  // 용돈이 빚보다 크다면
             allowance -= myDebt;
             // 부모 계좌 잔액 차감
-            newParent.transfer(allowance);
+            parent.transfer(allowance);
 
             // 자식 계좌 잔액 증가시키기
-            newChild.addMoney(allowance);
-            newChild.resetLoan();
+            child.addMoney(allowance);
+            child.resetLoan();
 
-            return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급");
+            return ResponseEntity.status(HttpStatus.OK).body("정기 용돈 정상 지급");
         } else if (allowance < myDebt) {  // 만약 빚이 용돈보다 크다면
             // 부모 계좌 잔액 차감
-            newParent.transfer(allowance);
+            parent.transfer(allowance);
 
             // 자식 계좌에서 빚 탕감
-            newChild.subtractLoan(allowance);
+            child.subtractLoan(allowance);
 
-            return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급되었지만 대출 빚이 아직 남아있습니다.");
+            return ResponseEntity.status(HttpStatus.OK).body("대출 차감 후 남는 용돈이 없습니다.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("알 수 없는 오류");
         }
     }
+
+        @Transactional  // 용돈 수동 이체 로직
+        public ResponseEntity<String> allowanceTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
+            // 어떤 부모가 어떤 자식에게 얼마를 보내는 지만 알면 된다.
+            int immediateAllowance = requestDto.getAllowanceAmount();
+
+            Parents parent = parentRepository.findById(requestDto.getParentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));
+            Child child = childRepository.findById(requestDto.getChildId())
+                    .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
+
+            if (parent.getBalance() >= immediateAllowance) {
+                child.addMoney(immediateAllowance);
+                return ResponseEntity.ok("일반 용돈 지급 완료");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("계좌 잔액이 부족합니다.");
+            }
+
+        }
 }
