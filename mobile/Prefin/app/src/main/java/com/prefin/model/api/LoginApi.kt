@@ -9,10 +9,10 @@ interface LoginApi {
 
 
     // 자녀 로그인
-    @POST("/child/login")
+    @POST("child/login")
     suspend fun childLogin(@Body child: Child) : Child
 
 
-    @POST("/parent/login")
+    @POST("parent/login")
     suspend fun parentLogin(@Body parent: Parent) : Parent
 }

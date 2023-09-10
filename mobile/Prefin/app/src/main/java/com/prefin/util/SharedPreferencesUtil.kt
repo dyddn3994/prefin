@@ -39,7 +39,7 @@ class SharedPreferencesUtil(context: Context) {
         editor.putString("userId", parent.userId)
         editor.putString("userFCMToken", parent.fcmToken)
         editor.putString("type", "parent")
-
+        editor.apply()
     }
     fun addChildUser(child : Child) {
         val editor = preferences.edit()
@@ -48,6 +48,7 @@ class SharedPreferencesUtil(context: Context) {
         editor.putString("userId", child.userId)
         editor.putString("userFCMToken", child.fcmToken)
         editor.putString("type", "child")
+        editor.apply()
 
     }
 }

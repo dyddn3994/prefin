@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.datatransport.runtime.firebase.transport.LogEventDropped
 import com.prefin.config.ApplicationClass
 import com.prefin.model.dto.Child
 import com.prefin.model.dto.Parent
@@ -20,7 +21,9 @@ class LoginViewModel : ViewModel() {
             try {
                 val response = RetrofitUtil.loginApi.childLogin(Child(userId = userId, password = pwd))
                 if(response != null){
-                    ApplicationClass.sharedPreferences.addChildUser(response as Child)
+                    Log.d(TAG, "유저 정보: $response")
+                    // 로그아웃 구현하면 다시 주석 풀기
+//                    ApplicationClass.sharedPreferences.addChildUser(response)
                     _loginSuccess.value = true
 
                 }
@@ -39,12 +42,16 @@ class LoginViewModel : ViewModel() {
             try {
                 val response = RetrofitUtil.loginApi.parentLogin(parentUser)
                 if(response != null){
-                    ApplicationClass.sharedPreferences.addParentUser(response as Parent)
+                    Log.d(TAG, "유저 정보: $response")
+                    //로그아웃 구현하면 다시 주석 풀어야함
+//                    ApplicationClass.sharedPreferences.addParentUser(response)
                     _loginSuccess.value = true
 
                 }
             } catch (e: Exception) {
+
                 Log.d(TAG, "login: 실패 $userId / $pwd")
+                Log.d(TAG, "원인 : ${e.message}")
             }
         }
     }

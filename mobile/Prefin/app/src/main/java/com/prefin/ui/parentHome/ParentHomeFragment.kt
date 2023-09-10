@@ -1,6 +1,7 @@
 package com.prefin.ui.parentHome
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentParentHomeBinding
 
@@ -16,7 +18,7 @@ import com.prefin.databinding.FragmentParentHomeBinding
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+private const val TAG = "ParentHomeFragment prefin"
 /**
  * A simple [Fragment] subclass.
  * Use the [ParentHomeFragment.newInstance] factory method to
@@ -43,9 +45,9 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     }
 
     fun init(){
-
-        parentHomeViewModel.getParentData()
-        parentHomeViewModel.getChildData()
+        Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
+//        parentHomeViewModel.getParentData()
+//        parentHomeViewModel.getChildData()
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner){
             binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"

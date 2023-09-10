@@ -16,10 +16,10 @@
             app:destination="@+id/SignUpFragment"/>
         <action
             android:id="@+id/action_LoginFragment_to_ParentHomeFragemnt"
-            app:destination="@id/ParentHomeFragemnt" />
+            app:destination="@id/ParentHomeFragment" />
         <action
             android:id="@+id/action_LoginFragment_to_ChildHomeFragemnt"
-            app:destination="@id/ChildHomeFragemnt" />
+            app:destination="@id/ChildHomeFragment" />
 
     </fragment>
 
@@ -35,14 +35,14 @@
 
     </fragment>
 
-    <fragment android:id="@+id/ParentHomeFragemnt"
+    <fragment android:id="@+id/ParentHomeFragment"
         android:name="com.prefin.ui.parentHome.ParentHomeFragment"
         android:label="parentHome"
         tools:layout="@layout/fragment_parent_home">
 
     </fragment>
 
-    <fragment android:id="@+id/ChildHomeFragemnt"
+    <fragment android:id="@+id/ChildHomeFragment"
         android:name="com.prefin.ui.childHome.ChildHomeFragment"
         android:label="childtHome"
         tools:layout="@layout/fragment_child_home">

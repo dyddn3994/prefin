@@ -32,7 +32,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                 if(binding.fragmentLoginParentRadioButton.isChecked){
                     findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
                 }
-                if(binding.fragmentLoginParentRadioButton.isChecked){
+                if(binding.fragmentLoginChildRadioButton.isChecked){
                     findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
                 }
             }
