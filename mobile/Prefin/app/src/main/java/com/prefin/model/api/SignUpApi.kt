@@ -16,7 +16,7 @@ interface SignUpApi {
 
     // 자녀 회원가입
     @POST("child")
-    suspend fun childSignUp(@Body child: Child)
+    suspend fun childSignUp(@Body child: Child) : Long
 
     @PUT("parent/{id}/account")
     suspend fun accountRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>

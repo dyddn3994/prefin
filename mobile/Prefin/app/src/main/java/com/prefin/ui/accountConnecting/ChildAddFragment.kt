@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildAddBinding
@@ -24,7 +27,8 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var count = 0;
+    private val childAddFragmentViewModel : ChildAddFragmentViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,16 +43,21 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
     }
 
     fun init() {
+        childAddFragmentViewModel.childList.observe(viewLifecycleOwner){
+            binding.fragmentChildAddCountTextView.text = "현재 등록된 자녀의 계정은 \n총 ${it.size}개 입니다."
+        }
+        childAddFragmentViewModel.getChildList(mainActivityViewModel.parentUser!!.id)
+
         binding.apply {
             // 자녀 계좌 등록 화면
             fragmentChildAddChildAddButton.setOnClickListener {
-                findNavController().navigate(R.id.action_ChildAddFragment_to_AccountInputChildFragment)
+                findNavController().navigate(R.id.action_ChildAddFragment_to_ChildJoinFragment)
             }
             // 바로 부모 홈 화면
             fragmentChildAddChildCancelButton.setOnClickListener {
                 findNavController().navigate(R.id.action_ChildAddFragment_to_LoginFragment)
             }
-            fragmentChildAddCountTextView.text = "현재 등록된 자녀의 계정은 \n총 ${count}개 입니다."
+            fragmentChildAddCountTextView.text = "현재 등록된 자녀의 계정은 \n총 -1개 입니다."
         }
 
     }

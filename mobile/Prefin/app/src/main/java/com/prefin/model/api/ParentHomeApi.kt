@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface ParentHomeApi {
 
-    @GET("parent/child/{id}")
+    @GET("parent/{id}/getChildren")
     suspend fun getChildData(@Path("id") id : Long) : List<Child>
 
     @GET("parent/account/{id}")
