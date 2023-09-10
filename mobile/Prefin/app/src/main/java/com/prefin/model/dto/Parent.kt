@@ -6,7 +6,7 @@ data class Parent(
     var account: String?,
     var balance: Int = 0,
     var fcmToken: String?,
-    val id: Long = 0,
+    var id: Long = 0,
     var loanRate: BigDecimal?,
     var name: String = "",
     var password: String = "",

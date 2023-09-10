@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentAccountInputChildBinding
@@ -26,6 +28,7 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
     private var param1: String? = null
     private var param2: String? = null
     private  var countDownTimer: CountDownTimer? = null
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

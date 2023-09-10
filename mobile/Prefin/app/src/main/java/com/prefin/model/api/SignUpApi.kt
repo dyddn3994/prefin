@@ -5,6 +5,8 @@ import com.prefin.model.dto.Parent
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface SignUpApi {
 
@@ -13,6 +15,9 @@ interface SignUpApi {
     suspend fun parentSignUp(@Body parent : Parent) : Response<Long>
 
     // 자녀 회원가입
-    @POST("/child")
+    @POST("child")
     suspend fun childSignUp(@Body child: Child)
+
+    @PUT("parent/{id}/account")
+    suspend fun accountRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
 }

@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_SignUpFragment_to_LoginFragment"
             app:destination="@+id/LoginFragment"/>
+        <action
+            android:id="@+id/action_SignUpFragment_to_AccountInputFragment"
+            app:destination="@id/AccountInputFragment" />
 
     </fragment>
 
@@ -40,6 +43,9 @@
         android:label="parentHome"
         tools:layout="@layout/fragment_parent_home">
 
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_ChildAccountChooseFragment"
+            app:destination="@id/ChildAccountChooseFragment" />
     </fragment>
 
     <fragment android:id="@+id/ChildHomeFragment"
@@ -93,5 +99,15 @@
             android:id="@+id/action_ChildJoinFragment_to_ChildAddFragment"
             app:destination="@id/ChildAddFragment" />
     </fragment>
+
+    <fragment android:id="@+id/ChildAccountChooseFragment"
+        android:name="com.prefin.ui.saving.ChildAccountChooseFragment"
+        android:label="childAccountChoose"
+        tools:layout="@layout/fragment_child_account_choose"
+        >
+
+    </fragment>
+
+
 
 </navigation>

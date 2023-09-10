@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 // import com.google.gson.Gson
 // import com.google.gson.GsonBuilder
 // import com.petmily.util.NullOnEmptyConverterFactory
@@ -59,6 +60,7 @@ class ApplicationClass : Application() {
             .baseUrl(API_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(ScalarsConverterFactory.create())
             .build()
     }
 

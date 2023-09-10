@@ -5,10 +5,13 @@ import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentAccountInputBinding
-import kotlin.concurrent.timer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,9 +27,10 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val accountInputFragmentViewModel : AccountInputFragmentViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     private  var countDownTimer: CountDownTimer? = null
-
+    private val checkText = "신한브로"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,9 +48,15 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
     fun init() {
         binding.apply {
 
+            accountInputFragmentViewModel.accountRegisterSuccess.observe(viewLifecycleOwner){
+                if(it){
+                    findNavController().navigate(R.id.action_AccountInputFragment_to_ChildAddFragment)
+                }
+            }
+
             fragmentAccountInputCheckButton.setOnClickListener {
-                if (fragmentAccountInputEditText.text.isNullOrEmpty()) {
-                    // fcm 전송 && 타이머 설정
+                if (!fragmentAccountInputEditText.text.isNullOrEmpty()) {
+                  // 타이머 설정
                     fragmentAccountInputTimerLinearLayout.visibility = View.VISIBLE
                     startTimer()
                 }
@@ -63,7 +73,10 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
                 else {
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog
-
+                    if(fragmentAccountInputCheckEditText.text.toString() == checkText) {
+                        mainActivityViewModel.parentUser!!.account = fragmentAccountInputEditText.text.toString()
+                       accountInputFragmentViewModel.accountRegister(mainActivityViewModel.parentUser!!.id, mainActivityViewModel.parentUser!!)
+                    }
                 }
             }
         }
