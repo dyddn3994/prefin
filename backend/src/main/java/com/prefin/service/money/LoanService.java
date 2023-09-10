@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -45,21 +47,22 @@ public class LoanService {
 
         // 잔액과 대츨금을 비교한다. 잔액 부족시 BAD_REQUEST를 실행
         if (loanMoney > parentBalance) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not Enough Money");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("부모 계좌의 잔액이 부족합니다.");
         }
 
-        parent.transfer(loanMoney);  // 부모 계좌에서는 빌린 만큼 돈이 빠지고
+//        parent.transfer(loanMoney);  // 부모 계좌에서는 빌린 만큼 돈이 빠지고
         child.addMoney(loanMoney);  // 자식 계좌에서는 빌린 만큼 돈이 늘어난다.
+        child.addLoan(loanMoney); // 빌린 금액만큼 자식에게서 loanAmount를 늘린다
 
         // 이렇게 가져온 정보를 dto를 통해 LoanHistory에 넣는다.
         LoanHistory loanHistory = LoanHistory.builder()
                 .loanAmount(loanDto.getLoanAmount())
-                .loanDate(loanDto.getLoanDate())
+                .loanDate(LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli())
                 .parent(parent)
                 .child(child)
                 .build();
 
         loanRepository.save(loanHistory);
-        return ResponseEntity.ok("Loan Completed");
+        return ResponseEntity.ok("대출 완료");
     }
 }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AllowanceDto {
 
-    private int allowanceAmount;
     private Long payday;
+    private int allowanceAmount;
 
     private Long parentId;
     private Long childId;

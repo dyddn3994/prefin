@@ -1,4 +1,4 @@
-package com.prefin.dto.money;
+package com.prefin.dto.entertainment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoanDto {
+public class QuizDto {
 
-    private int loanAmount;
+    private Long id;
 
-    private Long parentId;
-    private Long childId;
-
+    private int answer;
+    private String question;
+    private String description;
 }

@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,6 @@ public class AllowanceService {
     private final AllowanceRepository allowanceRepository;
     private final ParentRepository parentRepository;
     private final ChildRepository childRepository;
-    private final LoanRepository loanRepository;
 
 
     // 용돈을 얼마 줄지, 언제 줄지 설정하는 로직
@@ -54,21 +55,22 @@ public class AllowanceService {
 
         allowanceRepository.save(newAllowance);
 
-        return ResponseEntity.ok("Allowance Set");
+        return ResponseEntity.ok("용돈 설정 완료");
     }
 
-    @Transactional  // 용돈 이체 로직
-    public ResponseEntity<String> allowanceTransfer(AllowanceDto allowanceDto) {  // AllowanceDto 로 받고
-        // 받은 Dto 에서 부모 id로 해당 용돈 정보를 찾는다.
-        Allowance newAllowance = allowanceRepository.findByParentId(allowanceDto.getParentId());
+    @Transactional  // 용돈 자동 이체 로직, 미완
+    public ResponseEntity<String> autoTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
+        // 받은 Dto 에서 부모와 자식 id로 해당 용돈 정보를 찾는다.
+        Allowance newAllowance = allowanceRepository.findByParentIdAndChildId(
+                requestDto.getChildId(), requestDto.getChildId());
 
-        // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
-        Parents newParent = newAllowance.getParent();
-        Child newChild = newAllowance.getChild();
+        Parents parent = newAllowance.getParent();
+        Child child = newAllowance.getChild();
 
-        int balance = newParent.getBalance();
+        int balance = parent.getBalance();
         int allowance = newAllowance.getAllowanceAmount();
 
+        // 부모 계좌에서 용돈과 잔액 비교 후 용돈 <= 잔액 이라면 돈을 차감하고 아니라면 cause error
         if (balance < allowance) {
             System.out.println("잔액 부족");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잔액이 부족합니다.");
@@ -76,35 +78,54 @@ public class AllowanceService {
 
 
         // 아래의 식을 계산하면 빌린 돈이 0일 땐 myDebt가 0이고 아니라면 한달치 이자가 나온다.
-        BigDecimal loanInterst = newParent.getLoanRate();
+        BigDecimal loanInterst = parent.getLoanRate();
 
-        BigDecimal bigDebt = new BigDecimal(
-                loanRepository.findAllByParentIdAndChildId(newParent.getId(), newChild.getId()).getLoanAmount()
-        );
+        BigDecimal bigDebt = new BigDecimal(child.getLoanAmount());
+
 
         BigDecimal totalDebt = loanInterst.multiply(bigDebt);
         int myDebt = totalDebt.intValueExact();
+
         // 만약 빌린 돈이 있다면 용돈에서 해당 원금과 한달 이자를 더한 금액을 용돈에서 뺀다.
-        if (myDebt != 0) {
-            allowance = allowance - myDebt;
+        if (allowance >= myDebt) {  // 용돈이 빚보다 크다면
+            allowance -= myDebt;
+            // 부모 계좌 잔액 차감
+            parent.transfer(allowance);
+
+            // 자식 계좌 잔액 증가시키기
+            child.addMoney(allowance);
+            child.resetLoan();
+
+            return ResponseEntity.status(HttpStatus.OK).body("정기 용돈 정상 지급");
+        } else if (allowance < myDebt) {  // 만약 빚이 용돈보다 크다면
+            // 부모 계좌 잔액 차감
+            parent.transfer(allowance);
+
+            // 자식 계좌에서 빚 탕감
+            child.subtractLoan(allowance);
+
+            return ResponseEntity.status(HttpStatus.OK).body("대출 차감 후 남는 용돈이 없습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("알 수 없는 오류");
         }
-
-        // 부모 계좌 잔액 차감
-        newParent.transfer(allowance);
-
-        // 자식 계좌 잔액 증가시키기
-        newChild.addMoney(allowance);
-
-        // 대출 내역 제거?
-        // 빌린 날짜로 구분?
-        // 체크하는 로직이 하나 더 필요
-
-        System.out.println("===========================================");
-        System.out.println("아이에게 용돈지급 완료");
-        System.out.println(newChild.getBalance());
-        System.out.println("===========================================");
-        return ResponseEntity.status(HttpStatus.OK).body("용돈 정상 지급");
-
-
     }
+
+        @Transactional  // 용돈 수동 이체 로직
+        public ResponseEntity<String> allowanceTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
+            // 어떤 부모가 어떤 자식에게 얼마를 보내는 지만 알면 된다.
+            int immediateAllowance = requestDto.getAllowanceAmount();
+
+            Parents parent = parentRepository.findById(requestDto.getParentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));
+            Child child = childRepository.findById(requestDto.getChildId())
+                    .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
+
+            if (parent.getBalance() >= immediateAllowance) {
+                child.addMoney(immediateAllowance);
+                return ResponseEntity.ok("일반 용돈 지급 완료");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("계좌 잔액이 부족합니다.");
+            }
+
+        }
 }

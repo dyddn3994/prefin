@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "children")
 public class Child {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String userId;
@@ -36,7 +36,7 @@ public class Child {
 
     private int savingAmount;
 
-    private int loanAccount;
+    private int loanAmount;
 
     private int balance;
 
@@ -90,6 +90,18 @@ public class Child {
 
     public void addMoney(int money) {
         this.balance += money;
+    }
+
+    public void addLoan(int money) {
+        this.loanAmount += money;
+    }
+
+    public void resetLoan() {
+        this.loanAmount = 0;
+    }
+
+    public void subtractLoan(int money) {
+        this.loanAmount -= money;
     }
 
 }
