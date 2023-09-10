@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -37,6 +39,9 @@ public class Parents {
     private BigDecimal savingRate;
 
     private int balance;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Child> child = new ArrayList<>();
 
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;

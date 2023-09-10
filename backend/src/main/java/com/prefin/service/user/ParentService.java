@@ -1,6 +1,8 @@
 package com.prefin.service.user;
 
+import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
+import com.prefin.dto.user.ChildDto;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -100,5 +105,17 @@ public class ParentService {
         parentRepository.save(parent);
 
         return "set Token: " + fcmToken;
+    }
+
+    public List<ChildDto> myChildren(Long id) {
+        Parents parent = parentRepository.findById(id).orElse(null);
+        if (parent == null) {
+            throw new NoSuchElementException("Parent Not Fount");
+        }
+
+        return parent.getChild().stream()
+                .map(ChildDto::fromEntity)
+                .collect(Collectors.toList());
+
     }
 }

@@ -128,4 +128,18 @@ public class AllowanceService {
             }
 
         }
+
+    public ResponseEntity<Integer> parentBalance(Long parentId) {
+        Parents parent = parentRepository.findById(parentId)
+                .orElseThrow(() -> new IllegalArgumentException("Parent Not Found"));
+
+        return ResponseEntity.ok(parent.getBalance());
+    }
+
+    public ResponseEntity<Integer> childBalance(Long childId) {
+        Child child = childRepository.findById(childId)
+                .orElseThrow(() -> new IllegalArgumentException("Parent Not Found"));
+
+        return ResponseEntity.ok(child.getBalance());
+    }
 }

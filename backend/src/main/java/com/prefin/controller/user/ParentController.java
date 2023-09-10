@@ -1,10 +1,14 @@
 package com.prefin.controller.user;
 
+import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
+import com.prefin.dto.user.ChildDto;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,5 +54,9 @@ public class ParentController {
         return parentService.setToken(id, parentDto.getFcmToken());
     }
 
+    @GetMapping("/parent/{id}/getChildren")
+    public List<ChildDto> myChildren(@PathVariable Long id) {
+        return parentService.myChildren(id);
+    }
 
 }
