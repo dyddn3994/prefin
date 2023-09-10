@@ -1,9 +1,9 @@
 package com.prefin.model.api
 
 import com.prefin.model.dto.Quest
-import com.prefin.model.dto.QuestRegisterRequest
 import com.prefin.model.dto.QuestCreateRequest
 import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestRegisterRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -21,7 +21,7 @@ interface QuestApi {
 
     // 생성된 퀘스트 조회
     @GET("quest/{id}")
-    suspend fun parentQuestList(
+    suspend fun parentQuestItemList(
         @Path("id") id: Long,
     ): List<Quest>
 
