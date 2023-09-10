@@ -1,10 +1,12 @@
 package com.prefin.ui.accountConnecting
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentAccountInputChildBinding
@@ -23,7 +25,7 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private  var countDownTimer: CountDownTimer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,6 +37,66 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+    fun init() {
+        binding.apply {
+
+            fragmentAccountInputChildCheckButton.setOnClickListener {
+                if (fragmentAccountInputChildEditText.text.isNullOrEmpty()) {
+                    // fcm 전송 && 타이머 설정
+                    fragmentAccountInputChildTimerLayout.visibility = View.VISIBLE
+                    startTimer()
+                }
+
+            }
+            fragmentAccountInputChildSettingButton.setOnClickListener {
+                if(fragmentAccountInputChildCheckEditText.text.isNullOrEmpty() ){
+                    Toast.makeText(requireContext(), "인증 번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+
+                }
+                else if(fragmentAccountInputChildTimerTextView.text == "00:00"){
+                    Toast.makeText(requireContext(), "인증 시간을 초과하였습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    // 맞는지 확인하기 -> 맞다면 다음 화면
+                    // 틀리면 dialog
+
+                }
+            }
+        }
+    }
+
+    private fun startTimer() {
+        countDownTimer?.cancel()
+
+        countDownTimer = object : CountDownTimer(180000, 1000) { // 3분을 밀리초로 표현
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / 60000
+                val seconds = (millisUntilFinished % 60000) / 1000
+                binding.fragmentAccountInputChildTimerTextView.text = String.format("%02d:%02d", minutes, seconds)
+            }
+
+            override fun onFinish() {
+                binding.fragmentAccountInputChildTimerTextView.text = "00:00"
+            }
+        }
+        countDownTimer?.start()
+    }
+
+    private fun stopTimer() {
+        countDownTimer?.cancel()
+        binding.fragmentAccountInputChildTimerTextView.text = "3:00"
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopTimer()
+    }
+
 
     companion object {
         /**

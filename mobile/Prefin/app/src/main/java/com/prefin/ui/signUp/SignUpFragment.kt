@@ -47,7 +47,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
             // 회원가입 버튼 클릭
             fragmentSignUpRegisterButton.setOnClickListener {
-                if(fragmentSignUpEmailEditText.text.isNullOrEmpty()
+                if(fragmentSignUpIdEditText.text.isNullOrEmpty()
                     || fragmentSignUpPasswordEditText.text.isNullOrEmpty()
                     || fragmentSignUpPasswordCheckEditText.text.isNullOrEmpty()
                     || fragmentSignUpNameEditText.text.isNullOrEmpty()){
@@ -55,21 +55,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    if(android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()
-                        && fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
+                    if(fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
                         // 회원가입 구현
                         fragmentSignUpEmailCheckTextView.visibility = View.GONE
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
                         fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
                     }
 
-
-                    if(!android.util.Patterns.EMAIL_ADDRESS.matcher(fragmentSignUpEmailEditText.text.toString()).matches()){
-                        fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE
-                    }
-                    else{
-                        fragmentSignUpEmailCheckTextView.visibility = View.GONE
-                    }
 
 
                     if(fragmentSignUpPasswordEditText.text.toString() != fragmentSignUpPasswordCheckEditText.text.toString()){

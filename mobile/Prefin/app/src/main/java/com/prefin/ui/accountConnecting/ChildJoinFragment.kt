@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildJoinBinding
@@ -34,6 +35,22 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun init() {
+        binding.apply {
+            fragmentChildJoinJoinButton.setOnClickListener {
+                if(fragmentChildJoinIdEditText.text.isNullOrEmpty() || fragmentChildJoinPasswordEditText.text.isNullOrEmpty()){
+                    Toast.makeText(requireContext(), "아이디 및 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+                }
+                else if(fragmentChildJoinNameEditText.text.isNullOrEmpty()){
+                    Toast.makeText(requireContext(), "자녀 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    // 등록 후 화면 이동
+                }
+            }
+        }
     }
 
     companion object {

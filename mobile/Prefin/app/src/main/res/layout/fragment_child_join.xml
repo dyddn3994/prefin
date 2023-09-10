@@ -118,7 +118,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_account_input_child_setting_button"
+        android:id="@+id/fragment_child_join_join_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rectangle_81"
