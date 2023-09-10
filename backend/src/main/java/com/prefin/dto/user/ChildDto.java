@@ -1,5 +1,6 @@
 package com.prefin.dto.user;
 
+import com.prefin.domain.user.Child;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,4 +39,22 @@ public class ChildDto {
     private long parentId;
 
     private long mascotId;
+
+    public static ChildDto fromEntity(Child child) {
+        return ChildDto.builder()
+                .id(child.getId())
+                .userId(child.getUserId())
+                .password(child.getPassword())
+                .name(child.getName())
+                .account(child.getAccount())
+                .simplePass(child.getSimplePass())
+                .isQuizSolved(child.getIsQuizSolved())
+                .quizId(child.getQuizId())
+                .trustScore(child.getTrustScore())
+                .savingAmount(child.getSavingAmount())
+                .balance(child.getBalance())
+                .parentId(child.getParent().getId())
+                .mascotId(child.getMascot().getId())
+                .build();
+    }
 }

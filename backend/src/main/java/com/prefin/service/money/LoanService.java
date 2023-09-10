@@ -50,7 +50,7 @@ public class LoanService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("부모 계좌의 잔액이 부족합니다.");
         }
 
-//        parent.transfer(loanMoney);  // 부모 계좌에서는 빌린 만큼 돈이 빠지고
+        parent.transfer(loanMoney);  // 부모 계좌에서는 빌린 만큼 돈이 빠지고
         child.addMoney(loanMoney);  // 자식 계좌에서는 빌린 만큼 돈이 늘어난다.
         child.addLoan(loanMoney); // 빌린 금액만큼 자식에게서 loanAmount를 늘린다
 
