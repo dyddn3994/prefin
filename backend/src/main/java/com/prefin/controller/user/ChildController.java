@@ -4,6 +4,7 @@ import com.prefin.domain.user.Child;
 import com.prefin.dto.user.ChildDto;
 import com.prefin.service.user.ChildService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,22 +27,22 @@ public class ChildController {
     }
 
     @PutMapping("/child/{id}/account")
-    public String setAccount(@PathVariable long id, @RequestBody ChildDto childDto) {
+    public ResponseEntity<Boolean> setAccount(@PathVariable long id, @RequestBody ChildDto childDto) {
         return childService.setAccount(id, childDto.getAccount());
     }
 
     @PutMapping("/child/{id}/simplepass")
-    public String setSimplePass(@PathVariable long id, @RequestBody ChildDto childDto) {
+    public ResponseEntity<Boolean> setSimplePass(@PathVariable long id, @RequestBody ChildDto childDto) {
         return childService.setSimplePassword(id, childDto.getSimplePass());
     }
 
     @PutMapping("/child/{id}/trustscore")
-    public String changeTrustScore(@PathVariable long id, @RequestBody ChildDto childDto) {
+    public ResponseEntity<Boolean> changeTrustScore(@PathVariable long id, @RequestBody ChildDto childDto) {
         return childService.changeTrustScore(id, childDto.getTrustScore());
     }
 
     @PutMapping("/child/{id}/token")
-    public String setToken(@PathVariable long id, @RequestBody ChildDto childDto) {
+    public ResponseEntity<Boolean> setToken(@PathVariable long id, @RequestBody ChildDto childDto) {
         return childService.setToken(id, childDto.getFcmToken());
     }
 

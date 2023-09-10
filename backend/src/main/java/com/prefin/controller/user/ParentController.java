@@ -4,6 +4,7 @@ import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ParentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,27 +27,27 @@ public class ParentController {
     }
 
     @PutMapping("/parent/{id}/account")
-    public String setAccount(@PathVariable long id, @RequestBody ParentDto parentDto) {
+    public ResponseEntity<Boolean> setAccount(@PathVariable long id, @RequestBody ParentDto parentDto) {
         return parentService.setAccount(id, parentDto.getAccount());
     }
 
     @PutMapping("/parent/{id}/simplepass")
-    public String setSimplePass(@PathVariable long id, @RequestBody ParentDto parentDto) {
+    public ResponseEntity<Boolean> setSimplePass(@PathVariable long id, @RequestBody ParentDto parentDto) {
         return parentService.setSimplePassword(id, parentDto.getSimplePass());
     }
 
     @PutMapping("/parent/{id}/loan")
-    public String setLoanRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
+    public ResponseEntity<Boolean> setLoanRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
         return  parentService.setLoanRate(id, parentDto.getLoanRate());
     }
 
     @PutMapping("/parent/{id}/saving")
-    public String setSavingRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
+    public ResponseEntity<Boolean> setSavingRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
         return parentService.setSavingRate(id, parentDto.getSavingRate());
     }
 
     @PutMapping("/parent/{id}/token")
-    public String setToken(@PathVariable long id, @RequestBody ParentDto parentDto) {
+    public ResponseEntity<Boolean> setToken(@PathVariable long id, @RequestBody ParentDto parentDto) {
         return parentService.setToken(id, parentDto.getFcmToken());
     }
 
