@@ -34,7 +34,7 @@ public class ChildService {
                 name(child.getName()).
                 parent(parentRepository.findById(child.getParentId()).orElse(null)).
                 isQuizSolved(false).
-                quizId(0L).
+                quizId(1L).
                 build();
 
         return childRepository.save(newChild).getId();
