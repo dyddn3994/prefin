@@ -2,6 +2,7 @@ package com.prefin.ui.quest
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -21,6 +22,10 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
         fragmentQuestParentHomeQuestListRecyclerView.apply {
             adapter = questParentAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+        
+        fragmentQuestParentHomeQuestItemListImageView.setOnClickListener {
+            findNavController().navigate(R.id.action_QuestParentHomeFragment_to_QuestParentItemFragment)
         }
     }
 }

@@ -62,21 +62,7 @@
         android:layout_marginHorizontal="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_quest_regist_cancel_button"
-        />
-
-    <android.widget.Button
-        android:id="@+id/fragment_quest_regist_cancel_button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="취소"
-        style="@style/Text.regular.Size20"
-        android:background="@drawable/button_rectangle_81_color_reversed"
-        android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 

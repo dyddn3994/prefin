@@ -28,11 +28,6 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
 //            questRegistViewModel.registerQuest()
         }
 
-        // 취소하기 버튼 클릭
-        fragmentQuestRegistCancelButton.setOnClickListener {
-            // TODO: 취소 api 없음
-        }
-
         // 퀘스트 등록 observe
         questRegistViewModel.isQuestRegistSuccess.observe(viewLifecycleOwner) {
             if (!it) {
