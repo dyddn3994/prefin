@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentLoginBinding
 
@@ -16,17 +17,47 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(ApplicationClass.sharedPreferences.getString("type") == "parent"){
+            findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
+        }
+        else if(ApplicationClass.sharedPreferences.getString("type") == "child"){
+            findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+        }
+        else{
+
+        }
+
+        loginViewModel.loginSuccess.observe(viewLifecycleOwner){
+            if(loginViewModel.loginSuccess.value == true){
+                if(binding.fragmentLoginParentRadioButton.isChecked){
+                    findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
+                }
+                if(binding.fragmentLoginChildRadioButton.isChecked){
+                    findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+                }
+            }
+        }
         binding.apply {
             // 로그인 버튼 클릭 시
+
+
             fragmentLoginLoginButton.setOnClickListener {
                 if (fragmentLoginIdEditText.text.isNullOrEmpty() || fragmentLoginPasswordEditText.text.isNullOrEmpty()) {
                     Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
                 } else {
                     // 로그인 절차 진행
-                    loginViewModel.login(
-                        fragmentLoginIdEditText.text.toString(),
-                        fragmentLoginPasswordEditText.text.toString(),
-                    )
+                    if(fragmentLoginChildRadioButton.isChecked){
+                        loginViewModel.childLogin(
+                            fragmentLoginIdEditText.text.toString(),
+                            fragmentLoginPasswordEditText.text.toString(),
+                        )
+
+
+                    }
+                    if(fragmentLoginParentRadioButton.isChecked){
+                        loginViewModel.parentLogin(fragmentLoginIdEditText.text.toString(),
+                            fragmentLoginPasswordEditText.text.toString())
+                    }
                 }
             }
 

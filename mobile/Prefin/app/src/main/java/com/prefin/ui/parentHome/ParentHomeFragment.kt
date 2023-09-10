@@ -1,12 +1,16 @@
 package com.prefin.ui.parentHome
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentParentHomeBinding
 
@@ -14,7 +18,7 @@ import com.prefin.databinding.FragmentParentHomeBinding
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+private const val TAG = "ParentHomeFragment prefin"
 /**
  * A simple [Fragment] subclass.
  * Use the [ParentHomeFragment.newInstance] factory method to
@@ -25,6 +29,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var adpater : ChildAccountAdapter
+    private val parentHomeViewModel : ParentHomeFragmentViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,6 +45,19 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     }
 
     fun init(){
+        Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
+//        parentHomeViewModel.getParentData()
+//        parentHomeViewModel.getChildData()
+
+        parentHomeViewModel.parent.observe(viewLifecycleOwner){
+            binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
+            binding.fragmentParentHomeMyAccountMoneyTextView.text = "${it.balance} 원"
+        }
+
+        parentHomeViewModel.childs.observe(viewLifecycleOwner){
+            adpater.submitList(it)
+        }
+
 
         binding.apply {
 
@@ -53,6 +71,26 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
             fragmentParentHomeChildAccountRecyclerView.adapter = adpater
             val layoutManager = LinearLayoutManager(requireContext())
             fragmentParentHomeChildAccountRecyclerView.layoutManager = layoutManager
+
+            // 퀘스트 화면 이동
+            fragmentParentHomeQuestTextView.setOnClickListener {
+
+            }
+
+            // 자녀 저축 내역 보기
+            fragmentParentHomeSavingTextView.setOnClickListener {
+
+            }
+
+            // 자녀 대출 내역 및 승인
+            fragmentParentHomeLoanTextView.setOnClickListener {
+
+            }
+
+            // 설정 화면
+            fragmentParentHomeSettingTextView.setOnClickListener {
+
+            }
         }
     }
 

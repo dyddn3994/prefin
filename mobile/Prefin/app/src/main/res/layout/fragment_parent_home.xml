@@ -127,18 +127,16 @@
 
     <TextView
 
-        android:layout_marginStart="16dp"
         android:id="@+id/fragment_parent_home_saving_text_view"
+        style="@style/Text.regular.Size20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:background="@drawable/color_block_purple"
-        android:text="자녀 저축"
         android:gravity="center"
-        style="@style/Text.regular.Size20"
-        app:layout_constraintTop_toTopOf="@+id/fragment_parent_home_quest_text_view"
+        android:text="자녀 저축"
         app:layout_constraintStart_toEndOf="@+id/fragment_parent_home_quest_text_view"
-        >
-    </TextView>
+        app:layout_constraintTop_toTopOf="@+id/fragment_parent_home_quest_text_view"></TextView>
 
     <TextView
         android:layout_marginTop="16dp"

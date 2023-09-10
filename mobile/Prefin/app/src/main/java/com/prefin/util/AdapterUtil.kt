@@ -1,6 +1,7 @@
 package com.prefin.util
 
 import androidx.recyclerview.widget.DiffUtil
+import com.prefin.model.dto.Child
 import com.prefin.model.dto.ChildAccount
 import com.prefin.model.dto.Quest
 import com.prefin.model.dto.SavingHistory
@@ -24,12 +25,12 @@ class AdapterUtil {
 
     companion object {
 
-        val diffUtilChildAccount = object : DiffUtil.ItemCallback<ChildAccount>() {
-            override fun areItemsTheSame(oldItem: ChildAccount, newItem: ChildAccount): Boolean {
+        val diffUtilChildAccount = object : DiffUtil.ItemCallback<Child>() {
+            override fun areItemsTheSame(oldItem: Child, newItem: Child): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: ChildAccount, newItem: ChildAccount): Boolean {
+            override fun areContentsTheSame(oldItem: Child, newItem: Child): Boolean {
                 return oldItem == newItem
             }
         }
