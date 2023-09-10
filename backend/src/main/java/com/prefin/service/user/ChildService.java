@@ -10,6 +10,8 @@ import com.prefin.repository.money.SavingRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,7 @@ public class ChildService {
                 name(child.getName()).
                 parent(parentRepository.findById(child.getParentId()).orElse(null)).
                 isQuizSolved(false).
-                quizId(0L).
+                quizId(1L).
                 build();
 
         return childRepository.save(newChild).getId();
@@ -56,114 +58,113 @@ public class ChildService {
     }
 
     // 계좌 등록
-    public String setAccount(long id, String account) {
+    public ResponseEntity<Boolean> setAccount(long id, String account) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateAccount(account);
         childRepository.save(child);
 
-        return "set Account: " + account;
+        return ResponseEntity.ok().body(true);
     }
 
     // 간편 비밀번호 등록
-    public String setSimplePassword(long id, String simplePassword) {
+    public ResponseEntity<Boolean> setSimplePassword(long id, String simplePassword) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateSimplePass(simplePassword);
         childRepository.save(child);
 
-        return "set SimplePassword: " + simplePassword;
+        return ResponseEntity.ok().body(true);
     }
 
     // 저축 금액 변경
-    public String changeSavingAmount(long id, int savingAmount) {
+    public ResponseEntity<Boolean> changeSavingAmount(long id, int savingAmount) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateSavingAmount(savingAmount);
         childRepository.save(child);
 
-        return "change SavingAmount: " + savingAmount;
+        return ResponseEntity.ok().body(true);
     }
 
     // 신뢰 점수 변경
-    public String changeTrustScore(long id, int score) {
+    public ResponseEntity<Boolean> changeTrustScore(long id, int score) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateTrustScore(score);
         childRepository.save(child);
 
-        return "change TrustScore: " + score;
+        return ResponseEntity.ok().body(true);
     }
 
     // 부모 설정
-    public String setParent(long childId, long parentId) {
+    public ResponseEntity<Boolean> setParent(long childId, long parentId) {
         Child child = childRepository.findById(childId).orElse(null);
         Parents parent = parentRepository.findById(parentId).orElse(null);
 
-        if (child == null) return "child not exist";
-        if (parent == null) return "parent not exist";
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        if (parent == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateParent(parent);
         childRepository.save(child);
 
-        return "set Parent: " + parent.getName();
+        return ResponseEntity.ok().body(true);
     }
 
     // 마스코트 설정
-    public String updateMascot(long childId, long mascotId) {
+    public ResponseEntity<Boolean> updateMascot(long childId, long mascotId) {
         Child child = childRepository.findById(childId).orElse(null);
         Mascot mascot = mascotRepository.findById(mascotId).orElse(null);
 
-        if (child == null) return "child not exist";
-        if (mascot == null) return "mascot not exist";
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        if (mascot == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateMascot(mascot);
         childRepository.save(child);
 
-        return "change Mascot: " + mascot.getName();
+        return ResponseEntity.ok().body(true);
     }
 
     // 퀴즈풀이를 true로 변경
-    public String solveQuiz(long id) {
+    public ResponseEntity<Boolean> solveQuiz(long id) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
-
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         child.quizSolved();
         childRepository.save(child);
 
-        return "Today Quiz Solved";
+        return ResponseEntity.ok().body(true);
     }
 
     // 다음날이 지나면 퀴즈 번호를 증가시키고 퀴즈 풀이를 false로 변경
-    public String increaseQuizId(long id) {
+    public ResponseEntity<Boolean> increaseQuizId(long id) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.increaseQuizId();
         childRepository.save(child);
 
-        return "Quiz Updated";
+        return ResponseEntity.ok().body(true);
     }
 
     // FCM Token 등록
-    public String setToken(long id, String fcmToken) {
+    public ResponseEntity<Boolean> setToken(long id, String fcmToken) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateToken(fcmToken);
         childRepository.save(child);
-        return "set Token: " + fcmToken;
+        return ResponseEntity.ok().body(true);
     }
 
     // 저축하거나 출금할 때 가능여부를 체크하는 로직이 필요함.
