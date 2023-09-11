@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoanController {
     private final LoanService loanService;
 
-    @PostMapping("/borrow")
-    public ResponseEntity<String> borrowMoney(@RequestBody LoanDto requsetDto) {
-        return loanService.borrowMoney(requsetDto);
+    @PostMapping("/loan/askForMoney")
+    public ResponseEntity<String> askForMoney(@RequestBody LoanDto requsetDto) {
+        return loanService.askForMoney(requsetDto);
+    }
+
+    @PostMapping("/loan/giveMoney")
+    public ResponseEntity<String> giveMoney(@RequestBody LoanDto requestDto) {
+        return loanService.giveMoney(requestDto);
     }
 }
