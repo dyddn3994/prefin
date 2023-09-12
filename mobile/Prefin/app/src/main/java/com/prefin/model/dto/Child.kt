@@ -4,7 +4,7 @@ data class Child(
     val account: String = "",
     val balance: Int = 0,
     val fcmToken: String? = null,
-    val id: Long = 0,
+    var id: Long = 0,
     val isQuizSolved: Boolean? = false,
     val loanAccount: Int = 0,
     val mascotId: Long? = null,

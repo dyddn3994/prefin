@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -28,7 +30,9 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
     private var param1: String? = null
     private var param2: String? = null
     private  var countDownTimer: CountDownTimer? = null
+    private val accountInputChildFragmentViewModel : AccountInputChildFragmentViewModel by viewModels()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+    private val checkText = "신한브로"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,8 +43,16 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
     }
     fun init() {
+
+        accountInputChildFragmentViewModel.accountChildSuccess.observe(viewLifecycleOwner){
+            if(it){
+                findNavController().navigate(R.id.action_AccountInputChildFragment_to_ChildAddFragment)
+            }
+        }
+
         binding.apply {
 
             fragmentAccountInputChildCheckButton.setOnClickListener {
@@ -62,7 +74,9 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
                 else {
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog
-
+                    if(fragmentAccountInputChildCheckEditText.text.toString() == checkText){
+                        accountInputChildFragmentViewModel.childAccountRegister(mainActivityViewModel.childUser!!.id, mainActivityViewModel.childUser!!)
+                    }
                 }
             }
         }

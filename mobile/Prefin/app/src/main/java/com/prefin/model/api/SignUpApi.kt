@@ -20,4 +20,7 @@ interface SignUpApi {
 
     @PUT("parent/{id}/account")
     suspend fun accountRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
+
+    @PUT("child/{id}/account")
+    suspend fun childAccountRegister(@Path("id") id : Long, @Body parent : Child) : Response<Boolean>
 }
