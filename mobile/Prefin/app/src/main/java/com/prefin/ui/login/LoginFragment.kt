@@ -14,6 +14,7 @@ import com.prefin.databinding.FragmentLoginBinding
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
     private val loginViewModel: LoginViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -30,6 +31,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
         loginViewModel.loginSuccess.observe(viewLifecycleOwner){
             if(loginViewModel.loginSuccess.value == true){
                 if(binding.fragmentLoginParentRadioButton.isChecked){
+
                     findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
                 }
                 if(binding.fragmentLoginChildRadioButton.isChecked){
@@ -50,13 +52,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                         loginViewModel.childLogin(
                             fragmentLoginIdEditText.text.toString(),
                             fragmentLoginPasswordEditText.text.toString(),
+                            mainActivityViewModel.fcmToken!!
                         )
 
 
                     }
                     if(fragmentLoginParentRadioButton.isChecked){
                         loginViewModel.parentLogin(fragmentLoginIdEditText.text.toString(),
-                            fragmentLoginPasswordEditText.text.toString())
+                            fragmentLoginPasswordEditText.text.toString(), mainActivityViewModel.fcmToken!!)
                     }
                 }
             }

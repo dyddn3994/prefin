@@ -11,4 +11,6 @@ class MainActivityViewModel : ViewModel() {
      var parentUser : Parent? = null
 
      var childUser : Child? = null
+
+     var fcmToken : String? = null
 }

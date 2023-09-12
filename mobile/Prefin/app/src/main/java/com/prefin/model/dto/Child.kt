@@ -3,7 +3,7 @@ package com.prefin.model.dto
 data class Child(
     val account: String = "",
     val balance: Int = 0,
-    val fcmToken: String? = null,
+    var fcmToken: String? = null,
     var id: Long = 0,
     val isQuizSolved: Boolean? = false,
     val loanAccount: Int = 0,

@@ -37,7 +37,7 @@ class SimplePassFragment : BaseFragment<FragmentSimplePassBinding>(FragmentSimpl
         init()
     }
     fun init() {
-
+        
     }
 
     companion object {

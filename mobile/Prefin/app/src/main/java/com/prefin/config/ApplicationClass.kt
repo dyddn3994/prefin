@@ -1,6 +1,7 @@
 package com.prefin.config
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.prefin.util.SharedPreferencesUtil
@@ -43,6 +44,9 @@ class ApplicationClass : Application() {
 
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
+
+        FirebaseApp.initializeApp(this)
+
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.

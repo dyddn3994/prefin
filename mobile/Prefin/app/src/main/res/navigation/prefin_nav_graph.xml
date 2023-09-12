@@ -110,6 +110,12 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/SimplePassFragment"
+        android:name="com.prefin.ui.accountConnecting.SimplePassFragment"
+        android:label="simplePass"
+        tools:layout="@layout/fragment_simple_pass"/>
+
 
 
 </navigation>
