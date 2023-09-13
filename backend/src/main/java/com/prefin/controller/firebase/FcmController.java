@@ -14,13 +14,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class FcmController {
-    private FirebaseCloudMessageService firebaseCloudMessageService;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @PostMapping("/fcm")
     public void sendFcm(@RequestBody FcmDto fcmDto) throws IOException {
         String token = fcmDto.getMessage().getToken();
-        String title = fcmDto.getMessage().getNotification().getTitle();
-        String body = fcmDto.getMessage().getNotification().getBody();
+        String title = fcmDto.getMessage().getData().getTitle();
+        String body = fcmDto.getMessage().getData().getBody();
 
         firebaseCloudMessageService.sendMessageTo(token, title, body);
     }
