@@ -19,11 +19,6 @@ public class AllowanceController {
         return allowanceService.allowanceSetting(requestDto);
     }
 
-    @PostMapping("/allowance/auto")  // 용돈 자동 이체
-    public ResponseEntity<String> autoAllowance(@RequestBody AllowanceDto requestDto) {
-        return allowanceService.autoTransfer(requestDto);
-    }
-
 
     @PostMapping("/allowance/transfer")  // 용돈 수동 이체
     public ResponseEntity<String> transferAllowance(@RequestBody AllowanceDto requestDto) {
