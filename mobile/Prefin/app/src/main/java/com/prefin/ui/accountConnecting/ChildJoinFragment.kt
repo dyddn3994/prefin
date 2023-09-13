@@ -50,6 +50,7 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
 
         childJoinFragmentViewModel.childJoinSuccess.observe(viewLifecycleOwner){
             if(it){
+                mainActivityViewModel.childUser = childJoinFragmentViewModel.childUser
                 findNavController().navigate(R.id.action_ChildJoinFragment_to_AccountInputChildFragment)
             }
         }

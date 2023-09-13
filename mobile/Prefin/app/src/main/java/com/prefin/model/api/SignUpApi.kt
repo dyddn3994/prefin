@@ -20,4 +20,11 @@ interface SignUpApi {
 
     @PUT("parent/{id}/account")
     suspend fun accountRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
+
+    @PUT("child/{id}/account")
+    suspend fun childAccountRegister(@Path("id") id : Long, @Body child : Child) : Response<Boolean>
+
+    //간편 비밀번호 등록
+    @PUT("parent/{id}/simplepass")
+    suspend fun parentSimplePassRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
 }

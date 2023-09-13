@@ -46,6 +46,12 @@
         <action
             android:id="@+id/action_ParentHomeFragment_to_ChildAccountChooseFragment"
             app:destination="@id/ChildAccountChooseFragment" />
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_QuestParentHomeFragment"
+            app:destination="@id/QuestParentHomeFragment" />
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_SettingFragment"
+            app:destination="@id/SettingFragment" />
     </fragment>
 
     <fragment android:id="@+id/ChildHomeFragment"
@@ -53,6 +59,9 @@
         android:label="childtHome"
         tools:layout="@layout/fragment_child_home">
 
+        <action
+            android:id="@+id/action_ChildHomeFragment_to_SettingFragment"
+            app:destination="@id/SettingFragment" />
     </fragment>
 
     <fragment android:id="@+id/AccountInputFragment"
@@ -211,4 +220,26 @@
         tools:layout="@layout/fragment_child_account_choose"
         >
     </fragment>
+
+    <fragment
+        android:id="@+id/SimplePassFragment"
+        android:name="com.prefin.ui.accountConnecting.SimplePassFragment"
+        android:label="simplePass"
+        tools:layout="@layout/fragment_simple_pass"/>
+
+
+
+    <fragment android:id="@+id/SettingFragment"
+        android:name="com.prefin.ui.setting.SettingFragment"
+        android:label="setting"
+        tools:layout="@layout/fragment_setting">
+
+
+        <action
+            android:id="@+id/action_SettingFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+    </fragment>
+
+
+
 </navigation>

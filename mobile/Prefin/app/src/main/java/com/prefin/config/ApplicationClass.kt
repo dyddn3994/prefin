@@ -1,6 +1,7 @@
 package com.prefin.config
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.prefin.util.SharedPreferencesUtil
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 // 앱이 실행될때 1번만 실행이 됩니다.
 class ApplicationClass : Application() {
-    val API_URL = "http://172.30.1.72:8080/api/v1/"
+    val API_URL = "http://172.30.1.25:8080/api/v1/"
 
     // 코틀린의 전역변수
     companion object {
@@ -34,6 +35,9 @@ class ApplicationClass : Application() {
 
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
+
+        FirebaseApp.initializeApp(this)
+
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.

@@ -13,41 +13,39 @@
         tools:context=".ui.childHome.ChildHomeFragment">
 
         <ImageView
-            android:layout_marginStart="16dp"
             android:id="@+id/fragment_child_home_logo_text_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:src="@drawable/prefin_text"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="4dp"
             android:id="@+id/fragment_child_home_quiz_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/ic_quiz"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/fragment_child_home_noti_image_view"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_marginEnd="16dp"
             android:id="@+id/fragment_child_home_noti_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/ic_noti"
-            app:layout_constraintTop_toTopOf="@+id/fragment_child_home_setting_image_view"
             app:layout_constraintEnd_toStartOf="@+id/fragment_child_home_setting_image_view"
-            />
+            app:layout_constraintTop_toTopOf="@+id/fragment_child_home_setting_image_view" />
 
         <ImageView
-            android:layout_marginTop="8dp"
             android:id="@+id/fragment_child_home_setting_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:src="@drawable/ic_setting"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,36 +54,34 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/fragment_child_home_card_view"
-            android:layout_marginTop="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:backgroundTint="@color/colorblueBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_logo_text_image_view">
 
             <ImageView
-                android:padding="12dp"
                 android:id="@+id/fragment_child_home_character_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/character"
-                />
+                android:padding="12dp"
+                android:src="@drawable/character" />
 
 
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:id="@+id/fragment_child_home_pocketmoney_title_text_view"
+            style="@style/Title.Bold.Size32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="용돈"
-            style="@style/Title.Bold.Size32"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_card_view"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_card_view" />
 
         <LinearLayout
             android:id="@+id/fragment_child_home_my_account_linearLayout"
@@ -128,16 +124,15 @@
         </LinearLayout>
 
         <TextView
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:id="@+id/fragment_child_home_saving_title_text_view"
+            style="@style/Title.Bold.Size32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="저축"
-            style="@style/Title.Bold.Size32"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_my_account_linearLayout"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_my_account_linearLayout" />
 
         <LinearLayout
             android:id="@+id/fragment_child_home_saving_account_linearLayout"
@@ -180,31 +175,34 @@
         </LinearLayout>
 
         <TextView
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:id="@+id/fragment_child_home_quest_title_text_view"
+            android:id="@+id/fragment_child_home_quest_text_view"
+            style="@style/Text.regular.Size20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="퀘스트 목록"
-            style="@style/Title.Bold.Size32"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_account_linearLayout"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:padding="16dp"
-            android:id="@+id/fragment_child_home_quest_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:background="@drawable/color_block_red"
+            android:gravity="center"
+            android:text="퀘스트"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_child_home_loan_text_view"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_quest_title_text_view"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_quest"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_account_linearLayout" />
 
+        <TextView
+            android:layout_marginTop="16dp"
+            android:id="@+id/fragment_child_home_loan_text_view"
+            style="@style/Text.regular.Size20"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/color_block_blue"
+            android:gravity="center"
+            android:text="용돈 빌리기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fragment_child_home_quest_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_account_linearLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
