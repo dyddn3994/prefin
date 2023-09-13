@@ -21,6 +21,8 @@ public class LoanHistory {
 
     private Long loanDate;
 
+    private Boolean isAccepted;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Parents parent;
@@ -28,4 +30,9 @@ public class LoanHistory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
     private Child child;
+
+    public void lendMoney(Long loanDate) {
+        this.loanDate = loanDate;
+        this.isAccepted = true;
+    }
 }
