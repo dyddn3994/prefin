@@ -1,6 +1,5 @@
 package com.prefin.domain.user;
 
-import com.prefin.domain.entertainment.Mascot;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +19,7 @@ public class Child {
 
     private String password;
 
+    @Column(columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
 
     private String fcmToken;
@@ -44,11 +44,6 @@ public class Child {
     @JoinColumn(name = "PARENT_ID")
     private Parents parent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MASCOT_ID")
-    private Mascot mascot;
-
-
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }
@@ -71,10 +66,6 @@ public class Child {
 
     public void updateParent(Parents parent) {
         this.parent = parent;
-    }
-
-    public void updateMascot(Mascot mascot) {
-        this.mascot = mascot;
     }
 
     public void quizSolved() {
