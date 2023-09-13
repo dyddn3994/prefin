@@ -35,7 +35,7 @@ class LoginViewModel : ViewModel() {
 
                     Log.d(TAG, "유저 정보: $response")
                     // 로그아웃 구현하면 다시 주석 풀기
-//                    ApplicationClass.sharedPreferences.addChildUser(response)
+                    ApplicationClass.sharedPreferences.addChildUser(response)
                     _loginSuccess.value = true
 
                 }
@@ -55,20 +55,21 @@ class LoginViewModel : ViewModel() {
                 val response = RetrofitUtil.loginApi.parentLogin(parentUser)
                 if(response != null){
                     id = response.id
-                    if(!token.isNullOrEmpty()){
-                        response.fcmToken = token
-                        val fcmResponse = RetrofitUtil.loginApi.parentFcmTokenRegister(id, response)
-                        if(fcmResponse.isSuccessful){
-                            if (fcmResponse.body()!!){
-                                _loginSuccess.value = true
-                            }
-                        }
-                    }
+                    _loginSuccess.value = true
+//                    if(!token.isNullOrEmpty()){
+//                        response.fcmToken = token
+//                        val fcmResponse = RetrofitUtil.loginApi.parentFcmTokenRegister(id, response)
+//                        if(fcmResponse.isSuccessful){
+//                            if (fcmResponse.body()!!){
+//                                _loginSuccess.value = true
+//                            }
+//                        }
+//                    }
 
 
                     Log.d(TAG, "유저 정보: $response")
                     //로그아웃 구현하면 다시 주석 풀어야함
-//                    ApplicationClass.sharedPreferences.addParentUser(response)
+                    ApplicationClass.sharedPreferences.addParentUser(response)
 
 
                 }

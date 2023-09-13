@@ -1,7 +1,7 @@
 package com.prefin.model.dto
 
 data class Child(
-    val account: String = "",
+    var account: String = "",
     val balance: Int = 0,
     var fcmToken: String? = null,
     var id: Long = 0,

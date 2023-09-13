@@ -1,4 +1,4 @@
-package com.prefin.ui.childHome
+package com.prefin.ui.quiz
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.prefin.R
 import com.prefin.config.BaseFragment
-import com.prefin.databinding.FragmentChildHomeBinding
+import com.prefin.databinding.FragmentQuizBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +16,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ChildHomeFragment.newInstance] factory method to
+ * Use the [QuizFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHomeBinding::bind, R.layout.fragment_child_home) {
+class QuizFragment : BaseFragment<FragmentQuizBinding>(FragmentQuizBinding::bind, R.layout.fragment_quiz) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,24 +34,6 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
-    }
-
-    fun init() {
-        with(binding) {
-
-            //계좌 내역 조회
-            fragmentChildHomeMyAccountLinearLayout.setOnClickListener {
-
-            }
-
-            //저축 내역 조회
-            fragmentChildHomeSavingAccountLinearLayout.setOnClickListener {
-
-            }
-
-        }
-
     }
 
     companion object {
@@ -61,12 +43,12 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ChildHomeFragment.
+         * @return A new instance of fragment QuizFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ChildHomeFragment().apply {
+            QuizFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

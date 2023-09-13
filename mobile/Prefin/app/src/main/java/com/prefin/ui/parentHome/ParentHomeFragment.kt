@@ -13,6 +13,7 @@ import com.prefin.R
 import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentParentHomeBinding
+import com.prefin.model.dto.Child
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +31,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     private var param2: String? = null
     private lateinit var adpater : ChildAccountAdapter
     private val parentHomeViewModel : ParentHomeFragmentViewModel by viewModels()
+    private val childList = mutableListOf<Child>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,14 +42,18 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        test()
         init()
     }
 
+    fun test(){
+        childList.add(Child(account = "123123", name = "테스트", balance = 10000))
+        childList.add(Child(account = "123123", name = "테스트2", balance = 10000))
+    }
     fun init(){
         Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
 //        parentHomeViewModel.getParentData()
-//        parentHomeViewModel.getChildData()
+        parentHomeViewModel.getChildData()
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner){
             binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
@@ -71,10 +77,10 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
             fragmentParentHomeChildAccountRecyclerView.adapter = adpater
             val layoutManager = LinearLayoutManager(requireContext())
             fragmentParentHomeChildAccountRecyclerView.layoutManager = layoutManager
-
+            adpater.submitList(childList) // 테스트 데이터
             // 퀘스트 화면 이동
             fragmentParentHomeQuestTextView.setOnClickListener {
-
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_QuestParentHomeFragment)
             }
 
             // 자녀 저축 내역 보기
@@ -89,7 +95,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
             // 설정 화면
             fragmentParentHomeSettingTextView.setOnClickListener {
-
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_SettingFragment)
             }
         }
     }

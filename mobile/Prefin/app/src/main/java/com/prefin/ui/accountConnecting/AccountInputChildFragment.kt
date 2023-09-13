@@ -75,6 +75,7 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog
                     if(fragmentAccountInputChildCheckEditText.text.toString() == checkText){
+                        mainActivityViewModel.childUser!!.account = fragmentAccountInputChildEditText.text.toString()
                         accountInputChildFragmentViewModel.childAccountRegister(mainActivityViewModel.childUser!!.id, mainActivityViewModel.childUser!!)
                     }
                 }
