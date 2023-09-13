@@ -56,15 +56,15 @@ class LoginViewModel : ViewModel() {
                 if(response != null){
                     id = response.id
                     _loginSuccess.value = true
-//                    if(!token.isNullOrEmpty()){
-//                        response.fcmToken = token
-//                        val fcmResponse = RetrofitUtil.loginApi.parentFcmTokenRegister(id, response)
-//                        if(fcmResponse.isSuccessful){
-//                            if (fcmResponse.body()!!){
-//                                _loginSuccess.value = true
-//                            }
-//                        }
-//                    }
+                    if(!token.isNullOrEmpty()){
+                        response.fcmToken = token
+                        val fcmResponse = RetrofitUtil.loginApi.parentFcmTokenRegister(id, response)
+                        if(fcmResponse.isSuccessful){
+                            if (fcmResponse.body()!!){
+                                _loginSuccess.value = true
+                            }
+                        }
+                    }
 
 
                     Log.d(TAG, "유저 정보: $response")
