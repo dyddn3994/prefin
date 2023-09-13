@@ -41,7 +41,7 @@ public class Parents {
     private int balance;
 
     @OneToMany(mappedBy = "parent")
-    private List<Child> child = new ArrayList<>();
+    private List<Child> childList = new ArrayList<>();
 
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;
