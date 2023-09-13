@@ -35,18 +35,16 @@ public class ParentService {
     }
 
     // 로그인
-    public Parents login(String userId, String password) {
+    public ParentDto login(String userId, String password) {
         // id로 회원 정보 찾기
         Parents parent = parentRepository.findByUserId(userId).orElse(null);
 
-        if (parent == null) return null;
-
-        // 비밀번호 일치여부 확인
-        if (parent.getPassword().equals(password)) {
-            return parent;
+        // 부모 존재 여부 및 비밀번호 일치여부 확인
+        if (parent == null || !parent.getPassword().equals(password)) {
+            return null;
         }
 
-        return null;
+        return ParentDto.fromEntity(parent);
     }
 
     // 계좌 등록 설정
@@ -115,7 +113,7 @@ public class ParentService {
             throw new NoSuchElementException("Parent Not Fount");
         }
 
-        return parent.getChild().stream()
+        return parent.getChildList().stream()
                 .map(ChildDto::fromEntity)
                 .collect(Collectors.toList());
 

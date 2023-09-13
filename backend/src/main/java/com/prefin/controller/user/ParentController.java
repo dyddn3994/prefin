@@ -23,7 +23,7 @@ public class ParentController {
     }
 
     @PostMapping("/parent/login")
-    public Parents login(@RequestBody ParentDto parentDto) {
+    public ParentDto login(@RequestBody ParentDto parentDto) {
         String userId = parentDto.getUserId();
         String password = parentDto.getPassword();
 
