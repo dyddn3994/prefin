@@ -12,6 +12,8 @@ import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
 import com.prefin.service.money.AllowanceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +27,14 @@ public class QuestOwnedService {
     private final ChildRepository childRepository;
 
     // 퀘스트 소유 등록
-    public String makeQuestOwned(QuestOwnedDto questOwnedDto) {
+    public ResponseEntity<Boolean> makeQuestOwned(QuestOwnedDto questOwnedDto) {
         Child child = childRepository.findById(questOwnedDto.getChildId()).orElse(null);
 
-        if (child == null) return "child not exist";
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         Quest quest = questRepository.findById(questOwnedDto.getQuestId()).orElse(null);
 
-        if (quest == null) return "quest not exist";
+        if (quest == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         // 퀘스트 소유 생성
         QuestOwned questOwned = QuestOwned.builder().
@@ -50,26 +52,26 @@ public class QuestOwnedService {
         quest.updateRegistered(true);
         questRepository.save(quest);
 
-        return "Quest Registered";
+        return ResponseEntity.ok(true);
     }
 
     // 퀘스트 완료 요청 (fcm 보내기)
-    public String requestQuestComplete(long id) {
+    public ResponseEntity<Boolean> requestQuestComplete(long id) {
         QuestOwned questOwned = questOwnedRepository.findById(id).orElse(null);
 
-        if (questOwned == null) return "quest not exist";
+        if (questOwned == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         questOwned.updateRequested(true);
         questOwnedRepository.save(questOwned);
 
-        return "quest is requested";
+        return ResponseEntity.ok(true);
     }
 
     // 퀘스트 완료 (퀘스트의 등록 여부를 false로 업데이트)
-    public String setQuestCompleted(long id) {
+    public ResponseEntity<Boolean> setQuestCompleted(long id) {
         QuestOwned questOwned = questOwnedRepository.findById(id).orElse(null);
 
-        if (questOwned == null) return "quest not exist";
+        if (questOwned == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         questOwned.updateCompleted(true);
         questOwnedRepository.save(questOwned);
@@ -86,6 +88,6 @@ public class QuestOwnedService {
 
         allowanceService.allowanceTransfer(allowanceDto);
 
-        return "Quest completed";
+        return ResponseEntity.ok(true);
     }
 }

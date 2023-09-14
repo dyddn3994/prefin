@@ -5,6 +5,9 @@ import com.prefin.dto.quest.QuestDto;
 import com.prefin.repository.quest.QuestRepository;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +19,7 @@ public class QuestService {
     private final QuestRepository questRepository;
 
     // 퀘스트 생성
-    public String makeQuest(QuestDto questDto) {
+    public ResponseEntity<Boolean> makeQuest(QuestDto questDto) {
         Quest quest = Quest.builder().
                 title(questDto.getTitle()).
                 reward(questDto.getReward()).
@@ -26,18 +29,18 @@ public class QuestService {
 
         questRepository.save(quest);
 
-        return "Quest Created";
+        return ResponseEntity.ok(true);
     }
 
     // 퀘스트 삭제
-    public String deleteQuest(long id) {
+    public ResponseEntity<Boolean> deleteQuest(long id) {
         Quest quest = questRepository.findById(id).orElse(null);
 
-        if (quest == null) return "quest not exist";
+        if (quest == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         questRepository.delete(quest);
 
-        return "quest deleted";
+        return ResponseEntity.ok(true);
     }
 
 
