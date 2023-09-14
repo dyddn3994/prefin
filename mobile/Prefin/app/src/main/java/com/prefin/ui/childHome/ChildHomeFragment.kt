@@ -57,6 +57,11 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
                 }
             }
 
+            // 퀘스트 버튼
+            fragmentChildHomeQuestTextView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_QuestChildHomeFragment)
+            }
+            
             // 용돈 빌리기 버튼
             fragmentChildHomeLoanTextView.setOnClickListener {
                 findNavController().navigate(R.id.action_ChildHomeFragment_to_LoanHomeFragment)

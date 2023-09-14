@@ -26,7 +26,7 @@ interface QuestApi {
     ): List<Quest>
 
     // 자녀에게 등록된 퀘스트 조회
-    @GET("questowned/{id}")
+    @GET("questowneds/{id}")
     suspend fun childQuestList(
         @Path("id") id: Long,
     ): List<QuestOwned>

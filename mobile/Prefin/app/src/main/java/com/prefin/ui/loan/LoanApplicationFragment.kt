@@ -72,7 +72,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         )
 
         dialogLoanApplicationApplyButton.setOnClickListener {
-            loanApplicationViewModel.borrow(
+            loanApplicationViewModel.askForMoney(
                 binding.fragmentLoanApplicationAmountEditText.text.toString().toInt(),
                 ApplicationClass.sharedPreferences.getLong("id"),
                 mainActivityViewModel.selectedChild.id,

@@ -84,6 +84,9 @@
         <action
             android:id="@+id/action_ChildHomeFragment_to_LoanHomeFragment"
             app:destination="@+id/LoanHomeFragment" />
+        <action
+            android:id="@+id/action_ChildHomeFragment_to_QuestChildHomeFragment"
+            app:destination="@+id/QuestChildHomeFragment" />
     </fragment>
 
     <fragment android:id="@+id/AccountInputFragment"

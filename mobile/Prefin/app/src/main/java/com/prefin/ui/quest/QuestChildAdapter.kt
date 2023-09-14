@@ -27,6 +27,10 @@ class QuestChildAdapter(var context: Context) : ListAdapter<QuestOwned, QuestChi
                 // 미요청 상태
                 itemChildQuestTimeImageView.visibility = View.GONE
             }
+
+            root.setOnClickListener {
+                itemClickListener.onClick(binding, layoutPosition, data)
+            }
         }
     }
 
@@ -42,5 +46,10 @@ class QuestChildAdapter(var context: Context) : ListAdapter<QuestOwned, QuestChi
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
+    }
+
+    lateinit var itemClickListener: ItemClickListener
+    interface ItemClickListener {
+        fun onClick(binding: ItemChildQuestBinding, position: Int, data: QuestOwned)
     }
 }
