@@ -65,6 +65,12 @@
         <action
             android:id="@+id/action_ChildHomeFragment_to_SettingFragment"
             app:destination="@id/SettingFragment" />
+        <action
+            android:id="@+id/action_ChildHomeFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+        <action
+            android:id="@+id/action_ChildHomeFragment_to_QuizAnswerFragment"
+            app:destination="@id/QuizAnswerFragment" />
     </fragment>
 
     <fragment android:id="@+id/AccountInputFragment"
@@ -257,4 +263,24 @@
         android:name="com.prefin.ui.loan.LoanHomeFragment"
         android:label="loan_home"
         tools:layout="@layout/fragment_loan_home"/>
+
+    <fragment android:id="@+id/QuizFragment"
+        android:name="com.prefin.ui.quiz.QuizFragment"
+        android:label="quiz"
+        tools:layout="@layout/fragment_quiz">
+
+        <action
+            android:id="@+id/action_QuizFragment_to_QuizAnswerFragment"
+            app:destination="@id/QuizAnswerFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/QuizAnswerFragment"
+        android:name="com.prefin.ui.quiz.QuziAnswerFragment"
+        android:label="quizAnswer"
+        tools:layout="@layout/fragment_quzi_answer">
+
+        <action
+            android:id="@+id/action_QuizAnswerFragment_to_ChildHomeFragment"
+            app:destination="@id/ChildHomeFragment" />
+    </fragment>
 </navigation>

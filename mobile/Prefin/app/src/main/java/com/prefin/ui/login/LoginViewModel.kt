@@ -23,6 +23,7 @@ class LoginViewModel : ViewModel() {
                 val response = RetrofitUtil.loginApi.childLogin(Child(userId = userId, password = pwd))
                 if(response != null){
                     id = response.id
+                    ApplicationClass.sharedPreferences.addChildUser(response)
                     if(!token.isNullOrEmpty()){
                         response.fcmToken = token
                         val fcmResponse = RetrofitUtil.loginApi.childFcmTokenRegister(id, response)
@@ -32,10 +33,9 @@ class LoginViewModel : ViewModel() {
                             }
                         }
                     }
-
                     Log.d(TAG, "유저 정보: $response")
                     // 로그아웃 구현하면 다시 주석 풀기
-                    ApplicationClass.sharedPreferences.addChildUser(response)
+
                     _loginSuccess.value = true
 
                 }
@@ -56,20 +56,21 @@ class LoginViewModel : ViewModel() {
                 if(response != null){
                     id = response.id
                     _loginSuccess.value = true
-//                    if(!token.isNullOrEmpty()){
-//                        response.fcmToken = token
-//                        val fcmResponse = RetrofitUtil.loginApi.parentFcmTokenRegister(id, response)
-//                        if(fcmResponse.isSuccessful){
-//                            if (fcmResponse.body()!!){
-//                                _loginSuccess.value = true
-//                            }
-//                        }
-//                    }
+                    ApplicationClass.sharedPreferences.addParentUser(response)
+                    if(!token.isNullOrEmpty()){
+                        response.fcmToken = token
+                        val fcmResponse = RetrofitUtil.loginApi.parentFcmTokenRegister(id, response)
+                        if(fcmResponse.isSuccessful){
+                            if (fcmResponse.body()!!){
+                                _loginSuccess.value = true
+                            }
+                        }
+                    }
 
 
                     Log.d(TAG, "유저 정보: $response")
                     //로그아웃 구현하면 다시 주석 풀어야함
-                    ApplicationClass.sharedPreferences.addParentUser(response)
+
 
 
                 }

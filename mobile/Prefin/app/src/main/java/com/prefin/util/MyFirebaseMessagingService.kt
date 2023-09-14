@@ -52,14 +52,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             //알림생성
             sendNotification(remoteMessage)
             // ROOM DB 저장
-            val title = remoteMessage.data["title"].toString()
-            val body = remoteMessage.data["body"].toString()
-            val content = body.split("\n")[1]
-            val sender = body.split("\n")[0]
+//            val title = remoteMessage.data["title"].toString()
+//            val body = remoteMessage.data["body"].toString()
+//            val content = body.split("\n")[1]
+//            val sender = body.split("\n")[0]
 //            val notiMessage = NotiMessage(0, title, content, System.currentTimeMillis(), sender, remoteMessage.data["image"]!!)
 //
 //            ApplicationClass.notiMessageDatabase.notiMessageDao.saveNotiMessage(notiMessage)
-            Log.d(TAG, "송신자 : ${body.split("\n")[0]}")
+//            Log.d(TAG, "송신자 : ${body.split("\n")[0]}")
 
 //            Log.d(TAG, remoteMessage.data["title"].toString())
 //            Log.d(TAG, remoteMessage.data["body"].toString())
@@ -93,10 +93,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // 알림에 대한 UI 정보, 작업
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-
+            .setSmallIcon(R.mipmap.ic_launcher) // 아이콘 설정
             .setContentTitle(remoteMessage.data["title"].toString()) // 제목
             .setContentText(remoteMessage.data["body"].toString()) // 메시지 내용
 //            .setColor(Color.BLUE)
+
             .setAutoCancel(true) // 알람클릭시 삭제여부
             .setSound(soundUri)  // 알림 소리
             .setContentIntent(pendingIntent) // 알림 실행 시 Intent

@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildHomeBinding
@@ -23,7 +25,7 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val childHomeFragmentViewModel : ChildHomeFragmentViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -38,6 +40,15 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
     }
 
     fun init() {
+
+        childHomeFragmentViewModel.child.observe(viewLifecycleOwner){
+            with(binding){
+
+                fragmentChildHomeMyAccountMoneyTextView.text = "${it.balance} 원"
+                fragmentChildHomeSavingAccountMoneyTextView.text = "${it.savingAmount} 원"
+            }
+        }
+
         with(binding) {
 
             //계좌 내역 조회
@@ -49,8 +60,21 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             fragmentChildHomeSavingAccountLinearLayout.setOnClickListener {
 
             }
+            fragmentChildHomeSettingImageView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_SettingFragment)
+            }
+
+            fragmentChildHomeQuizImageView.setOnClickListener {
+                if(childHomeFragmentViewModel.child.value!!.isQuizSolved == true){
+                    findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizFragment)
+                }
+                else{
+                    findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizFragment)
+                }
+            }
 
         }
+        childHomeFragmentViewModel.getChild()
 
     }
 
