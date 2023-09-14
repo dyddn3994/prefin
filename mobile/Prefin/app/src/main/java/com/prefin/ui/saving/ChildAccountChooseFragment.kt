@@ -1,83 +1,59 @@
 package com.prefin.ui.saving
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildAccountChooseBinding
-import com.prefin.ui.parentHome.ChildAccountAdapter
+import com.prefin.databinding.ItemChildSelectBinding
+import com.prefin.model.dto.Child
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ChildAccountChooseFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ChildAccountChooseFragment : BaseFragment<FragmentChildAccountChooseBinding>(FragmentChildAccountChooseBinding::bind, R.layout.fragment_child_account_choose) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private val childAccountChooseFragmentViewModel : ChildAccountChooseFragmentViewModel by viewModels()
-    private lateinit var adpater : SavingAccountAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val childAccountChooseFragmentViewModel: ChildAccountChooseFragmentViewModel by viewModels()
+    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+
+    private lateinit var adapter: ChildSelectAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
 
-
     fun init() {
         childAccountChooseFragmentViewModel.getChildList()
 
-        childAccountChooseFragmentViewModel.childList.observe(viewLifecycleOwner){
-
+        childAccountChooseFragmentViewModel.childList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
+
         binding.apply {
             fragmentChildAccountChooseBackButton.setOnClickListener {
                 findNavController().navigateUp()
             }
 
-            adpater = SavingAccountAdapter(requireContext())
-            fragmentChildAccountChooseRecyclerView.adapter = adpater
-            val layoutManager = LinearLayoutManager(requireContext())
-            fragmentChildAccountChooseRecyclerView.layoutManager = layoutManager
-        }
-
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChildAccountChooseFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChildAccountChooseFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+            adapter = ChildSelectAdapter(requireContext()).apply {
+                itemClickListener = object : ChildSelectAdapter.ItemClickListener {
+                    override fun onClick(
+                        binding: ItemChildSelectBinding,
+                        position: Int,
+                        data: Child,
+                    ) {
+                        mainActivityViewModel.selectedChild = data
+                        when (mainActivityViewModel.destinationFragment) {
+                            1 -> findNavController().navigate(R.id.action_ChildAccountChooseFragment_to_QuestParentHomeFragment)
+                            2 -> findNavController().navigate(R.id.action_ChildAccountChooseFragment_to_SavingHomeFragment)
+                            else -> findNavController().navigate(R.id.action_ChildAccountChooseFragment_to_LoanHomeFragment)
+                        }
+                    }
                 }
             }
+            fragmentChildAccountChooseRecyclerView.adapter = adapter
+            fragmentChildAccountChooseRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 }

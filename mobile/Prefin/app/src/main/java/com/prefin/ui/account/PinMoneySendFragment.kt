@@ -2,14 +2,18 @@ package com.prefin.ui.account
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentPinMoneySendBinding
 
 class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentPinMoneySendBinding::bind, R.layout.fragment_pin_money_send) {
     private val pinMoneySendViewModel by viewModels<PinMoneySendViewModel>()
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +34,11 @@ class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentP
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 전송 요청
-//                accountViewModel.pinMoneySend()
+                pinMoneySendViewModel.pinMoneySend(
+                    ApplicationClass.sharedPreferences.getLong("id"),
+                    mainActivityViewModel.selectedChild.id,
+                    fragmentPinMoneyMoneyEditText.text.toString().toInt(),
+                )
             }
         }
 

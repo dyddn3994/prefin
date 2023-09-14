@@ -44,12 +44,12 @@ class AdapterUtil {
                 return oldItem == newItem
             }
         }
-    
+
         val diffUtilQuest = object : DiffUtil.ItemCallback<Quest>() {
             override fun areItemsTheSame(oldItem: Quest, newItem: Quest): Boolean {
                 return oldItem.id == newItem.id
             }
-        
+
             override fun areContentsTheSame(oldItem: Quest, newItem: Quest): Boolean {
                 return oldItem == newItem
             }
@@ -61,6 +61,16 @@ class AdapterUtil {
             }
 
             override fun areContentsTheSame(oldItem: QuestOwned, newItem: QuestOwned): Boolean {
+                return oldItem == newItem
+            }
+        }
+
+        val diffUtilChildSelect = object : DiffUtil.ItemCallback<Child>() {
+            override fun areItemsTheSame(oldItem: Child, newItem: Child): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Child, newItem: Child): Boolean {
                 return oldItem == newItem
             }
         }

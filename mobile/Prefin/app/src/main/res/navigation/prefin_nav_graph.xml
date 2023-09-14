@@ -44,14 +44,17 @@
         tools:layout="@layout/fragment_parent_home">
 
         <action
+            android:id="@+id/action_ParentHomeFragment_to_AccountFragment"
+            app:destination="@+id/AccountFragment" />
+        <action
             android:id="@+id/action_ParentHomeFragment_to_ChildAccountChooseFragment"
-            app:destination="@id/ChildAccountChooseFragment" />
+            app:destination="@+id/ChildAccountChooseFragment" />
         <action
             android:id="@+id/action_ParentHomeFragment_to_QuestParentHomeFragment"
-            app:destination="@id/QuestParentHomeFragment" />
+            app:destination="@+id/QuestParentHomeFragment" />
         <action
             android:id="@+id/action_ParentHomeFragment_to_SettingFragment"
-            app:destination="@id/SettingFragment" />
+            app:destination="@+id/SettingFragment" />
     </fragment>
 
     <fragment android:id="@+id/ChildHomeFragment"
@@ -219,6 +222,18 @@
         android:label="childAccountChoose"
         tools:layout="@layout/fragment_child_account_choose"
         >
+
+        <action
+            android:id="@+id/action_ChildAccountChooseFragment_to_QuestParentHomeFragment"
+            app:destination="@+id/QuestParentHomeFragment" />
+
+        <action
+            android:id="@+id/action_ChildAccountChooseFragment_to_SavingHomeFragment"
+            app:destination="@+id/SavingHomeFragment" />
+
+        <action
+            android:id="@+id/action_ChildAccountChooseFragment_to_LoanHomeFragment"
+            app:destination="@+id/LoanHomeFragment" />
     </fragment>
 
     <fragment
@@ -227,19 +242,19 @@
         android:label="simplePass"
         tools:layout="@layout/fragment_simple_pass"/>
 
-
-
     <fragment android:id="@+id/SettingFragment"
         android:name="com.prefin.ui.setting.SettingFragment"
         android:label="setting"
         tools:layout="@layout/fragment_setting">
-
 
         <action
             android:id="@+id/action_SettingFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
     </fragment>
 
-
-
+    <fragment
+        android:id="@+id/LoanHomeFragment"
+        android:name="com.prefin.ui.loan.LoanHomeFragment"
+        android:label="loan_home"
+        tools:layout="@layout/fragment_loan_home"/>
 </navigation>

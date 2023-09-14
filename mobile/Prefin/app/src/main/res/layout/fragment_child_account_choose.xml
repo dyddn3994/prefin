@@ -23,7 +23,7 @@
         style="@style/Title.Bold.Size32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="자녀 계좌 선택"
+        android:text="자녀 선택"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_child_account_choose_text_view"
-        tools:listitem="@layout/item_child_account"
+        tools:listitem="@layout/item_child_select"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
