@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestOwnedDto {
+    private long id;
+
     private long childId;
 
     private long questId;

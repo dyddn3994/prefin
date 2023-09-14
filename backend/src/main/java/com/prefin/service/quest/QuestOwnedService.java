@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -89,5 +92,40 @@ public class QuestOwnedService {
         allowanceService.allowanceTransfer(allowanceDto);
 
         return ResponseEntity.ok(true);
+    }
+
+    public QuestOwnedDto findById(long id) {
+        QuestOwned questOwned = questOwnedRepository.findById(id).orElse(null);
+
+        return QuestOwnedDto.builder()
+                .questId(questOwned.getId())
+                .childId(questOwned.getChild().getId())
+                .questId(questOwned.getQuest().getId())
+                .requested(questOwned.isRequested())
+                .completed(questOwned.isCompleted())
+                .startDate(questOwned.getStartDate())
+                .endDate(questOwned.getEndDate())
+                .build();
+    }
+
+    public List<QuestOwnedDto> findByChild(Long id) {
+        Child child = childRepository.findById(id).orElse(null);
+
+        List<QuestOwned> questOwneds = questOwnedRepository.findByChild(child);
+
+        List<QuestOwnedDto> questOwnedDtos = new ArrayList<>();
+
+        for (QuestOwned questOwned : questOwneds) {
+            questOwnedDtos.add(QuestOwnedDto.builder()
+                    .id(questOwned.getId())
+                    .childId(questOwned.getChild().getId())
+                    .questId(questOwned.getQuest().getId())
+                    .requested(questOwned.isRequested())
+                    .completed(questOwned.isCompleted())
+                    .startDate(questOwned.getStartDate())
+                    .endDate(questOwned.getEndDate()).build());
+        }
+
+        return questOwnedDtos;
     }
 }
