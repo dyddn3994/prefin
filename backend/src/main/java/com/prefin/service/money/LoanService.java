@@ -17,6 +17,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,11 +57,32 @@ public class LoanService {
         return ResponseEntity.ok("대출 신청 완료");
     }
 
+    // 대출 신청 수정
+    @Transactional
+    public ResponseEntity<String> updateLoanRequest(LoanDto loanDto) {
+        LoanHistory loanRequest = loanRepository.findById(loanDto.getLoanId())
+                .orElseThrow(() -> new EntityNotFoundException("LoanHistory Not Found") );
+
+        loanRequest.updateLoanRequest(loanDto.getLoanAmount());
+
+        return ResponseEntity.ok("대출 수정 완료");
+    }
+
+    // 대출 신청 삭제
+    @Transactional
+    public ResponseEntity<String> deleteRequest(Long loanId) {
+        LoanHistory loanRequest = loanRepository.findById(loanId)
+                .orElseThrow(() -> new EntityNotFoundException("LoanHistory Not Found") );
+        loanRepository.delete(loanRequest);
+        return ResponseEntity.ok("대출 신청 취소");
+    }
+
+    // 대출 지급
     @Transactional
     public ResponseEntity<String> giveMoney(LoanDto loanDto) {  // 대출 확인 후 지급
         // 대출 내역 id로 어떤 대출인지 확인한다.
         // 대출 해주는 로직
-        LoanHistory myLoan = loanRepository.findById(loanDto.getId()).orElse(null);
+        LoanHistory myLoan = loanRepository.findById(loanDto.getLoanId()).orElse(null);
 
         Parents parent = parentRepository.findById(myLoan.getParent().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));

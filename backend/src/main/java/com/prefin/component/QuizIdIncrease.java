@@ -18,7 +18,7 @@ public class QuizIdIncrease {
     // 퀴즈 확인
     // 매 정각마다 모든 자녀 목록 들고와서 quizSolved가 true인 자녀들은 퀴즈 번호를 증가시키고  quizSolved를 다시 false로 바꾼다
     @Transactional
-    @Scheduled(cron = "* 0 0 * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "* 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
     public void autoQuizChecker() {
         List<Child> childList = childRepository.findAll();
         for (Child child : childList) {

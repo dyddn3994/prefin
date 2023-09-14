@@ -5,6 +5,8 @@ import com.prefin.domain.user.Parents;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @NoArgsConstructor
@@ -34,5 +36,8 @@ public class LoanHistory {
     public void lendMoney(Long loanDate) {
         this.loanDate = loanDate;
         this.isAccepted = true;
+    }
+    public void updateLoanRequest(int loanAmount) {
+        this.loanAmount = loanAmount;
     }
 }
