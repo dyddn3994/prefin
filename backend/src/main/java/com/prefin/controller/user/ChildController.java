@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -55,12 +56,12 @@ public class ChildController {
     }
 
     @PutMapping("/child/{id}/deposit")
-    public ResponseEntity<Boolean> deposit(@PathVariable long id, @RequestBody ChildDto childDto) {
+    public ResponseEntity<Boolean> deposit(@PathVariable long id, @RequestBody ChildDto childDto) throws IOException {
         return childService.deposit(id, childDto.getBalance());
     }
 
     @PutMapping("child/{id}/withdraw")
-    public ResponseEntity<Boolean> withdraw(@PathVariable long id, @RequestBody ChildDto childDto) {
+    public ResponseEntity<Boolean> withdraw(@PathVariable long id, @RequestBody ChildDto childDto) throws IOException {
         return childService.withdraw(id, childDto.getBalance());
     }
 

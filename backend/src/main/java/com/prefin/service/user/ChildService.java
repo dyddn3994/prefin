@@ -11,6 +11,7 @@ import com.prefin.repository.money.AccountHistoryRepository;
 import com.prefin.repository.money.SavingRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
+import com.prefin.service.firebase.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class ChildService {
     private final ParentRepository parentRepository;
     private final SavingRepository savingRepository;
     private final AccountHistoryRepository accountHistoryRepository;
-
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
     // 자녀 회원 가입
     public Long signUp(ChildDto child) {
 
@@ -45,6 +47,7 @@ public class ChildService {
                 name(child.getName()).
                 parent(parentRepository.findById(child.getParentId()).orElse(null)).
                 isQuizSolved(false).
+                trustScore(100).
                 quizId(1L).
                 build();
 
@@ -218,7 +221,7 @@ public class ChildService {
 
     // 저축하거나 출금할 때 가능여부를 체크하는 로직이 필요함.
     // 저축 하기
-    public ResponseEntity<Boolean> deposit(long id, int balance) {
+    public ResponseEntity<Boolean> deposit(long id, int balance) throws IOException {
         Child child = childRepository.findById(id).orElse(null);
 
         if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
@@ -242,11 +245,17 @@ public class ChildService {
         savingRepository.save(savingHistory);
         childRepository.save(child);
 
+        // FCM
+        String token = child.getParent().getFcmToken();
+        String title = "저축";
+        String body = balance + "원 저축되었습니다.";
+        firebaseCloudMessageService.sendMessageTo(token, title, body);
+
         return ResponseEntity.ok(true);
     }
 
     // 출금 하기
-    public ResponseEntity<Boolean> withdraw(long id, int balance) {
+    public ResponseEntity<Boolean> withdraw(long id, int balance) throws IOException {
         Child child = childRepository.findById(id).orElse(null);
 
         if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
@@ -267,6 +276,12 @@ public class ChildService {
 
         savingRepository.save(savingHistory);
         childRepository.save(child);
+
+        // FCM
+        String token = child.getParent().getFcmToken();
+        String title = "출금";
+        String body = balance + "원 출금되었습니다.";
+        firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok(true);
     }

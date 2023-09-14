@@ -7,6 +7,7 @@ import com.prefin.dto.money.LoanDto;
 import com.prefin.repository.money.LoanRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
+import com.prefin.service.firebase.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -25,10 +27,10 @@ public class LoanService {
     private final LoanRepository loanRepository;
     private final ParentRepository parentRepository;
     private final ChildRepository childRepository;
-
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @Transactional
-    public ResponseEntity<String> askForMoney(LoanDto loanDto) {  // 대출 신청 기능
+    public ResponseEntity<String> askForMoney(LoanDto loanDto) throws IOException {  // 대출 신청 기능
         // 부모와 자식의 정보를 가져온다
         // 대출 테이블에 추가하는 느낌
 
@@ -53,11 +55,18 @@ public class LoanService {
                 .build();
 
         loanRepository.save(loanHistory);
+
+        // FCM
+        String token = child.getParent().getFcmToken();
+        String title = "대출";
+        String body = loanDto.getLoanAmount() + "원 대출 신청 되었습니다.";
+        firebaseCloudMessageService.sendMessageTo(token, title, body);
+
         return ResponseEntity.ok("대출 신청 완료");
     }
 
     @Transactional
-    public ResponseEntity<String> giveMoney(LoanDto loanDto) {  // 대출 확인 후 지급
+    public ResponseEntity<String> giveMoney(LoanDto loanDto) throws IOException {  // 대출 확인 후 지급
         // 대출 내역 id로 어떤 대출인지 확인한다.
         // 대출 해주는 로직
         LoanHistory myLoan = loanRepository.findById(loanDto.getId()).orElse(null);
@@ -88,6 +97,12 @@ public class LoanService {
         // 이렇게 가져온 정보를 업데이트 해준다. loanDate와 isAccepted 두 가지
         Long today = LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
         myLoan.lendMoney(today);
+
+        // FCM
+        String token = child.getFcmToken();
+        String title = "대출 완료";
+        String body = loanMoney + "원 대출이 완료되었습니다.";
+        firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok("대출 완료");
     }

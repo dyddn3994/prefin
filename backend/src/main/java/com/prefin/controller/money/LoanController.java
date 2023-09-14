@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ public class LoanController {
 
     // 대출 요청
     @PostMapping("/loan/askForMoney")
-    public ResponseEntity<String> askForMoney(@RequestBody LoanDto requsetDto) {
+    public ResponseEntity<String> askForMoney(@RequestBody LoanDto requsetDto) throws IOException {
         return loanService.askForMoney(requsetDto);
     }
 
@@ -25,7 +26,7 @@ public class LoanController {
 
     // 대출 지급
     @PostMapping("/loan/giveMoney")
-    public ResponseEntity<String> giveMoney(@RequestBody LoanDto requestDto) {
+    public ResponseEntity<String> giveMoney(@RequestBody LoanDto requestDto) throws IOException {
         return loanService.giveMoney(requestDto);
     }
 
