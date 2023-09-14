@@ -50,6 +50,7 @@ class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentP
             } else {
                 // 용돈 전송 성공
                 showSnackbar("전송에 성공하였습니다.")
+                mainActivityViewModel.selectedChild.balance += fragmentPinMoneyMoneyEditText.text.toString().toInt()
                 findNavController().navigateUp()
             }
         }

@@ -56,6 +56,10 @@ class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(Fragm
             } else {
                 // 정기용돈 등록 성공
                 showSnackbar("등록에 성공하였습니다.")
+
+                mainActivityViewModel.selectedChild.payday = fragmentPinMoneyRegistDateEditText.text.toString().toLong()
+                mainActivityViewModel.selectedChild.allowanceAmount = fragmentPinMoneyRegistAmountEditText.text.toString().toInt()
+
                 findNavController().navigateUp()
             }
         }

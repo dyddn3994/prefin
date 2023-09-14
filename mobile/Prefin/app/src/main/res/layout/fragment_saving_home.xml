@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.saving.SavingHomeFragment">
 
     <ImageView
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:text="저축 내역"
         style="@style/Text.regular.Size32"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="140dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_saving_home_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_saving_home_saving_money_text_view"
         />

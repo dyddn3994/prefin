@@ -34,11 +34,22 @@
         android:id="@+id/fragment_loan_application_before_pinmoney_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="200,000원 입니다."
+        tools:text="200,000 원"
         style="@style/Text.regular.Size20"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_loan_application_before_pinmoney_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_loan_application_before_pinmoney_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_application_before_pinmoney_postfix_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 입니다."
+        style="@style/Text.regular.Size20"
+        app:layout_constraintStart_toEndOf="@+id/fragment_loan_application_before_pinmoney_text_view"
+        app:layout_constraintTop_toTopOf="@+id/fragment_loan_application_before_pinmoney_text_view"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_loan_application_before_pinmoney_text_view"
         />
 
     <TextView
@@ -57,11 +68,22 @@
         android:id="@+id/fragment_loan_application_interest_rate_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="1.2% 입니다."
+        tools:text="1.2%"
         style="@style/Text.regular.Size20"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_loan_application_interest_rate_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_loan_application_interest_rate_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_application_interest_rate_postfix_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text=" 입니다."
+        style="@style/Text.regular.Size20"
+        app:layout_constraintStart_toEndOf="@+id/fragment_loan_application_interest_rate_text_view"
+        app:layout_constraintTop_toTopOf="@+id/fragment_loan_application_interest_rate_text_view"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_loan_application_interest_rate_text_view"
         />
 
     <EditText
@@ -70,6 +92,7 @@
         android:layout_height="wrap_content"
         android:hint="대출 받을 금액을 입력하세요."
         android:background="@drawable/edittext_rectangle_24"
+        android:inputType="number"
         android:paddingStart="12dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="100dp"
@@ -77,7 +100,7 @@
         />
 
     <android.widget.Button
-        android:id="@+id/fragment_pin_money_send_button"
+        android:id="@+id/fragment_loan_application_apply_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="요청하기"

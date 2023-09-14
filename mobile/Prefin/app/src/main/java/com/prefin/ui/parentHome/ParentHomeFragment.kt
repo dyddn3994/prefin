@@ -14,6 +14,7 @@ import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentParentHomeBinding
 import com.prefin.databinding.ItemChildAccountBinding
 import com.prefin.model.dto.Child
+import com.prefin.util.StringFormatUtil
 
 private const val TAG = "ParentHomeFragment prefin"
 class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParentHomeBinding::bind, R.layout.fragment_parent_home) {
@@ -36,7 +37,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner) {
             binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
-            binding.fragmentParentHomeMyAccountMoneyTextView.text = "${it.balance} 원"
+            binding.fragmentParentHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
         }
 
         parentHomeViewModel.childs.observe(viewLifecycleOwner) {

@@ -42,13 +42,28 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_loan_home_title_text_view"
         />
 
+    <android.widget.Button
+        android:id="@+id/fragment_loan_home_loan_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="대출 신청"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_home_saving_money_text_view"
+        />
+
     <TextView
         android:id="@+id/fragment_loan_home_loan_history_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="대출 내역"
         style="@style/Text.regular.Size32"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="140dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_loan_home_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_loan_home_saving_money_text_view"
         />

@@ -1,60 +1,87 @@
 package com.prefin.ui.loan
 
+import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
+import com.prefin.config.BaseFragment
+import com.prefin.databinding.DialogLoanApplicationBinding
+import com.prefin.databinding.FragmentLoanApplicationBinding
+import com.prefin.util.StringFormatUtil
+import java.math.BigDecimal
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(FragmentLoanApplicationBinding::bind, R.layout.fragment_loan_application) {
+    private val loanApplicationViewModel by viewModels<LoanApplicationViewModel>()
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoanApplicationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class LoanApplicationFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    // 대출 신청 dialog
+    private val dialog: Dialog by lazy {
+        BottomSheetDialog(requireContext()).apply {
+            setContentView(R.layout.dialog_loan_application)
         }
     }
-    
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loan_application, container, false)
+    private val dialogBinding: DialogLoanApplicationBinding by lazy {
+        DialogLoanApplicationBinding.bind(dialog.findViewById(R.id.dialog_loan_application_constraint_layout))
     }
-    
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoanApplicationFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoanApplicationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    private fun init() = with(binding) {
+        fragmentLoanApplicationBeforePinmoneyTextView.text = StringFormatUtil.moneyToWon(
+            mainActivityViewModel.selectedChild.allowanceAmount -
+                mainActivityViewModel.selectedChild.loanAmount,
+        )
+        fragmentLoanApplicationInterestRateTextView.text = "${mainActivityViewModel.selectedChild.savingRate}%"
+
+        fragmentLoanApplicationApplyButton.setOnClickListener {
+            openDialog()
+        }
+
+        loanApplicationViewModel.loanApplySuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                dialog.dismiss()
+                showSnackbar("대출이 신청되었습니다. 부모님 확인 후 금액이 전송됩니다.")
+
+                findNavController().navigateUp()
             }
+        }
+    }
+
+    private fun openDialog() = with(dialogBinding) {
+        dialogLoanApplicationLoanAmountTextView.text = StringFormatUtil.moneyToWon(binding.fragmentLoanApplicationAmountEditText.text.toString().toInt())
+        dialogLoanApplicationBeforePinmoneyTextView.text = StringFormatUtil.moneyToWon(
+            mainActivityViewModel.selectedChild.allowanceAmount -
+                mainActivityViewModel.selectedChild.loanAmount,
+        )
+        dialogLoanApplicationAfterPinmoneyTextView.text = StringFormatUtil.moneyToWon(
+            mainActivityViewModel.selectedChild.allowanceAmount -
+                mainActivityViewModel.selectedChild.loanAmount -
+                binding.fragmentLoanApplicationAmountEditText.text.toString().toInt() -
+                binding.fragmentLoanApplicationAmountEditText.text.toString().toBigDecimal()
+                    .multiply((mainActivityViewModel.selectedChild.loanRate ?: BigDecimal("0.0")).multiply(BigDecimal("0.01")))
+                    .toInt(),
+        )
+
+        dialogLoanApplicationApplyButton.setOnClickListener {
+            loanApplicationViewModel.borrow(
+                binding.fragmentLoanApplicationAmountEditText.text.toString().toInt(),
+                ApplicationClass.sharedPreferences.getLong("id"),
+                mainActivityViewModel.selectedChild.id,
+            )
+        }
+        dialogLoanApplicationCancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }

@@ -37,5 +37,9 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
         fragmentAccountSendPinmoneyButton.setOnClickListener {
             findNavController().navigate(R.id.action_AccountFragment_to_PinMoneySendFragment)
         }
+
+        fragmentAccountBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 }

@@ -4,6 +4,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="snackbarStyle">@color/colorPrimary</item>
     </style>
 
     <style name="Theme.Prefin" parent="Base.Theme.Prefin" />

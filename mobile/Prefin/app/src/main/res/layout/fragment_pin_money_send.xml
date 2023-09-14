@@ -34,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="보낼 용돈 입력"
+        android:inputType="number"
         android:padding="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="24dp"
