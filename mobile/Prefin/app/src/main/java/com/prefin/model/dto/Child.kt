@@ -15,5 +15,7 @@ data class Child(
     val savingAmount: Int = 0,
     val simplePass: String? = null,
     val trustScore: Int = 0,
-    var userId: String = ""
+    var userId: String = "",
+    var payday: Long = 0L,
+    var allowanceAmount: Int = 0,
 )

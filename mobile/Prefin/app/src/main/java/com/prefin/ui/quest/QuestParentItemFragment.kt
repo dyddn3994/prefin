@@ -20,7 +20,7 @@ class QuestParentItemFragment : BaseFragment<FragmentQuestParentItemBinding>(Fra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        questParentItemViewModel.requestQuestItemList(mainActivityViewModel.selectedChildId)
+        questParentItemViewModel.requestQuestItemList(mainActivityViewModel.selectedChild.id)
         init()
     }
 

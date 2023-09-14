@@ -75,9 +75,9 @@
         android:layout_height="wrap_content"
         android:text="저축 내역"
         style="@style/Text.regular.Size32"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="160dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_saving_home_title_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_home_withdraw_button"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_home_saving_money_text_view"
         />
 
     <androidx.recyclerview.widget.RecyclerView

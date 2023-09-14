@@ -2,14 +2,18 @@ package com.prefin.ui.account
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentPinMoneyRegistBinding
 
 class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(FragmentPinMoneyRegistBinding::bind, R.layout.fragment_pin_money_regist) {
     private val pinMoneyRegistViewModel by viewModels<PinMoneyRegistViewModel>()
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -18,7 +22,10 @@ class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(Fragm
     }
 
     private fun init() = with(binding) {
-        // TODO: 수정 시 default값 입력
+        if (mainActivityViewModel.selectedChild.payday > 0) {
+            fragmentPinMoneyRegistDateEditText.setText(mainActivityViewModel.selectedChild.payday.toString())
+            fragmentPinMoneyRegistAmountEditText.setText(mainActivityViewModel.selectedChild.allowanceAmount.toString())
+        }
 
         // 뒤로가기 버튼 클릭
         fragmentPinMoneyRegistBackButton.setOnClickListener {
@@ -32,7 +39,12 @@ class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(Fragm
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 등록 요청
-//                accountViewModel.pinMoneySet()
+                pinMoneyRegistViewModel.pinMoneySet(
+                    fragmentPinMoneyRegistDateEditText.text.toString().toLong(),
+                    fragmentPinMoneyRegistAmountEditText.text.toString().toInt(),
+                    ApplicationClass.sharedPreferences.getLong("id"),
+                    mainActivityViewModel.selectedChild.id,
+                )
             }
         }
 

@@ -37,7 +37,6 @@ class ApplicationClass : Application() {
         initRetrofitInstance()
 
         FirebaseApp.initializeApp(this)
-
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.
