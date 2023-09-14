@@ -37,74 +37,71 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
     fun init() {
         Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
-        parentHomeViewModel.getParentData()
-        parentHomeViewModel.getChildData()
-
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner) {
+            mainActivityViewModel.parentUser = it
+            binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
+            binding.fragmentParentHomeMyAccountMoneyTextView.text = "${it.balance} 원"
+        }
 
+        parentHomeViewModel.childs.observe(viewLifecycleOwner) {
+            adpater.submitList(it)
+        }
 
-            parentHomeViewModel.parent.observe(viewLifecycleOwner) {
-                mainActivityViewModel.parentUser = it
-                binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
-                binding.fragmentParentHomeMyAccountMoneyTextView.text = "${it.balance} 원"
-            }
-
-            parentHomeViewModel.childs.observe(viewLifecycleOwner) {
-                adpater.submitList(it)
-            }
-
-            binding.apply {
+        binding.apply {
 
                 fragmentParentHomeChildAdd.setOnClickListener {
                     findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildJoinFragment2)
-                    // 눌렀을 때 계좌 거래 내역 조회
-                    fragmentParentHomeMyAccountLinearLayout.setOnClickListener {
-                    }
 
-                    // adapter 연결
-                    adpater = ChildAccountAdapter(requireContext()).apply {
-                        itemClickListener = object : ChildAccountAdapter.ItemClickListener {
-                            override fun onClick(
-                                binding: ItemChildAccountBinding,
-                                position: Int,
-                                data: Child,
-                            ) {
-                                mainActivityViewModel.selectedChild = data
-                                findNavController().navigate(R.id.action_ParentHomeFragment_to_AccountFragment)
-                            }
-                        }
-                    }
-                    fragmentParentHomeChildAccountRecyclerView.adapter = adpater
-                    fragmentParentHomeChildAccountRecyclerView.layoutManager =
-                        LinearLayoutManager(requireContext())
+                }
+            // 눌렀을 때 계좌 거래 내역 조회
+            fragmentParentHomeMyAccountLinearLayout.setOnClickListener {
+            }
 
-                    adpater.submitList(childList) // 테스트 데이터
-
-                    // 퀘스트 화면 이동
-                    fragmentParentHomeQuestTextView.setOnClickListener {
-                        findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
-                        mainActivityViewModel.destinationFragment = 1
-                    }
-
-                    // 자녀 저축 내역 보기
-                    fragmentParentHomeSavingTextView.setOnClickListener {
-                        findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
-                        mainActivityViewModel.destinationFragment = 2
-                    }
-
-                    // 자녀 대출 내역 및 승인
-                    fragmentParentHomeLoanTextView.setOnClickListener {
-                        findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
-                        mainActivityViewModel.destinationFragment = 3
-                    }
-
-                    // 설정 화면
-                    fragmentParentHomeSettingTextView.setOnClickListener {
-                        findNavController().navigate(R.id.action_ParentHomeFragment_to_SettingFragment)
+            // adapter 연결
+            adpater = ChildAccountAdapter(requireContext()).apply {
+                itemClickListener = object : ChildAccountAdapter.ItemClickListener {
+                    override fun onClick(
+                        binding: ItemChildAccountBinding,
+                        position: Int,
+                        data: Child,
+                    ) {
+                        mainActivityViewModel.selectedChild = data
+                        findNavController().navigate(R.id.action_ParentHomeFragment_to_AccountFragment)
                     }
                 }
             }
-        }
+            fragmentParentHomeChildAccountRecyclerView.adapter = adpater
+            fragmentParentHomeChildAccountRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext())
+
+            adpater.submitList(childList) // 테스트 데이터
+
+            // 퀘스트 화면 이동
+            fragmentParentHomeQuestTextView.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
+                mainActivityViewModel.destinationFragment = 1
+            }
+
+            // 자녀 저축 내역 보기
+            fragmentParentHomeSavingTextView.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
+                mainActivityViewModel.destinationFragment = 2
+            }
+
+            // 자녀 대출 내역 및 승인
+            fragmentParentHomeLoanTextView.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
+                mainActivityViewModel.destinationFragment = 3
+            }
+
+            // 설정 화면
+            fragmentParentHomeSettingTextView.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_SettingFragment)
+            }
+            }
+        parentHomeViewModel.getParentData()
+        parentHomeViewModel.getChildData()
     }
+
 }

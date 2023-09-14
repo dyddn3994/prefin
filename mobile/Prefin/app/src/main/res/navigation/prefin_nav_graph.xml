@@ -293,6 +293,8 @@
 
         <action
             android:id="@+id/action_QuizAnswerFragment_to_ChildHomeFragment"
-            app:destination="@id/ChildHomeFragment" />
+            app:destination="@id/ChildHomeFragment"
+            app:popUpTo="@id/QuizAnswerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
