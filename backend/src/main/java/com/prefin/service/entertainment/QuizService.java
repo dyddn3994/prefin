@@ -57,14 +57,14 @@ public class QuizService {
         int answer = quiz.getAnswer();  // 실제 정답이 일치하는지 확인
 
         if (answer == myAnswer) {
+            // 문제 풀었다고 표시
             child.quizSolved();
-            // 신뢰점수 증가 로직 추후 추가
-            int score = 3;
+            int score = 2;
             child.updateTrustScore(score);
             return  ResponseEntity.ok("정답입니다.");
         } else {
+            // 문제 풀었다고 표시
             child.quizSolved();
-            // 신뢰점수 증가 로직 추후 추가
             int score = 1;
             child.updateTrustScore(score);
             return  ResponseEntity.ok("오답입니다.");

@@ -18,6 +18,12 @@ public class AllowanceController {
     public ResponseEntity<String> setAllowance(@RequestBody AllowanceDto requestDto) {
         return allowanceService.allowanceSetting(requestDto);
     }
+//
+//    // 정기 용돈 수정
+//    @PutMapping("/allowance/update")
+//    public ResponseEntity<String> updateAllowance(@RequestBody AllowanceDto requestDto) {
+//        return allowanceService.allowanceUpdate(requestDto);
+//    }
 
 
     @PostMapping("/allowance/transfer")  // 용돈 수동 이체

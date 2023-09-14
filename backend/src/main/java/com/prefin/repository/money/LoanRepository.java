@@ -10,4 +10,6 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<LoanHistory, Long> {
     List<LoanHistory> findAllByParentIdAndChildIdAndIsAccepted(Long parentId, Long childId, Boolean isAccepted);
 
+    List<LoanHistory> findAllByChildId(Long childId);
+
 }

@@ -5,17 +5,13 @@ import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
 import com.prefin.repository.money.AllowanceRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 @Component
@@ -33,12 +29,11 @@ public class AutoTransfer {
         System.out.println("!!자동 이체 실행!!");
         List<Allowance> allowances = allowanceRepository.findAll();
         for (Allowance allowance:allowances) {
-            int dayOfToday = LocalDateTime.now().getDayOfMonth();
+            Integer dayOfToday = LocalDateTime.now().getDayOfMonth();
+            Long dayOfMonth = Long.valueOf(dayOfToday);
             Long payday = allowance.getPayday();
-            LocalDateTime paydayIntoDate = Instant.ofEpochMilli(payday).atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-            int dayOfPayday = paydayIntoDate.getDayOfMonth();
-            if (dayOfToday == dayOfPayday) {
+            if (dayOfMonth.equals(payday)) {
                 Parents parent = allowance.getParent();
                 Child child = allowance.getChild();
 

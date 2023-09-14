@@ -31,22 +31,27 @@ public class AllowanceService {
     private final ChildRepository childRepository;
 
 
-    // 용돈을 얼마 줄지, 언제 줄지 설정
+    // 정기 용돈 설정
     @Transactional
     public ResponseEntity<String> allowanceSetting(AllowanceDto allowanceDto) {
-        // 부모와 자식의 정보를 가져온다
-        Parents parent = null;
-        Child child = null;
+        // 만약 설정된 정기 용돈 중 중복된 경우가 있다면 에러 발생
+        if (allowanceRepository.findByParentIdAndChildId(
+                allowanceDto.getParentId(), allowanceDto.getChildId()) != null) {
+            Allowance allowance = allowanceRepository.findByParentIdAndChildId(
+                    allowanceDto.getParentId(), allowanceDto.getChildId());
 
-        if (allowanceDto.getParentId() != null) {
-            parent = parentRepository.findById(allowanceDto.getParentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));
+            allowance.updateAllowance(allowanceDto.getAllowanceAmount(), allowanceDto.getPayday());
+
+            return ResponseEntity.status(HttpStatus.OK).body("용돈 수정 완료");
         }
-        if (allowanceDto.getChildId() != null) {
-            child = childRepository.findById(allowanceDto.getChildId())
-                    .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
-        }
-//        Long payday = allowanceDto.getPayday();
+
+        // 부모와 자식의 정보를 가져온다
+        Parents parent = parentRepository.findById(allowanceDto.getParentId())
+                .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));
+
+        Child child = childRepository.findById(allowanceDto.getChildId())
+                .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
+
         // 용돈 테이블에 새로운 용돈을 추가
         // 위에서 가져온 부모, 자식의 정보와 Dto에서 받은 용돈 금액, 용돈 지급일을 입력한다.
         Allowance newAllowance = Allowance.builder()
@@ -60,6 +65,16 @@ public class AllowanceService {
 
         return ResponseEntity.ok("용돈 설정 완료");
     }
+//
+//    // 정기 용돈 수정
+//    public ResponseEntity<String> allowanceUpdate(AllowanceDto allowanceDto) {
+//        Allowance allowance = allowanceRepository.findByParentIdAndChildId(
+//                allowanceDto.getParentId(), allowanceDto.getChildId());
+//
+//        allowance.updateAllowance(allowanceDto.getAllowanceAmount(), allowanceDto.getPayday());
+//
+//        return ResponseEntity.status(HttpStatus.OK).body("용돈 수정 완료");
+//    }
 
 
     // 용돈 수동 이체 로직
