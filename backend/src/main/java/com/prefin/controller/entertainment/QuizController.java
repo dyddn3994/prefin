@@ -22,7 +22,7 @@ public class QuizController {
     }
 
     @PostMapping("/quiz/isCorrect/{childId}")
-    public ResponseEntity<String> isCorrect(@RequestBody QuizDto requestDto, @PathVariable Long childId) {
+    public ResponseEntity<Boolean> isCorrect(@RequestBody QuizDto requestDto, @PathVariable Long childId) {
         return quizService.checkAnswer(requestDto, childId);
     }
 }

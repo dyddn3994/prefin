@@ -32,6 +32,7 @@ public class QuizService {
             QuizDto responseDto = QuizDto.builder()
                     .id(todayQuiz.getId())
                     .description(todayQuiz.getDescription())
+                    .question(todayQuiz.getQuestion())
                     .build();
 
             return ResponseEntity.ok(responseDto);
@@ -48,7 +49,7 @@ public class QuizService {
     }
 
     @Transactional  // 문제를 맞췄는지 안 맞췄는지 확인하는 로직
-    public ResponseEntity<String> checkAnswer(QuizDto quizDto, Long childId) {
+    public ResponseEntity<Boolean> checkAnswer(QuizDto quizDto, Long childId) {
 
         Child child = childRepository.findById(childId).orElse(null);
         Quiz quiz = quizRepository.findById(child.getQuizId()).orElse(null);
@@ -61,13 +62,13 @@ public class QuizService {
             child.quizSolved();
             int score = 2;
             child.updateTrustScore(score);
-            return  ResponseEntity.ok("정답입니다.");
+            return  ResponseEntity.ok(true);
         } else {
             // 문제 풀었다고 표시
             child.quizSolved();
             int score = 1;
             child.updateTrustScore(score);
-            return  ResponseEntity.ok("오답입니다.");
+            return  ResponseEntity.ok(false);
         }
     }
 

@@ -22,6 +22,9 @@ public class ParentController {
         return parentService.signUp(parentDto);
     }
 
+    @GetMapping("/parent/{id}")
+    public ParentDto getParentById(@PathVariable Long id) { return parentService.getParenById(id);}
+
     @PostMapping("/parent/login")
     public ParentDto login(@RequestBody ParentDto parentDto) {
         String userId = parentDto.getUserId();

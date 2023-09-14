@@ -1,11 +1,16 @@
 package com.prefin.controller.user;
 
 import com.prefin.domain.user.Child;
+import com.prefin.dto.money.AccountHistoryDto;
 import com.prefin.dto.user.ChildDto;
+import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ChildService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +23,11 @@ public class ChildController {
         return childService.signUp(childDto);
     }
 
+    @GetMapping("/child/{id}")
+    public ChildDto getChildById(@PathVariable Long id) { return childService.getChildById(id);}
+
     @PostMapping("/child/login")
-    public Child login(@RequestBody ChildDto childDto) {
+    public ChildDto login(@RequestBody ChildDto childDto) {
         String userId = childDto.getUserId();
         String password = childDto.getPassword();
 
@@ -47,12 +55,17 @@ public class ChildController {
     }
 
     @PutMapping("/child/{id}/deposit")
-    public void deposit(@PathVariable long id, @RequestBody ChildDto childDto) {
-        childService.deposit(id, childDto.getBalance());
+    public ResponseEntity<Boolean> deposit(@PathVariable long id, @RequestBody ChildDto childDto) {
+        return childService.deposit(id, childDto.getBalance());
     }
 
     @PutMapping("child/{id}/withdraw")
-    public void withdraw(@PathVariable long id, @RequestBody ChildDto childDto) {
-        childService.withdraw(id, childDto.getBalance());
+    public ResponseEntity<Boolean> withdraw(@PathVariable long id, @RequestBody ChildDto childDto) {
+        return childService.withdraw(id, childDto.getBalance());
+    }
+
+    @GetMapping("child/{id}/accounthistory")
+    public List<AccountHistoryDto> getAccountHistory(@PathVariable long id) {
+        return childService.getAccountHistory(id);
     }
 }
