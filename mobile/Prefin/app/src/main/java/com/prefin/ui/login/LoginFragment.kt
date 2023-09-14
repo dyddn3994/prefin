@@ -11,6 +11,7 @@ import com.prefin.R
 import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentLoginBinding
+import com.prefin.util.RetrofitUtil
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
     private val loginViewModel: LoginViewModel by viewModels()

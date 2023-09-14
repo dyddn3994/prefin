@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
@@ -31,6 +33,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     private var param2: String? = null
     private lateinit var adpater : ChildAccountAdapter
     private val parentHomeViewModel : ParentHomeFragmentViewModel by viewModels()
+    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     private val childList = mutableListOf<Child>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,7 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
         parentHomeViewModel.getChildData()
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner){
+            mainActivityViewModel.parentUser = it
             binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
             binding.fragmentParentHomeMyAccountMoneyTextView.text = "${it.balance} 원"
         }
@@ -63,9 +67,8 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
         binding.apply {
 
-            // 눌렀을 때 계좌 거래 내역 조회
-            fragmentParentHomeMyAccountLinearLayout.setOnClickListener {
-
+            fragmentParentHomeChildAdd.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildJoinFragment2)
             }
 
             // adapter 연결
