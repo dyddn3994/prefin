@@ -3,6 +3,7 @@ package com.prefin
 import androidx.lifecycle.ViewModel
 import com.prefin.model.dto.Child
 import com.prefin.model.dto.Parent
+import com.prefin.model.dto.Quest
 import com.prefin.model.dto.Quiz
 
 class MainActivityViewModel : ViewModel() {
@@ -16,4 +17,6 @@ class MainActivityViewModel : ViewModel() {
     var destinationFragment = 0
 
     var quiz: Quiz? = null
+
+    var selectedQuest: Quest? = null
 }

@@ -50,10 +50,10 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
         binding.apply {
 
-                fragmentParentHomeChildAdd.setOnClickListener {
-                    findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildJoinFragment2)
+            fragmentParentHomeChildAdd.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildJoinFragment2)
 
-                }
+            }
             // 눌렀을 때 계좌 거래 내역 조회
             fragmentParentHomeMyAccountLinearLayout.setOnClickListener {
             }

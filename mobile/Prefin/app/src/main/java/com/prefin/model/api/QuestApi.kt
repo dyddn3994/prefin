@@ -20,7 +20,7 @@ interface QuestApi {
     // 퀘스트 삭제
 
     // 생성된 퀘스트 조회
-    @GET("quest/{id}")
+    @GET("quests/{id}")
     suspend fun parentQuestItemList(
         @Path("id") id: Long,
     ): List<Quest>

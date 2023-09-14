@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prefin.databinding.ItemParentQuestBinding
+import com.prefin.model.dto.Quest
 import com.prefin.model.dto.QuestOwned
 import com.prefin.util.AdapterUtil
 import com.prefin.util.StringFormatUtil
@@ -15,6 +16,16 @@ class QuestParentAdapter(var context: Context) : ListAdapter<QuestOwned, QuestPa
     AdapterUtil.diffUtilQuestOwned,
 ) {
     inner class ItemViewHolder(var binding: ItemParentQuestBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val questowned = currentList[position]
+                    itemClickListener.onClick(it, adapterPosition, questowned)
+                }
+            }
+        }
         fun bind(data: QuestOwned) = with(binding) {
             itemParentQuestQuestNameTextView.text = data.quest.title
             itemParentQuestDateTextView.text = StringFormatUtil.dateToString(data.endDate)
@@ -43,5 +54,10 @@ class QuestParentAdapter(var context: Context) : ListAdapter<QuestOwned, QuestPa
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
+    }
+
+    lateinit var itemClickListener : ItemClickListener
+    interface ItemClickListener{
+        fun onClick(view: View, position: Int, data: QuestOwned)
     }
 }
