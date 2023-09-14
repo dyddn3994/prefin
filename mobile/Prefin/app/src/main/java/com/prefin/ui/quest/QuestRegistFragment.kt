@@ -4,6 +4,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CalendarView
 import android.widget.DatePicker
 import android.widget.DatePicker.OnDateChangedListener
 import androidx.fragment.app.activityViewModels
@@ -14,12 +15,13 @@ import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentQuestRegistBinding
 import com.prefin.util.StringFormatUtil
+import java.util.Calendar
 
 private const val TAG = "QuestRegistFragment prefin"
 class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQuestRegistBinding::bind, R.layout.fragment_quest_regist) {
     private val questRegistViewModel by viewModels<QuestRegistViewModel>()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
-
+    private var selectedDate = 0L
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -31,7 +33,12 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
         Log.d(TAG, "init: ${mainActivityViewModel.selectedQuest}")
         fragmentQuestRegistQuestNameTextView.text = mainActivityViewModel.selectedQuest!!.title
 
-        fragmentQuestRegistCalendarView.date
+        fragmentQuestRegistCalendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
+            val calendar =  Calendar.getInstance()
+            calendar.set(year, month, dayOfMonth)
+            val dateInMillis = calendar.timeInMillis
+            selectedDate = dateInMillis
+        }
 
 
         fragmentQuestRegistAmountTextView.text = StringFormatUtil.moneyToWon(mainActivityViewModel.selectedQuest!!.reward)
@@ -42,7 +49,7 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
 
         // 등록하기 버튼 클릭
         fragmentQuestRegistRegistButton.setOnClickListener {
-            questRegistViewModel.registerQuest(mainActivityViewModel.selectedChild.id, fragmentQuestRegistCalendarView.date, mainActivityViewModel.selectedQuest!!.id, System.currentTimeMillis())
+            questRegistViewModel.registerQuest(mainActivityViewModel.selectedChild.id, selectedDate, mainActivityViewModel.selectedQuest!!.id, System.currentTimeMillis())
         }
 
         // 퀘스트 등록 observe

@@ -12,6 +12,7 @@ import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentQuestParentHomeBinding
 import com.prefin.model.dto.Quest
 import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestOwnedQuest
 
 class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(FragmentQuestParentHomeBinding::bind, R.layout.fragment_quest_parent_home) {
     private lateinit var questParentAdapter: QuestParentAdapter
@@ -33,7 +34,7 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
             layoutManager = LinearLayoutManager(requireContext())
         }
         questParentAdapter.itemClickListener  = object : QuestParentAdapter.ItemClickListener{
-            override fun onClick(view: View, position: Int, data: QuestOwned) {
+            override fun onClick(view: View, position: Int, data: QuestOwnedQuest) {
                 //bottomSeat 띄우기
 
 
