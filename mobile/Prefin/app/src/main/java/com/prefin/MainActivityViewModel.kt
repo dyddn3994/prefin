@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.prefin.model.dto.Child
 
 import com.prefin.model.dto.Parent
+import com.prefin.model.dto.Quiz
 
 class MainActivityViewModel : ViewModel() {
     var selectedChildId: Long = 0L
@@ -12,8 +13,10 @@ class MainActivityViewModel : ViewModel() {
 
 
 
-     var childUser : Child? = null
+    var childUser : Child? = null
 
-     var fcmToken : String? = null
+    var fcmToken : String? = null
+
+    var quiz : Quiz? = null
 
 }

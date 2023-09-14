@@ -42,17 +42,13 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        test()
         init()
     }
 
-    fun test(){
-        childList.add(Child(account = "123123", name = "테스트", balance = 10000))
-        childList.add(Child(account = "123123", name = "테스트2", balance = 10000))
-    }
+
     fun init(){
         Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
-//        parentHomeViewModel.getParentData()
+        parentHomeViewModel.getParentData()
         parentHomeViewModel.getChildData()
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner){
