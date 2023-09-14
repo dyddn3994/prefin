@@ -75,6 +75,7 @@ public class AllowanceService {
 
         if (parent.getBalance() >= immediateAllowance) {
             child.addMoney(immediateAllowance);
+            parent.transfer(immediateAllowance);
             return ResponseEntity.ok("일반 용돈 지급 완료");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("계좌 잔액이 부족합니다.");
