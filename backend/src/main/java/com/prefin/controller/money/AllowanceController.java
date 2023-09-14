@@ -25,12 +25,12 @@ public class AllowanceController {
         return allowanceService.allowanceTransfer(requestDto);
     }
 
-    @GetMapping("/parentBalance/{parentId}")
+    @GetMapping("/parentBalance/{parentId}")  // 부모 잔액 조회
     public ResponseEntity<Integer> parentBalance(@PathVariable Long parentId) {
         return allowanceService.parentBalance(parentId);
     }
 
-    @GetMapping("/childBalance/{childId}")
+    @GetMapping("/childBalance/{childId}")  // 자녀 잔액 조회
     public ResponseEntity<Integer> childBalance(@PathVariable Long childId) {
         return allowanceService.childBalance(childId);
     }
