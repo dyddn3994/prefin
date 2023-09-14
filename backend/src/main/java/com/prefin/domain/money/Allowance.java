@@ -28,4 +28,9 @@ public class Allowance {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
     private Child child;
+
+    public void updateAllowance(int money, Long payday) {
+        this.allowanceAmount = money;
+        this.payday = payday;
+    }
 }
