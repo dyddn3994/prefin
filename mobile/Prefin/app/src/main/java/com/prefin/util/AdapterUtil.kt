@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.prefin.model.dto.Child
 import com.prefin.model.dto.Quest
 import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.model.dto.SavingHistory
 
 /**
@@ -61,6 +62,16 @@ class AdapterUtil {
             }
 
             override fun areContentsTheSame(oldItem: QuestOwned, newItem: QuestOwned): Boolean {
+                return oldItem == newItem
+            }
+        }
+
+        val diffUtilQuestOwnedQuest = object : DiffUtil.ItemCallback<QuestOwnedQuest>() {
+            override fun areItemsTheSame(oldItem: QuestOwnedQuest, newItem: QuestOwnedQuest): Boolean {
+                return oldItem.questId == newItem.questId
+            }
+
+            override fun areContentsTheSame(oldItem: QuestOwnedQuest, newItem: QuestOwnedQuest): Boolean {
                 return oldItem == newItem
             }
         }

@@ -3,6 +3,7 @@ package com.prefin.model.api
 import com.prefin.model.dto.Quest
 import com.prefin.model.dto.QuestCreateRequest
 import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.model.dto.QuestRegisterRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -26,10 +27,10 @@ interface QuestApi {
     ): List<Quest>
 
     // 자녀에게 등록된 퀘스트 조회
-    @GET("questowned/{id}")
+    @GET("questowneds/{id}")
     suspend fun childQuestList(
         @Path("id") id: Long,
-    ): List<QuestOwned>
+    ): List<QuestOwnedQuest>
 
     // 퀘스트 등록
     @POST("questowned")
