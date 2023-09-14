@@ -15,6 +15,7 @@ import com.prefin.databinding.DialogChildQuestFinishBinding
 import com.prefin.databinding.FragmentQuestChildHomeBinding
 import com.prefin.databinding.ItemChildQuestBinding
 import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.util.StringFormatUtil
 
 class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(FragmentQuestChildHomeBinding::bind, R.layout.fragment_quest_child_home) {
@@ -44,7 +45,7 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
                 override fun onClick(
                     binding: ItemChildQuestBinding,
                     position: Int,
-                    data: QuestOwned,
+                    data: QuestOwnedQuest,
                 ) {
                     showDialog(data)
                 }
@@ -66,12 +67,12 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
         }
     }
 
-    private fun showDialog(data: QuestOwned) = with(dialogBinding) {
-        dialogChildQuestFinishQuestNameTextView.text = data.quest.title
-        dialogChildQuestFinishMoneyTextView.text = StringFormatUtil.moneyToWon(data.quest.reward)
+    private fun showDialog(data: QuestOwnedQuest) = with(dialogBinding) {
+        dialogChildQuestFinishQuestNameTextView.text = data.title
+        dialogChildQuestFinishMoneyTextView.text = StringFormatUtil.moneyToWon(data.reward)
 
         dialogChildQuestFinishFinishButton.setOnClickListener {
-            questChildHomeViewModel.questFinishRequest(data.id)
+            questChildHomeViewModel.questFinishRequest(data.questId)
         }
         dialogLoanApplicationCancelButton.setOnClickListener {
             dialog.dismiss()

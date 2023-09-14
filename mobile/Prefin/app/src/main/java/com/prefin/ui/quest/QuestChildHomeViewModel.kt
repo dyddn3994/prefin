@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.util.RetrofitUtil
 import kotlinx.coroutines.launch
 
@@ -29,8 +29,8 @@ class QuestChildHomeViewModel : ViewModel() {
     }
 
     // 자녀 퀘스트 리스트 조회
-    private var _questList = MutableLiveData<List<QuestOwned>>()
-    val questList: LiveData<List<QuestOwned>>
+    private var _questList = MutableLiveData<List<QuestOwnedQuest>>()
+    val questList: LiveData<List<QuestOwnedQuest>>
         get() = _questList
 
     fun getQuestList(childId: Long) {
