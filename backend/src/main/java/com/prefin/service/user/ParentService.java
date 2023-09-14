@@ -118,4 +118,12 @@ public class ParentService {
                 .collect(Collectors.toList());
 
     }
+
+    public ParentDto getParenById(Long id) {
+        Parents parent = parentRepository.findById(id).orElse(null);
+
+        if (parent == null) return null;
+
+        return ParentDto.fromEntity(parent);
+    }
 }

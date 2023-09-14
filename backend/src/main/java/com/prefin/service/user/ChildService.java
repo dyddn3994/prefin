@@ -4,6 +4,7 @@ import com.prefin.domain.money.SavingHistory;
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ChildDto;
+import com.prefin.dto.user.ParentDto;
 import com.prefin.repository.money.SavingRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
@@ -204,5 +205,13 @@ public class ChildService {
         childRepository.save(child);
 
         return ResponseEntity.ok(true);
+    }
+
+    public ChildDto getChildById(Long id) {
+        Child child = childRepository.findById(id).orElse(null);
+
+        if (child == null) return null;
+
+        return ChildDto.fromEntity(child);
     }
 }

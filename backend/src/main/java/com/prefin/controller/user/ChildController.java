@@ -2,6 +2,7 @@ package com.prefin.controller.user;
 
 import com.prefin.domain.user.Child;
 import com.prefin.dto.user.ChildDto;
+import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ChildService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class ChildController {
     public long signUp(@RequestBody ChildDto childDto) {
         return childService.signUp(childDto);
     }
+
+    @GetMapping("/child/{id}")
+    public ChildDto getChildById(@PathVariable Long id) { return childService.getChildById(id);}
 
     @PostMapping("/child/login")
     public ChildDto login(@RequestBody ChildDto childDto) {
