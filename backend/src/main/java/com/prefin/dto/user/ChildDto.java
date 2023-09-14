@@ -2,10 +2,13 @@ package com.prefin.dto.user;
 
 import com.prefin.domain.money.Allowance;
 import com.prefin.domain.user.Child;
+import com.prefin.domain.user.Parents;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Getter
 @Builder
@@ -44,11 +47,20 @@ public class ChildDto {
 
     private long payday;
 
+    private BigDecimal saveRate;
+
+    private BigDecimal loanRate;
+
     public static ChildDto fromEntity(Child child) {
         Allowance allowance = child.getAllowance();
 
         if (allowance == null)
             allowance = Allowance.builder().build();
+
+        Parents parent = child.getParent();
+
+        if (parent == null)
+            parent = Parents.builder().build();
 
         return ChildDto.builder()
                 .id(child.getId())
@@ -66,6 +78,8 @@ public class ChildDto {
                 .parentId(child.getParent().getId())
                 .allowanceAmount(allowance.getAllowanceAmount())
                 .payday(allowance.getPayday())
+                .saveRate(parent.getSavingRate())
+                .loanRate(parent.getLoanRate())
                 .build();
     }
 }

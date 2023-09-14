@@ -1,21 +1,30 @@
 package com.prefin.service.user;
 
+import com.prefin.domain.money.AccountHistory;
 import com.prefin.domain.money.SavingHistory;
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
+import com.prefin.dto.bank.AccountInfoDto;
+import com.prefin.dto.money.AccountHistoryDto;
 import com.prefin.dto.user.ChildDto;
-import com.prefin.dto.user.ParentDto;
+import com.prefin.repository.money.AccountHistoryRepository;
 import com.prefin.repository.money.SavingRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -24,10 +33,12 @@ public class ChildService {
     private final ChildRepository childRepository;
     private final ParentRepository parentRepository;
     private final SavingRepository savingRepository;
+    private final AccountHistoryRepository accountHistoryRepository;
 
     // 자녀 회원 가입
     public Long signUp(ChildDto child) {
 
+        // 자녀 저장
         Child newChild = Child.builder().
                 userId(child.getUserId()).
                 password(child.getPassword()).
@@ -37,7 +48,9 @@ public class ChildService {
                 quizId(1L).
                 build();
 
-        return childRepository.save(newChild).getId();
+        Long childId = childRepository.save(newChild).getId();
+
+        return childId;
     }
 
     // 로그인
@@ -64,8 +77,59 @@ public class ChildService {
         child.updateAccount(account);
         childRepository.save(child);
 
+        if (accountHistoryRepository.findByChild(child) == null) {
+            setAccountHistory(id, account);
+        }
+
         return ResponseEntity.ok().body(true);
     }
+
+    private void setAccountHistory(long id, String account) {
+        // 자녀 거래내역 저장
+        String url = "https://shbhack.shinhan.com/v1/search/transaction";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // 데이터 본문 생성
+        Map<String, Object> dataHeader = new HashMap<>();
+        dataHeader.put("apikey", "2023_Shinhan_SSAFY_Hackathon");
+
+        Map<String, Object> dataBody = new HashMap<>();
+        dataBody.put("계좌번호", account);
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("dataHeader", dataHeader);
+        requestBody.put("dataBody", dataBody);
+
+        // HTTP 요청 엔터티 생성
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // RestTemplate을 사용하여 HTTP POST 요청 보내기
+        ResponseEntity<AccountInfoDto> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, AccountInfoDto.class);
+
+        // 응답 처리
+        AccountInfoDto accountInfoDto = responseEntity.getBody();
+
+        List<AccountInfoDto.TransactionHistory> transactionHistoryList = accountInfoDto.getDataBody().getHistories();
+
+        // 자녀와 거래내역 연결
+        for (AccountInfoDto.TransactionHistory transactionHistory : transactionHistoryList) {
+            AccountHistory accountHistory = AccountHistory.builder()
+                    .child(childRepository.findById(id).get())
+                    .transactionDate(transactionHistory.getTransactionDate())
+                    .transactionTime(transactionHistory.getTransactionTime())
+                    .briefs(transactionHistory.getBriefs())
+                    .deposit(transactionHistory.getDeposit())
+                    .withdraw(transactionHistory.getWithdraw())
+                    .build();
+
+            accountHistoryRepository.save(accountHistory);
+        }
+    }
+
 
     // 간편 비밀번호 등록
     public ResponseEntity<Boolean> setSimplePassword(long id, String simplePassword) {
@@ -213,5 +277,28 @@ public class ChildService {
         if (child == null) return null;
 
         return ChildDto.fromEntity(child);
+    }
+
+    public List<AccountHistoryDto> getAccountHistory(long id) {
+        Child child = childRepository.findById(id).orElse(null);
+
+        if (child == null) return null;
+        List<AccountHistory> accountHistories = accountHistoryRepository.findByChild(child);
+
+        List<AccountHistoryDto> accountHistoryDtos = new ArrayList<>();
+
+        for (AccountHistory accountHistory : accountHistories) {
+            accountHistoryDtos.add(AccountHistoryDto.builder()
+                            .id(accountHistory.getId())
+                            .childId(accountHistory.getChild().getId())
+                            .transactionDate(accountHistory.getTransactionDate())
+                            .transactionTime(accountHistory.getTransactionTime())
+                            .briefs(accountHistory.getBriefs())
+                            .deposit(accountHistory.getDeposit())
+                            .withdraw(accountHistory.getWithdraw())
+                    .build());
+        }
+
+        return accountHistoryDtos;
     }
 }

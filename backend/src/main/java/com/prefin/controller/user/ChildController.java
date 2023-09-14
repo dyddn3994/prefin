@@ -1,12 +1,16 @@
 package com.prefin.controller.user;
 
 import com.prefin.domain.user.Child;
+import com.prefin.dto.money.AccountHistoryDto;
 import com.prefin.dto.user.ChildDto;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ChildService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,5 +62,10 @@ public class ChildController {
     @PutMapping("child/{id}/withdraw")
     public ResponseEntity<Boolean> withdraw(@PathVariable long id, @RequestBody ChildDto childDto) {
         return childService.withdraw(id, childDto.getBalance());
+    }
+
+    @GetMapping("child/{id}/accounthistory")
+    public List<AccountHistoryDto> getAccountHistory(@PathVariable long id) {
+        return childService.getAccountHistory(id);
     }
 }

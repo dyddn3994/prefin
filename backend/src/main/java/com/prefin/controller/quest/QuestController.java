@@ -31,14 +31,13 @@ public class QuestController {
 
     // QuestDto로 수정하세요
     @GetMapping("/quest/{id}")
-    public Quest getQuest(@PathVariable long id) {
-        return questRepository.findById(id).orElse(null);
+    public QuestDto getQuest(@PathVariable long id) {
+        return questService.getQuestById(id);
     }
 
     @GetMapping("/quests/{id}")
-    public List<Quest> getQuestByParent(long id) {
-        Parents parent = parentRepository.findById(id).orElse(null);
+    public List<QuestDto> getQuestByParent(@PathVariable Long id) {
 
-        return questRepository.findByParent(parent);
+        return questService.findByParent(id);
     }
 }

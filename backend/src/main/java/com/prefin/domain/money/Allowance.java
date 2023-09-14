@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Allowance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
