@@ -2,8 +2,11 @@ package com.prefin.ui.quest
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prefin.R
@@ -16,7 +19,16 @@ class QuestParentItemAdapter(var context: Context) : ListAdapter<Quest, QuestPar
     AdapterUtil.diffUtilQuest,
 ) {
     inner class ItemViewHolder(var binding: ItemParentQuestItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("ResourceAsColor")
+
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val quest = currentList[position]
+                    itemClickListener.onClick(it, adapterPosition, quest)
+                }
+            }
+        }
         fun bind(data: Quest) = with(binding) {
             itemParentQuestItemQuestNameTextView.text = data.title
             itemParentQuestItemAmountTextView.text = StringFormatUtil.moneyToWon(data.reward)
@@ -24,11 +36,11 @@ class QuestParentItemAdapter(var context: Context) : ListAdapter<Quest, QuestPar
             // 등록되어 있을 경우 클릭 불가
             if (data.registered) {
                 // 등록 상태
-                root.setBackgroundColor(R.color.colorGray)
+                root.setBackgroundColor(Color.GRAY)
                 root.isClickable = false
             } else {
                 // 미등록 상태
-                root.setBackgroundColor(R.color.white)
+                root.setBackgroundColor(Color.WHITE)
                 root.isClickable = true
             }
         }
@@ -46,5 +58,11 @@ class QuestParentItemAdapter(var context: Context) : ListAdapter<Quest, QuestPar
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
+    }
+
+
+    lateinit var itemClickListener : ItemClickListener
+    interface ItemClickListener{
+        fun onClick(view: View, position: Int, data: Quest)
     }
 }

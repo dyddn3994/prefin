@@ -2,6 +2,7 @@ package com.prefin.ui.childHome
 
 import android.os.Bundle
 import android.view.View
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,10 +21,11 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
     }
 
     fun init() {
-        childHomeFragmentViewModel.child.observe(viewLifecycleOwner) {
-            mainActivityViewModel.selectedChild = it
-            
-            with(binding) {
+        childHomeFragmentViewModel.getQuiz()
+        
+        childHomeFragmentViewModel.child.observe(viewLifecycleOwner){
+            with(binding){
+                mainActivityViewModel.selectedChild = it
                 fragmentChildHomeMyAccountMoneyTextView.text = "${it.balance} 원"
                 fragmentChildHomeSavingAccountMoneyTextView.text = "${it.savingAmount} 원"
             }
@@ -44,9 +46,13 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             }
 
             fragmentChildHomeQuizImageView.setOnClickListener {
-                if (childHomeFragmentViewModel.child.value!!.isQuizSolved == true) {
-                    findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizFragment)
-                } else {
+                if(childHomeFragmentViewModel.child.value!!.isQuizSolved == true){
+
+                    Log.d("Quiz", "init: ${childHomeFragmentViewModel.quiz}")
+                    mainActivityViewModel.quiz = childHomeFragmentViewModel.quiz
+                    findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizAnswerFragment)
+                }
+                else{
                     findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizFragment)
                 }
             }

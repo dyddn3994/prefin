@@ -2,10 +2,13 @@ package com.prefin.ui.quiz
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.BaseFragment
+import com.prefin.databinding.FragmentQuizAnswerBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -14,14 +17,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [QuziAnswerFragment.newInstance] factory method to
+ * Use the [QuizAnswerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class QuziAnswerFragment : Fragment() {
+class QuizAnswerFragment : BaseFragment<FragmentQuizAnswerBinding>(FragmentQuizAnswerBinding::bind, R.layout.fragment_quiz_answer) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private val mainAnswerViewModel : MainActivityViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -30,12 +33,12 @@ class QuziAnswerFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quzi_answer, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.fragmentQuizAnswerTextView.text = mainAnswerViewModel.quiz!!.description
+        binding.fragmentQuizAnswerBack.setOnClickListener {
+            findNavController().navigate(R.id.action_QuizAnswerFragment_to_ChildHomeFragment)
+        }
     }
 
     companion object {
@@ -50,7 +53,7 @@ class QuziAnswerFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            QuziAnswerFragment().apply {
+            QuizAnswerFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

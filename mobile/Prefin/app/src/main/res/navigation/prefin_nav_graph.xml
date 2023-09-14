@@ -54,7 +54,14 @@
             app:destination="@+id/QuestParentHomeFragment" />
         <action
             android:id="@+id/action_ParentHomeFragment_to_SettingFragment"
-            app:destination="@+id/SettingFragment" />
+            app:destination="@id/SettingFragment" />
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_ChildJoinFragment2"
+            app:destination="@id/ChildJoinFragment"
+            app:popUpTo="@id/ParentHomeFragment"
+            app:popUpToInclusive="true" />
+
+
     </fragment>
 
     <fragment android:id="@+id/ChildHomeFragment"
@@ -97,6 +104,9 @@
         <action
             android:id="@+id/action_AccountInputChildFragment_to_ChildAddFragment"
             app:destination="@id/ChildAddFragment" />
+        <action
+            android:id="@+id/action_AccountInputChildFragment_to_ParentHomeFragment"
+            app:destination="@id/ParentHomeFragment" />
     </fragment>
 
     <fragment android:id="@+id/ChildAddFragment"
@@ -282,16 +292,20 @@
 
         <action
             android:id="@+id/action_QuizFragment_to_QuizAnswerFragment"
-            app:destination="@id/QuizAnswerFragment" />
+            app:destination="@id/QuizAnswerFragment"
+            app:popUpTo="@id/QuizFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment android:id="@+id/QuizAnswerFragment"
-        android:name="com.prefin.ui.quiz.QuziAnswerFragment"
+        android:name="com.prefin.ui.quiz.QuizAnswerFragment"
         android:label="quizAnswer"
-        tools:layout="@layout/fragment_quzi_answer">
+        tools:layout="@layout/fragment_quiz_answer">
 
         <action
             android:id="@+id/action_QuizAnswerFragment_to_ChildHomeFragment"
-            app:destination="@id/ChildHomeFragment" />
+            app:destination="@id/ChildHomeFragment"
+            app:popUpTo="@id/QuizAnswerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
