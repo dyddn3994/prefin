@@ -24,6 +24,7 @@ class QuestRegistViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
+                Log.d(TAG, "registerQuest: $startDate")
                 RetrofitUtil.questApi.questRegister(QuestRegisterRequest(childId, endDate, questId, startDate))
                 _isQuestRegistSuccess.value = true
             } catch (e: Exception) {
