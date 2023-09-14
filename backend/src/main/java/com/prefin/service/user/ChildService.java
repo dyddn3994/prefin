@@ -1,11 +1,9 @@
 package com.prefin.service.user;
 
-import com.prefin.domain.entertainment.Mascot;
 import com.prefin.domain.money.SavingHistory;
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ChildDto;
-import com.prefin.repository.entertainment.MascotRepository;
 import com.prefin.repository.money.SavingRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
@@ -24,7 +22,6 @@ import java.time.ZoneId;
 public class ChildService {
     private final ChildRepository childRepository;
     private final ParentRepository parentRepository;
-    private final MascotRepository mascotRepository;
     private final SavingRepository savingRepository;
 
     // 자녀 회원 가입
@@ -43,7 +40,7 @@ public class ChildService {
     }
 
     // 로그인
-    public Child login(String userId, String password) {
+    public ChildDto login(String userId, String password) {
         // id로 회원 정보 찾기
         Child child = childRepository.findByUserId(userId).orElse(null);
 
@@ -51,7 +48,7 @@ public class ChildService {
 
         // 비밀번호 일치여부 확인
         if (child.getPassword().equals(password)) {
-            return child;
+            return ChildDto.fromEntity(child);
         }
 
         return null;
@@ -119,19 +116,6 @@ public class ChildService {
         return ResponseEntity.ok().body(true);
     }
 
-    // 마스코트 설정
-    public ResponseEntity<Boolean> updateMascot(long childId, long mascotId) {
-        Child child = childRepository.findById(childId).orElse(null);
-        Mascot mascot = mascotRepository.findById(mascotId).orElse(null);
-
-        if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-        if (mascot == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-
-        child.updateMascot(mascot);
-        childRepository.save(child);
-
-        return ResponseEntity.ok().body(true);
-    }
 
     // 퀴즈풀이를 true로 변경
     public ResponseEntity<Boolean> solveQuiz(long id) {
@@ -169,10 +153,14 @@ public class ChildService {
 
     // 저축하거나 출금할 때 가능여부를 체크하는 로직이 필요함.
     // 저축 하기
-    public void deposit(long id, int balance) {
+    public ResponseEntity<Boolean> deposit(long id, int balance) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return;
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        if (child.getBalance() - balance < 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
 
         child.getParent().updateBalance(balance);
         child.updateBalance(-balance);
@@ -188,13 +176,17 @@ public class ChildService {
 
         savingRepository.save(savingHistory);
         childRepository.save(child);
+
+        return ResponseEntity.ok(true);
     }
 
     // 출금 하기
-    public void withdraw(long id, int balance) {
+    public ResponseEntity<Boolean> withdraw(long id, int balance) {
         Child child = childRepository.findById(id).orElse(null);
 
-        if (child == null) return;
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        if (child.getParent().getBalance() - balance < 0) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.getParent().updateBalance(-balance);
         child.updateBalance(balance);
@@ -210,5 +202,7 @@ public class ChildService {
 
         savingRepository.save(savingHistory);
         childRepository.save(child);
+
+        return ResponseEntity.ok(true);
     }
 }

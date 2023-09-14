@@ -24,11 +24,12 @@ public class QuestController {
         questService.makeQuest(questDto);
     }
 
-    @PostMapping("/quest/{id}")
+    @DeleteMapping("/quest/{id}")
     public void deleteQuest(@PathVariable long id) {
         questService.deleteQuest(id);
     }
 
+    // QuestDto로 수정하세요
     @GetMapping("/quest/{id}")
     public Quest getQuest(@PathVariable long id) {
         return questRepository.findById(id).orElse(null);

@@ -19,7 +19,7 @@ public class ChildController {
     }
 
     @PostMapping("/child/login")
-    public Child login(@RequestBody ChildDto childDto) {
+    public ChildDto login(@RequestBody ChildDto childDto) {
         String userId = childDto.getUserId();
         String password = childDto.getPassword();
 
@@ -47,12 +47,12 @@ public class ChildController {
     }
 
     @PutMapping("/child/{id}/deposit")
-    public void deposit(@PathVariable long id, @RequestBody ChildDto childDto) {
-        childService.deposit(id, childDto.getBalance());
+    public ResponseEntity<Boolean> deposit(@PathVariable long id, @RequestBody ChildDto childDto) {
+        return childService.deposit(id, childDto.getBalance());
     }
 
     @PutMapping("child/{id}/withdraw")
-    public void withdraw(@PathVariable long id, @RequestBody ChildDto childDto) {
-        childService.withdraw(id, childDto.getBalance());
+    public ResponseEntity<Boolean> withdraw(@PathVariable long id, @RequestBody ChildDto childDto) {
+        return childService.withdraw(id, childDto.getBalance());
     }
 }

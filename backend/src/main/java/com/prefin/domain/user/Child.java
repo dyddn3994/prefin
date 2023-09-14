@@ -1,5 +1,6 @@
 package com.prefin.domain.user;
 
+import com.prefin.domain.money.Allowance;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +44,9 @@ public class Child {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Parents parent;
+
+    @OneToOne(mappedBy = "child")
+    private Allowance allowance;
 
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;

@@ -1,5 +1,6 @@
 package com.prefin.dto.user;
 
+import com.prefin.domain.money.Allowance;
 import com.prefin.domain.user.Child;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,14 +39,23 @@ public class ChildDto {
 
     private long parentId;
 
-    private long mascotId;
+    // 용돈 관련
+    private int allowanceAmount;
+
+    private long payday;
 
     public static ChildDto fromEntity(Child child) {
+        Allowance allowance = child.getAllowance();
+
+        if (allowance == null)
+            allowance = Allowance.builder().build();
+
         return ChildDto.builder()
                 .id(child.getId())
                 .userId(child.getUserId())
                 .password(child.getPassword())
                 .name(child.getName())
+                .fcmToken(child.getFcmToken())
                 .account(child.getAccount())
                 .simplePass(child.getSimplePass())
                 .isQuizSolved(child.getIsQuizSolved())
@@ -54,7 +64,8 @@ public class ChildDto {
                 .savingAmount(child.getSavingAmount())
                 .balance(child.getBalance())
                 .parentId(child.getParent().getId())
-                .mascotId(child.getMascot().getId())
+                .allowanceAmount(allowance.getAllowanceAmount())
+                .payday(allowance.getPayday())
                 .build();
     }
 }
