@@ -18,6 +18,13 @@ public class AllowanceController {
     public ResponseEntity<String> setAllowance(@RequestBody AllowanceDto requestDto) {
         return allowanceService.allowanceSetting(requestDto);
     }
+
+    // 정기 용돈 삭제
+    @DeleteMapping("/allowance/delete/{allowanceId}")
+    public ResponseEntity<String> cancelAllowance(@PathVariable Long allowanceId) {
+        return allowanceService.deleteAutoTransfer(allowanceId);
+    }
+
 //
 //    // 정기 용돈 수정
 //    @PutMapping("/allowance/update")
