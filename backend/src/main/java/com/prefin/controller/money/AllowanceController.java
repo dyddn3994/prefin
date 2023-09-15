@@ -14,7 +14,7 @@ public class AllowanceController {
     private final AllowanceService allowanceService;
 
     // 용돈 수동 이체
-    @PostMapping("/allowance/set")  // 용돈 설정
+    @PostMapping("/allowance/set")  // 용돈 설정 및 수정
     public ResponseEntity<String> setAllowance(@RequestBody AllowanceDto requestDto) {
         return allowanceService.allowanceSetting(requestDto);
     }
