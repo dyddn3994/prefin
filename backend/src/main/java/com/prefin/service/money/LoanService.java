@@ -63,6 +63,10 @@ public class LoanService {
         LoanHistory loanRequest = loanRepository.findById(loanDto.getLoanId())
                 .orElseThrow(() -> new EntityNotFoundException("LoanHistory Not Found") );
 
+        if (loanRequest.getIsAccepted()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("이미 처리된 대출 신청입니다.");
+        }
+
         loanRequest.updateLoanRequest(loanDto.getLoanAmount());
 
         return ResponseEntity.ok("대출 수정 완료");
@@ -73,6 +77,11 @@ public class LoanService {
     public ResponseEntity<String> deleteRequest(Long loanId) {
         LoanHistory loanRequest = loanRepository.findById(loanId)
                 .orElseThrow(() -> new EntityNotFoundException("LoanHistory Not Found") );
+
+        if (loanRequest.getIsAccepted()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("이미 처리된 대출 신청입니다.");
+        }
+
         loanRepository.delete(loanRequest);
         return ResponseEntity.ok("대출 신청 취소");
     }
