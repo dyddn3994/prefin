@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanDto {
-    private Long id;
+    private Long loanId;
 
     private int loanAmount;
     private Boolean isAccepted;
@@ -21,7 +21,7 @@ public class LoanDto {
 
     public static LoanDto fromEntity(LoanHistory loanHistory) {
         return LoanDto.builder()
-                .id(loanHistory.getId())
+                .loanId(loanHistory.getId())
                 .loanAmount(loanHistory.getLoanAmount())
                 .isAccepted(loanHistory.getIsAccepted())
                 .parentId(loanHistory.getParent().getId())

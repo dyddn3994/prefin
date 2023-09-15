@@ -21,7 +21,17 @@ public class LoanController {
         return loanService.askForMoney(requsetDto);
     }
 
-    // 대출 요청 취소
+    // 대출 요청 수정
+    @PutMapping("/loan/update")
+    public ResponseEntity<String> updateLoanRequest(@RequestBody LoanDto requestDto) {
+        return loanService.updateLoanRequest(requestDto);
+    }
+
+    // 대출 요청 삭제
+    @DeleteMapping("/loan/cancel/{loanId}")
+    public ResponseEntity<String> cancelLoanRequest(@PathVariable Long loanId){
+        return loanService.deleteRequest(loanId);
+    }
 
 
     // 대출 지급
@@ -31,8 +41,8 @@ public class LoanController {
     }
 
     // 대출 내역 조회
-    @GetMapping("/loan/history")
-    public List<LoanDto> loanHistory(@RequestBody Long childId) {
+    @GetMapping("/loan/history/{childId}")
+    public List<LoanDto> loanHistory(@PathVariable Long childId) {
         return loanService.loanHistory(childId);
     }
 

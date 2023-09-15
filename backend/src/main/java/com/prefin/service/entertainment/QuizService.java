@@ -60,7 +60,7 @@ public class QuizService {
         if (answer == myAnswer) {
             // 문제 풀었다고 표시
             child.quizSolved();
-            int score = 2;
+            int score = 3;
             child.updateTrustScore(score);
             return  ResponseEntity.ok(true);
         } else {
