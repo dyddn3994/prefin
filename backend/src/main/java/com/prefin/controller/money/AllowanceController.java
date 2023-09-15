@@ -14,15 +14,16 @@ public class AllowanceController {
     private final AllowanceService allowanceService;
 
     // 용돈 수동 이체
-    @PostMapping("/allowance/set")  // 용돈 설정
+    @PostMapping("/allowance/set")  // 용돈 설정 및 수정
     public ResponseEntity<String> setAllowance(@RequestBody AllowanceDto requestDto) {
         return allowanceService.allowanceSetting(requestDto);
     }
-
-    @PostMapping("/allowance/auto")  // 용돈 자동 이체
-    public ResponseEntity<String> autoAllowance(@RequestBody AllowanceDto requestDto) {
-        return allowanceService.autoTransfer(requestDto);
-    }
+//
+//    // 정기 용돈 수정
+//    @PutMapping("/allowance/update")
+//    public ResponseEntity<String> updateAllowance(@RequestBody AllowanceDto requestDto) {
+//        return allowanceService.allowanceUpdate(requestDto);
+//    }
 
 
     @PostMapping("/allowance/transfer")  // 용돈 수동 이체
@@ -30,12 +31,12 @@ public class AllowanceController {
         return allowanceService.allowanceTransfer(requestDto);
     }
 
-    @GetMapping("/parentBalance/{parentId}")
+    @GetMapping("/parentBalance/{parentId}")  // 부모 잔액 조회
     public ResponseEntity<Integer> parentBalance(@PathVariable Long parentId) {
         return allowanceService.parentBalance(parentId);
     }
 
-    @GetMapping("/childBalance/{childId}")
+    @GetMapping("/childBalance/{childId}")  // 자녀 잔액 조회
     public ResponseEntity<Integer> childBalance(@PathVariable Long childId) {
         return allowanceService.childBalance(childId);
     }

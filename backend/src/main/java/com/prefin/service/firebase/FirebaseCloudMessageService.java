@@ -20,6 +20,7 @@ public class FirebaseCloudMessageService {
     private final ObjectMapper objectMapper;
 
     public void sendMessageTo(String targetToken, String title, String body) throws IOException {
+
         String message = makeMessage(targetToken, title, body);
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
@@ -38,7 +39,7 @@ public class FirebaseCloudMessageService {
         FcmDto fcmDto = FcmDto.builder()
                 .message(FcmDto.Message.builder()
                         .token(targetToken)
-                        .notification(FcmDto.Notification.builder()
+                        .data(FcmDto.Data.builder()
                                 .title(title)
                                 .body(body)
                                 .image(null)

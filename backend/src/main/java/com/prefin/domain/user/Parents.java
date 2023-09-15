@@ -23,6 +23,7 @@ public class Parents {
 
     private String password;
 
+    @Column(columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
 
     private String fcmToken;
@@ -41,7 +42,7 @@ public class Parents {
     private int balance;
 
     @OneToMany(mappedBy = "parent")
-    private List<Child> child = new ArrayList<>();
+    private List<Child> childList = new ArrayList<>();
 
     public void updateToken(String fcmToken) {
         this.fcmToken = fcmToken;

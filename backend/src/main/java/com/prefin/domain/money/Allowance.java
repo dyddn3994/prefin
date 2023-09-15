@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Allowance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +18,7 @@ public class Allowance {
 
     private int allowanceAmount;
 
-    private Long payday;
+    private long payday;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
@@ -28,4 +27,9 @@ public class Allowance {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHILD_ID")
     private Child child;
+
+    public void updateAllowance(int money, Long payday) {
+        this.allowanceAmount = money;
+        this.payday = payday;
+    }
 }

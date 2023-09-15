@@ -20,4 +20,9 @@ public class QuizController {
     public ResponseEntity<QuizDto> todayQuiz(@PathVariable Long childId) {
         return quizService.todayQuiz(childId);
     }
+
+    @PostMapping("/quiz/isCorrect/{childId}")
+    public ResponseEntity<Boolean> isCorrect(@RequestBody QuizDto requestDto, @PathVariable Long childId) {
+        return quizService.checkAnswer(requestDto, childId);
+    }
 }

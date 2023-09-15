@@ -9,12 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestOwnedDto {
-    private long id;
-
-    private long childId;
-
-    private long questId;
+public class QuestOwnedQuestDto {
+    private Long questId;
 
     private boolean requested;
 
@@ -23,4 +19,8 @@ public class QuestOwnedDto {
     private long startDate;
 
     private long endDate;
+
+    private String title;
+
+    private int reward;
 }
