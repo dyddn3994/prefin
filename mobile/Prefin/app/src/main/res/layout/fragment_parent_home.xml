@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,12 +14,12 @@
         tools:context=".ui.parentHome.ParentHomeFragment">
 
         <ImageView
-            android:layout_marginStart="16dp"
             android:id="@+id/fragment_parent_home_logo_text_image_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/prefin_text"
-
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/i_don_know_logo"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,19 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_noti"
-            app:layout_constraintTop_toTopOf="@+id/fragment_parent_home_setting_image_view"
-            app:layout_constraintEnd_toStartOf="@+id/fragment_parent_home_setting_image_view"
-            />
-
-        <ImageView
-            android:layout_marginTop="8dp"
-            android:id="@+id/fragment_parent_home_setting_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_setting"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:layout_marginTop="24dp"
