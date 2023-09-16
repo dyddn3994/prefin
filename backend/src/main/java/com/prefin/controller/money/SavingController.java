@@ -1,6 +1,5 @@
 package com.prefin.controller.money;
 
-import com.prefin.domain.money.SavingHistory;
 import com.prefin.dto.money.SavingHIstoryDto;
 import com.prefin.service.money.SavingService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 public class SavingController {
     private final SavingService savingService;
 
-    @GetMapping("/savinghistory/{id}")
+    @GetMapping("/savinghistory/{childId}")
     public List<SavingHIstoryDto> getSavingHistoryByChildId(@PathVariable Long childId) {
         return savingService.getSavingHistory(childId);
     }
