@@ -59,8 +59,8 @@ public class QuestOwnedService {
 
         // FCM
         String token = child.getFcmToken();
-        String title = "퀘스트가 등록되었습니다.";
-        String body = quest.getTitle();
+        String title = "퀘스트";
+        String body = "퀘스트 " + "`" + quest.getTitle() + "`" + "가 등록되었습니다";
         firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok(true);
@@ -77,8 +77,8 @@ public class QuestOwnedService {
 
         // FCM
         String token = questOwned.getChild().getParent().getFcmToken();
-        String title = "퀘스트 완료 요청이 도착했습니다.";
-        String body = questOwned.getQuest().getTitle();
+        String title = "퀘스트";
+        String body = "퀘스트 " + "`" + questOwned.getQuest().getTitle() + "`" + "의 완료 요청이 도착했습니다";
         firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok(true);
@@ -116,8 +116,8 @@ public class QuestOwnedService {
 
         // FCM
         String token = questOwned.getChild().getFcmToken();
-        String title = "퀘스트가 완료되었습니다.";
-        String body = quest.getTitle();
+        String title = "퀘스트";
+        String body = "퀘스트 " + "`" + quest.getTitle() + "`" + "가 완료되었습니다.";
         firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok(true);
