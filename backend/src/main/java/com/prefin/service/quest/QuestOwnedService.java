@@ -1,11 +1,14 @@
 package com.prefin.service.quest;
 
+import com.prefin.domain.money.AccountHistory;
 import com.prefin.domain.quest.Quest;
 import com.prefin.domain.quest.QuestOwned;
 import com.prefin.domain.user.Child;
+import com.prefin.dto.money.AccountHistoryDto;
 import com.prefin.dto.money.AllowanceDto;
 import com.prefin.dto.quest.QuestOwnedDto;
 import com.prefin.dto.quest.QuestOwnedQuestDto;
+import com.prefin.repository.money.AccountHistoryRepository;
 import com.prefin.repository.quest.QuestOwnedRepository;
 import com.prefin.repository.quest.QuestRepository;
 import com.prefin.repository.user.ChildRepository;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +34,7 @@ public class QuestOwnedService {
     private final AllowanceService allowanceService;
     private final QuestRepository questRepository;
     private final ChildRepository childRepository;
+    private final AccountHistoryRepository accountHistoryRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     // 퀘스트 소유 등록
@@ -110,9 +116,28 @@ public class QuestOwnedService {
         questOwned.updateCompleted(true);
         questOwnedRepository.save(questOwned);
 
-
         quest.updateRegistered(false);
         questRepository.save(quest);
+
+        // 거래 내역도 추가
+        LocalDateTime now = LocalDateTime.now();
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
+
+        String formattedDateTime = now.format(dateTimeFormatter);
+        String formattedTime = now.format(timeFormatter);
+
+        AccountHistory accountHistory = AccountHistory.builder().
+                child(questOwned.getChild()).
+                transactionDate(formattedDateTime).
+                transactionTime(formattedTime).
+                briefs("퀘스트 입금 " + "`" + quest.getTitle() + "`").
+                deposit(String.valueOf(quest.getReward())).
+                withdraw("0").
+                build();
+
+        accountHistoryRepository.save(accountHistory);
 
         // FCM
         String token = questOwned.getChild().getFcmToken();
