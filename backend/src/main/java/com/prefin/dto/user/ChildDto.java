@@ -47,7 +47,7 @@ public class ChildDto {
 
     private long payday;
 
-    private BigDecimal saveRate;
+    private BigDecimal savingRate;
 
     private BigDecimal loanRate;
 
@@ -78,7 +78,7 @@ public class ChildDto {
                 .parentId(child.getParent().getId())
                 .allowanceAmount(allowance.getAllowanceAmount())
                 .payday(allowance.getPayday())
-                .saveRate(child.getSavingRate())
+                .savingRate(child.getSavingRate())
                 .loanRate(child.getLoanRate())
                 .build();
     }
