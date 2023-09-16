@@ -15,10 +15,20 @@ import com.prefin.databinding.FragmentPinMoneyRegistBinding
 class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(FragmentPinMoneyRegistBinding::bind, R.layout.fragment_pin_money_regist) {
     private val pinMoneyRegistViewModel by viewModels<PinMoneyRegistViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-    private lateinit var mActivity : MainActivity
+    private lateinit var mActivity: MainActivity
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mActivity = requireActivity() as MainActivity
+        if (mainActivityViewModel.pinMoneyRegistFragmentAmount > 0) {
+            pinMoneyRegistViewModel.pinMoneySet(
+                mainActivityViewModel.pinMoneyRegistFragmentDate,
+                mainActivityViewModel.pinMoneyRegistFragmentAmount,
+                ApplicationClass.sharedPreferences.getLong("id"),
+                mainActivityViewModel.selectedChild.id,
+            )
+            mActivity.showLoadingDialog(requireContext())
+        }
         init()
     }
 
@@ -40,13 +50,10 @@ class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(Fragm
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 등록 요청
-                pinMoneyRegistViewModel.pinMoneySet(
-                    fragmentPinMoneyRegistDateEditText.text.toString().toLong(),
-                    fragmentPinMoneyRegistAmountEditText.text.toString().toInt(),
-                    ApplicationClass.sharedPreferences.getLong("id"),
-                    mainActivityViewModel.selectedChild.id,
-                )
-                mActivity.showLoadingDialog(requireContext())
+                mainActivityViewModel.pinMoneyRegistFragmentDate = fragmentPinMoneyRegistDateEditText.text.toString().toLong()
+                mainActivityViewModel.pinMoneyRegistFragmentAmount = fragmentPinMoneyRegistAmountEditText.text.toString().toInt()
+                mainActivityViewModel.fromFragment = PinMoneyRegistFragment::class.simpleName
+                findNavController().navigate(R.id.action_PinMoneyRegistFragment_to_SimplePassFragment)
             }
         }
 
@@ -62,7 +69,8 @@ class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(Fragm
 
                 mainActivityViewModel.selectedChild.payday = fragmentPinMoneyRegistDateEditText.text.toString().toLong()
                 mainActivityViewModel.selectedChild.allowanceAmount = fragmentPinMoneyRegistAmountEditText.text.toString().toInt()
-
+                mainActivityViewModel.pinMoneyRegistFragmentDate = 0L
+                mainActivityViewModel.pinMoneyRegistFragmentAmount = 0
                 findNavController().navigateUp()
             }
         }

@@ -116,6 +116,13 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"/>
 
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 
@@ -293,6 +300,14 @@
         android:name="com.prefin.ui.account.PinMoneyRegistFragment"
         android:label="pinMoneyRegist"
         tools:layout="@layout/fragment_pin_money_regist">
+
+        <action
+            android:id="@+id/action_PinMoneyRegistFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/PinMoneySendFragment"
@@ -370,6 +385,14 @@
         android:name="com.prefin.ui.loan.LoanResponseFragment"
         android:label="loanResponseFragment"
         tools:layout="@layout/fragment_loan_response">
+
+        <action
+            android:id="@+id/action_LoanResponseFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/QuestChildHomeFragment"

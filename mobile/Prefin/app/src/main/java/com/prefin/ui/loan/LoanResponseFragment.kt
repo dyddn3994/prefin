@@ -17,9 +17,17 @@ import java.math.BigDecimal
 class LoanResponseFragment : BaseFragment<FragmentLoanResponseBinding>(FragmentLoanResponseBinding::bind, R.layout.fragment_loan_response) {
     private val loanResponseViewModel by viewModels<LoanResponseViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-    private lateinit var mActivity : MainActivity
+
+    private lateinit var mActivity: MainActivity
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (mainActivityViewModel.loanResponseFragmentSuccess) {
+            mainActivityViewModel.loanResponseFragmentSuccess = false
+            loanResponseViewModel.giveMoney(mainActivityViewModel.selectedLoanHistory.loanId)
+            mActivity.showLoadingDialog(requireContext())
+        }
         mActivity = requireActivity() as MainActivity
         init()
     }
@@ -39,8 +47,9 @@ class LoanResponseFragment : BaseFragment<FragmentLoanResponseBinding>(FragmentL
 
         // 대출 승낙하기 버튼 클릭
         fragmentLoanResponseApplyButton.setOnClickListener {
-            loanResponseViewModel.giveMoney(mainActivityViewModel.selectedLoanHistory.loanId)
-            mActivity.showLoadingDialog(requireContext())
+            mainActivityViewModel.fromFragment = LoanResponseFragment::class.simpleName
+            mainActivityViewModel.loanResponseFragmentSuccess = true
+            findNavController().navigate(R.id.action_LoanResponseFragment_to_SimplePassFragment)
         }
 
         fragmentLoanResponseLoanAmountTextView.text = StringFormatUtil.moneyToWon(mainActivityViewModel.selectedLoanHistory.loanAmount)

@@ -30,4 +30,20 @@ class MainActivityViewModel : ViewModel() {
     var savingFragmentSavingAmount = 0
     var withdrawFragmentWithdrawAmount = 0
     var pinMoneySendFragmentAmount = 0
+    var pinMoneyRegistFragmentDate = 0L
+    var pinMoneyRegistFragmentAmount = 0
+    var parentFragmentSimplePassSuccess = false
+    var loanResponseFragmentSuccess = false
+
+    fun clearSimplePassMoving() {
+        fromFragment = ""
+
+        savingFragmentSavingAmount = 0
+        withdrawFragmentWithdrawAmount = 0
+        pinMoneySendFragmentAmount = 0
+        pinMoneyRegistFragmentDate = 0L
+        pinMoneyRegistFragmentAmount = 0
+        parentFragmentSimplePassSuccess = false
+        loanResponseFragmentSuccess = false
+    }
 }

@@ -3,6 +3,7 @@ package com.prefin.ui.accountConnecting
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,7 +13,6 @@ import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSimplePassBinding
 import com.prefin.ui.login.LoginFragment
-import com.prefin.ui.saving.SavingFragment
 
 private const val TAG = "Prefin_SimplePassFragment"
 class SimplePassFragment : BaseFragment<FragmentSimplePassBinding>(FragmentSimplePassBinding::bind, R.layout.fragment_simple_pass) {
@@ -88,6 +88,20 @@ class SimplePassFragment : BaseFragment<FragmentSimplePassBinding>(FragmentSimpl
                 findNavController().navigate(R.id.action_SimplePassFragment_to_ChildAddFragment)
             }
         }
+
+        // 뒤로가기 동작
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    mainActivityViewModel.clearSimplePassMoving()
+
+                    // 뒤로가기 동작 수행
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                }
+            },
+        )
     }
 
     private fun inputPassword(num: Int) = with(binding) {

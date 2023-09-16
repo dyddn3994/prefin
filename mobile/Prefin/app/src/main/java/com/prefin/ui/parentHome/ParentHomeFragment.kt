@@ -23,9 +23,6 @@ import com.prefin.util.StringFormatUtil
 
 private const val TAG = "ParentHomeFragment prefin"
 class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParentHomeBinding::bind, R.layout.fragment_parent_home) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var adpater: ChildAccountAdapter
     private val parentHomeViewModel: ParentHomeFragmentViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
@@ -37,6 +34,11 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mActivity = requireActivity() as MainActivity
+        if (mainActivityViewModel.parentFragmentSimplePassSuccess) {
+            mainActivityViewModel.parentFragmentSimplePassSuccess = false
+            findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
+            mainActivityViewModel.destinationFragment = 1
+        }
         init()
     }
 
@@ -101,8 +103,9 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
 
             // 퀘스트 화면 이동
             fragmentParentHomeQuestLayout.setOnClickListener {
-                findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
-                mainActivityViewModel.destinationFragment = 1
+                mainActivityViewModel.fromFragment = ParentHomeFragment::class.simpleName
+                mainActivityViewModel.parentFragmentSimplePassSuccess = true
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_SimplePassFragment)
             }
 
             // 자녀 저축 내역 보기
