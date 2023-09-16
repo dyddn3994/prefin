@@ -83,7 +83,8 @@ public class ChildService {
         child.updateAccount(account);
         childRepository.save(child);
 
-        if (accountHistoryRepository.findByChild(child) == null) {
+        // 계좌 등록할 때 자녀 거래내역이 존재하지 않으면 추가한다.
+        if (accountHistoryRepository.findByChild(child).size() == 0) {
             setAccountHistory(id, account);
         }
 
