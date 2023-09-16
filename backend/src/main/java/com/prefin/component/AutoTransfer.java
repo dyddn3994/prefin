@@ -1,8 +1,10 @@
 package com.prefin.component;
 
+import com.prefin.domain.money.AccountHistory;
 import com.prefin.domain.money.Allowance;
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
+import com.prefin.repository.money.AccountHistoryRepository;
 import com.prefin.repository.money.AllowanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -19,11 +22,12 @@ import java.util.List;
 public class AutoTransfer {
 
     private final AllowanceRepository allowanceRepository;
+    private final AccountHistoryRepository accountHistoryRepository;
 
     // 자동이체 로직
     // 용돈 설정 후 해당 테이블을 다 돌아보면서
     // 오늘 날짜와 비교, 일치한다면 해당 부모의 계좌에서 자식 계좌로 이체
-    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
+    @Scheduled(cron = "0 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
     @Transactional
     public void autoTransfer() {
         System.out.println("!!자동 이체 실행!!");
@@ -64,6 +68,26 @@ public class AutoTransfer {
                         child.addMoney(allowanceAmount);
                         child.resetLoan();
                         System.out.println("용돈 정상 지급");
+
+                        // 거래 내역 추가
+                        LocalDateTime now = LocalDateTime.now();
+
+                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
+
+                        String formattedDateTime = now.format(dateTimeFormatter);
+                        String formattedTime = now.format(timeFormatter);
+
+                        AccountHistory accountHistory = AccountHistory.builder().
+                                child(child).
+                                transactionDate(formattedDateTime).
+                                transactionTime(formattedTime).
+                                briefs("용돈").
+                                deposit(String.valueOf(allowanceAmount)).
+                                withdraw("0").
+                                build();
+
+                        accountHistoryRepository.save(accountHistory);
 
                     } else {  // 만약 빚이 용돈보다 크다면
                         // 부모 계좌 잔액 차감

@@ -1,9 +1,11 @@
 package com.prefin.service.money;
 
+import com.prefin.domain.money.AccountHistory;
 import com.prefin.domain.money.Allowance;
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
 import com.prefin.dto.money.AllowanceDto;
+import com.prefin.repository.money.AccountHistoryRepository;
 import com.prefin.repository.money.AllowanceRepository;
 import com.prefin.repository.money.LoanRepository;
 import com.prefin.repository.user.ChildRepository;
@@ -20,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -29,7 +32,7 @@ public class AllowanceService {
     private final AllowanceRepository allowanceRepository;
     private final ParentRepository parentRepository;
     private final ChildRepository childRepository;
-
+    private final AccountHistoryRepository accountHistoryRepository;
 
     // 정기 용돈 설정 및 수정
     @Transactional
@@ -99,6 +102,27 @@ public class AllowanceService {
         if (parent.getBalance() >= immediateAllowance) {
             child.addMoney(immediateAllowance);
             parent.transfer(immediateAllowance);
+
+            // 거래 내역 추가
+            LocalDateTime now = LocalDateTime.now();
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
+
+            String formattedDateTime = now.format(dateTimeFormatter);
+            String formattedTime = now.format(timeFormatter);
+
+            AccountHistory accountHistory = AccountHistory.builder().
+                    child(child).
+                    transactionDate(formattedDateTime).
+                    transactionTime(formattedTime).
+                    briefs("용돈").
+                    deposit(String.valueOf(requestDto.getAllowanceAmount())).
+                    withdraw("0").
+                    build();
+
+            accountHistoryRepository.save(accountHistory);
+
             return ResponseEntity.ok("일반 용돈 지급 완료");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("계좌 잔액이 부족합니다.");
