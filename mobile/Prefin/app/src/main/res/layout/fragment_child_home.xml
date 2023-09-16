@@ -57,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            app:cardCornerRadius="16dp"
             android:backgroundTint="@color/colorblueBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +78,7 @@
             android:layout_width="214dp"
             android:layout_height="235dp"
             android:layout_marginTop="32dp"
+            app:cardCornerRadius="16dp"
             android:backgroundTint="@color/colorblueBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,8 +113,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:padding="8dp"
-
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:background="@drawable/edittext_rectangle_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_pocketmoney_title_text_view">
 
@@ -162,8 +165,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:padding="8dp"
-
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:background="@drawable/edittext_rectangle_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_title_text_view">
 
@@ -197,35 +201,87 @@
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_marginTop="16dp"
-            android:id="@+id/fragment_child_home_quest_text_view"
-            style="@style/Text.regular.Size20"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/color_block_red"
-            android:gravity="center"
-            android:text="퀘스트"
-            app:layout_constraintEnd_toStartOf="@+id/fragment_child_home_loan_text_view"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_account_linearLayout" />
-
-        <TextView
-            android:layout_marginTop="16dp"
-            android:id="@+id/fragment_child_home_loan_text_view"
-            style="@style/Text.regular.Size20"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/color_block_blue"
-            android:gravity="center"
-            android:text="용돈 빌리기"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/fragment_child_home_quest_text_view"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_account_linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_saving_account_linearLayout"
+            android:gravity="center_horizontal"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/fragment_child_home_quest_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/color_block_red"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_quest_box"
+                        />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/fragment_child_home_quest_text_view"
+                        style="@style/Text.regular.Size20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="퀘스트"
+                        />
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/fragment_child_home_loan_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/color_block_blue"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_loan_box"
+                        />
+                    <TextView
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/fragment_child_home_loan_text_view"
+                        style="@style/Text.regular.Size20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="용돈 빌리기"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

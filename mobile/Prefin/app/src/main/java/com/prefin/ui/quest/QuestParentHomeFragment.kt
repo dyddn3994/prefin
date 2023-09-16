@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -23,6 +24,7 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
     private lateinit var questParentAdapter: QuestParentAdapter
     private val questParentHomeFragmentViewModel : QuestParentHomeFragmentViewModel by viewModels()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
 
     private val dialog: Dialog by lazy {
         BottomSheetDialog(requireContext()).apply {
@@ -35,11 +37,15 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = requireActivity() as MainActivity
         questParentHomeFragmentViewModel.getQuestList(mainActivityViewModel.selectedChild.id)
         questParentHomeFragmentViewModel.questList.observe(viewLifecycleOwner){
             questParentAdapter.submitList(it)
+            mActivity.dismissLoadingDialog()
         }
+
         init()
+        mActivity.showLoadingDialog(requireContext())
     }
 
     private fun init() = with(binding) {
@@ -56,6 +62,7 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
 
 
         questParentHomeFragmentViewModel.questCompleteSuccess.observe(viewLifecycleOwner){
+            mActivity.dismissLoadingDialog()
             if(it == 1){
                 questParentHomeFragmentViewModel.getQuestList(mainActivityViewModel.selectedChild.id)
             }
@@ -76,6 +83,7 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
                         if(data.requested){
                             questParentHomeFragmentViewModel.questComplete(data.questOwnedId)
                             dialog.dismiss()
+                            mActivity.showLoadingDialog(requireContext())
                         }
 
                     }

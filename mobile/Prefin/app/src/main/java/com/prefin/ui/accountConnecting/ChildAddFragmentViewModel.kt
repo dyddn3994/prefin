@@ -25,6 +25,7 @@ class ChildAddFragmentViewModel : ViewModel() {
 
             }
             catch (e : Exception){
+                _childList.value = mutableListOf()
                 Log.d(TAG, "getChildList: 통신 오류")
             }
         }

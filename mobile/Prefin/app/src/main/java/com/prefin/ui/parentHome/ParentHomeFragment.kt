@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -28,17 +29,18 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     private lateinit var adpater: ChildAccountAdapter
     private val parentHomeViewModel: ParentHomeFragmentViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity: MainActivity
 
 
     private val childList = mutableListOf<Child>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
     fun init() {
-
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -58,9 +60,11 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
             mainActivityViewModel.parentUser = it
             binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
             binding.fragmentParentHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
+            mActivity.dismissLoadingDialog()
         }
 
         parentHomeViewModel.childs.observe(viewLifecycleOwner) {
+
             adpater.submitList(it)
         }
 
@@ -96,30 +100,32 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
             }
 
             // 퀘스트 화면 이동
-            fragmentParentHomeQuestTextView.setOnClickListener {
+            fragmentParentHomeQuestLayout.setOnClickListener {
                 findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
                 mainActivityViewModel.destinationFragment = 1
             }
 
             // 자녀 저축 내역 보기
-            fragmentParentHomeSavingTextView.setOnClickListener {
+            fragmentParentHomeSavingLayout.setOnClickListener {
                 findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
                 mainActivityViewModel.destinationFragment = 2
             }
 
             // 자녀 대출 내역 및 승인
-            fragmentParentHomeLoanTextView.setOnClickListener {
+            fragmentParentHomeLoanLayout.setOnClickListener {
                 findNavController().navigate(R.id.action_ParentHomeFragment_to_ChildAccountChooseFragment)
                 mainActivityViewModel.destinationFragment = 3
             }
 
             // 설정 화면
-            fragmentParentHomeSettingTextView.setOnClickListener {
+            fragmentParentHomeSettingLayout.setOnClickListener {
                 findNavController().navigate(R.id.action_ParentHomeFragment_to_SettingFragment)
-            }
+             }
             }
         parentHomeViewModel.getParentData()
         parentHomeViewModel.getChildData()
+        mActivity.showLoadingDialog(requireContext())
+
     }
 
 

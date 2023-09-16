@@ -6,6 +6,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -15,9 +16,10 @@ import com.prefin.databinding.FragmentLoginBinding
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
     private val loginViewModel: LoginViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity = requireActivity() as MainActivity
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -39,11 +41,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
         }
 
         loginViewModel.loginSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (loginViewModel.loginSuccess.value == true) {
+                ApplicationClass.sharedPreferences.addFCMFlag(true)
                 if (binding.fragmentLoginParentRadioButton.isChecked) {
                     findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
                 }
                 if (binding.fragmentLoginChildRadioButton.isChecked) {
+                    ApplicationClass.sharedPreferences.addFCMFlag(true)
                     findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
                 }
             } else {
@@ -75,6 +80,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                             mainActivityViewModel.fcmToken!!,
                         )
                     }
+                    mActivity.showLoadingDialog(requireContext())
                 }
             }
 

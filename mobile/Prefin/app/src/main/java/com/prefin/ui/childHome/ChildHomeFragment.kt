@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -24,8 +25,10 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
     private lateinit var cardView1: CardView
     private lateinit var cardView2: CardView
     private var isFirstCardVisible = true
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity =  requireActivity() as MainActivity
         init()
     }
 
@@ -64,6 +67,7 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
                 fragmentChildHomeSavingAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.savingAmount)
                 fragmentChildHomeCardViewBackTrustScore.text = "현재 신뢰점수는 \n ${it.trustScore} 점 입니다."
             }
+            mActivity.dismissLoadingDialog()
         }
 
         with(binding) {
@@ -94,12 +98,12 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             }
 
             // 퀘스트 버튼
-            fragmentChildHomeQuestTextView.setOnClickListener {
+            fragmentChildHomeQuestCardView.setOnClickListener {
                 findNavController().navigate(R.id.action_ChildHomeFragment_to_QuestChildHomeFragment)
             }
 
             // 용돈 빌리기 버튼
-            fragmentChildHomeLoanTextView.setOnClickListener {
+            fragmentChildHomeLoanCardView.setOnClickListener {
                 findNavController().navigate(R.id.action_ChildHomeFragment_to_LoanHomeFragment)
             }
 
@@ -109,6 +113,7 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             }
         }
         childHomeFragmentViewModel.getChild()
+        mActivity.showLoadingDialog(requireContext())
     }
 
     private fun flipCards() {

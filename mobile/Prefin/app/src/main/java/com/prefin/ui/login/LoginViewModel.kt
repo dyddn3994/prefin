@@ -32,12 +32,16 @@ class LoginViewModel : ViewModel() {
                             }
                         }
                     }
+                    else{
+                        _loginSuccess.value = false
+                    }
                     Log.d(TAG, "유저 정보: $response")
                     // 로그아웃 구현하면 다시 주석 풀기
 
-                    _loginSuccess.value = true
+
                 }
             } catch (e: Exception) {
+                _loginSuccess.value = false
                 Log.d(TAG, "login: 실패 $userId / $pwd")
             }
         }
@@ -67,7 +71,11 @@ class LoginViewModel : ViewModel() {
                     Log.d(TAG, "유저 정보: $response")
                     // 로그아웃 구현하면 다시 주석 풀어야함
                 }
+                else{
+                    _loginSuccess.value = false
+                }
             } catch (e: Exception) {
+                _loginSuccess.value = false
                 Log.d(TAG, "login: 실패 $userId / $pwd")
                 Log.d(TAG, "원인 : ${e.message}")
             }

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -14,10 +15,10 @@ import com.prefin.databinding.FragmentPinMoneyRegistBinding
 class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(FragmentPinMoneyRegistBinding::bind, R.layout.fragment_pin_money_regist) {
     private val pinMoneyRegistViewModel by viewModels<PinMoneyRegistViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -45,11 +46,13 @@ class PinMoneyRegistFragment : BaseFragment<FragmentPinMoneyRegistBinding>(Fragm
                     ApplicationClass.sharedPreferences.getLong("id"),
                     mainActivityViewModel.selectedChild.id,
                 )
+                mActivity.showLoadingDialog(requireContext())
             }
         }
 
         // 정기 용돈 등록 observe
         pinMoneyRegistViewModel.isPinMoneySetSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (!it) {
                 // 정기용돈 등록 실패
                 showSnackbar("등록에 실패하였습니다.")

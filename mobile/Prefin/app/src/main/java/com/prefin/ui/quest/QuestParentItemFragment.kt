@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -19,11 +20,13 @@ class QuestParentItemFragment : BaseFragment<FragmentQuestParentItemBinding>(Fra
 
     private val questParentItemViewModel by viewModels<QuestParentItemViewModel>()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity = requireActivity() as MainActivity
         questParentItemViewModel.requestQuestItemList(ApplicationClass.sharedPreferences.getLong("id"))
         init()
+        mActivity.showLoadingDialog(requireContext())
     }
 
     private fun init() = with(binding) {
@@ -45,8 +48,11 @@ class QuestParentItemFragment : BaseFragment<FragmentQuestParentItemBinding>(Fra
 
         // 퀘스트 리스트 조회 observe
         questParentItemViewModel.questItemList.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             questParentItemAdapter.submitList(it)
         }
+
+
 
 
         questParentItemAdapter.itemClickListener = object : QuestParentItemAdapter.ItemClickListener{

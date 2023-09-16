@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -32,7 +33,7 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
 
     private val childJoinFragmentViewModel : ChildJoinFragmentViewModel by viewModels()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
-
+    private lateinit var mActivity : MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -43,12 +44,14 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity =  requireActivity() as MainActivity
         init()
     }
 
     fun init() {
 
         childJoinFragmentViewModel.childJoinSuccess.observe(viewLifecycleOwner){
+            mActivity.dismissLoadingDialog()
             if(it){
                 mainActivityViewModel.childUser = childJoinFragmentViewModel.childUser
                 findNavController().navigate(R.id.action_ChildJoinFragment_to_AccountInputChildFragment)
@@ -75,6 +78,7 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
                     newChild.password = fragmentChildJoinPasswordEditText.text.toString()
                     newChild.parentId = mainActivityViewModel.parentUser!!.id
                     childJoinFragmentViewModel.childJoin(newChild)
+                    mActivity.showLoadingDialog(requireContext())
                 }
             }
         }

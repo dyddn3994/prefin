@@ -43,6 +43,17 @@
         />
 
     <TextView
+        android:id="@+id/fragment_saving_current_amount_text_view"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 계좌 잔액 : 50000원"
+        style="@style/Text.regular.Size16"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_saving_amount_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_amount_edit_text" />
+
+    <TextView
         android:id="@+id/fragment_saving_before_total_amount_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

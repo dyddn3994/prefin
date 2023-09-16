@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -15,11 +16,12 @@ import java.util.regex.Pattern
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::bind, R.layout.fragment_sign_up) {
     private val signUpViewModel: SignUpViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
-
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity = requireActivity() as MainActivity
         signUpViewModel.signUpSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (signUpViewModel.signUpSuccess.value == true) {
                 val id = signUpViewModel.userId
                 signUpViewModel.parentUser.id = id
@@ -61,6 +63,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         signUpViewModel.parentUser.name = fragmentSignUpNameEditText.text.toString()
 
                         signUpViewModel.signUp()
+                        mActivity.showLoadingDialog(requireContext())
+
                     }
                     else if(!Pattern.matches("^[a-zA-Z0-9]*\$", fragmentSignUpIdEditText.text.toString())) {
                         fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE

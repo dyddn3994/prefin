@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -20,9 +21,11 @@ class LoanHomeFragment : BaseFragment<FragmentLoanHomeBinding>(FragmentLoanHomeB
     private val loanHomeViewModel by viewModels<LoanHomeViewModel>()
 
     private lateinit var loanHistoryAdapter: LoanHistoryAdapter
+    private lateinit var mActivity : MainActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -64,8 +67,10 @@ class LoanHomeFragment : BaseFragment<FragmentLoanHomeBinding>(FragmentLoanHomeB
         }
 
         loanHomeViewModel.setLoanHistory(mainActivityViewModel.selectedChild.id)
+        mActivity.showLoadingDialog(requireContext())
         loanHomeViewModel.loanHistories.observe(viewLifecycleOwner) {
             loanHistoryAdapter.submitList(it.reversed())
+            mActivity.dismissLoadingDialog()
         }
     }
 }

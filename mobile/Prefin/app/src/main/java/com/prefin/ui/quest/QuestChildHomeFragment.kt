@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.prefin.MainActivity
 import com.prefin.R
 import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
@@ -18,7 +19,7 @@ import com.prefin.util.StringFormatUtil
 
 class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(FragmentQuestChildHomeBinding::bind, R.layout.fragment_quest_child_home) {
     private lateinit var questChildAdapter: QuestChildAdapter
-
+    private lateinit var mActivity : MainActivity
     private val questChildHomeViewModel by viewModels<QuestChildHomeViewModel>()
 
     // 퀘스트 완료 신청 dialog
@@ -33,7 +34,7 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity =  requireActivity() as MainActivity
         init()
     }
 
@@ -57,6 +58,7 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
 
         questChildHomeViewModel.getQuestList(ApplicationClass.sharedPreferences.getLong("id"))
         questChildHomeViewModel.questList.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             questChildAdapter.submitList(it)
         }
 
@@ -65,6 +67,7 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
         }
 
         questChildHomeViewModel.questFinishRequestSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (!it) {
                 showSnackbar("완료 요청에 실패하였습니다.")
             } else {
@@ -73,6 +76,7 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
                 dialog.dismiss()
             }
         }
+        mActivity.showLoadingDialog(requireContext())
     }
 
     private fun showDialog(data: QuestOwnedQuest) = with(dialogBinding) {

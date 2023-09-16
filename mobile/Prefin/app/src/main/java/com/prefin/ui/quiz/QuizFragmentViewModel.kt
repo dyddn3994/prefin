@@ -29,7 +29,11 @@ class QuizFragmentViewModel : ViewModel() {
                 if (response != null) {
                     _quiz.value = response
                 }
+                else{
+                    _quiz.value = Quiz()
+                }
             } catch (e: Exception) {
+                _quiz.value = Quiz()
                 Log.d(TAG, "getQuiz: 퀴즈 조회 실패\n${e.message}")
             }
 

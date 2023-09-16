@@ -27,6 +27,7 @@ class AccountInputChildFragmentViewModel : ViewModel() {
                     }
                 }
             } catch (e : Exception){
+                _accountChildSuccess.value = false
                 Log.d(TAG, "childAccountRegister: 전송 오류")
             }
         }

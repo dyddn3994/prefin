@@ -99,4 +99,12 @@ dependencies {
     // gif VIew
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.27'
 
+    //spinner 로딩창
+    // https://github.com/ybq/Android-SpinKit
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // material ui
+    implementation 'com.google.android.material:material:1.9.0'
+
 }

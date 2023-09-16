@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -29,6 +30,7 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
     private var param2: String? = null
     private val childAddFragmentViewModel : ChildAddFragmentViewModel by viewModels()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,11 +41,13 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
     fun init() {
         childAddFragmentViewModel.childList.observe(viewLifecycleOwner){
+            mActivity.dismissLoadingDialog()
             binding.fragmentChildAddCountTextView.text = "현재 등록된 자녀의 계정은 \n총 ${it.size}개 입니다."
         }
         childAddFragmentViewModel.getChildList(mainActivityViewModel.parentUser!!.id)
@@ -59,6 +63,7 @@ class ChildAddFragment : BaseFragment<FragmentChildAddBinding>(FragmentChildAddB
             }
             fragmentChildAddCountTextView.text = "현재 등록된 자녀의 계정은 \n총 -1개 입니다."
         }
+        mActivity.showLoadingDialog(requireContext())
 
     }
 

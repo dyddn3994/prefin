@@ -2,6 +2,7 @@ package com.prefin.ui.quest
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -36,11 +37,11 @@ class QuestParentItemAdapter(var context: Context) : ListAdapter<Quest, QuestPar
             // 등록되어 있을 경우 클릭 불가
             if (data.registered) {
                 // 등록 상태
-                root.setBackgroundColor(Color.GRAY)
+                root.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.colorGray))
                 root.isClickable = false
             } else {
                 // 미등록 상태
-                root.setBackgroundColor(Color.WHITE)
+                root.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.white))
                 root.isClickable = true
             }
         }

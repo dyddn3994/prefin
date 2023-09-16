@@ -51,4 +51,16 @@ class SharedPreferencesUtil(context: Context) {
         editor.apply()
 
     }
+
+    fun addFCMFlag(flag : Boolean){
+        val editor = preferences.edit()
+        editor.putBoolean("fcmFlag", flag)
+        editor.apply()
+    }
+
+    fun getBoolean(key : String) : Boolean {
+        return preferences.getBoolean(key, true)
+    }
+
+
 }

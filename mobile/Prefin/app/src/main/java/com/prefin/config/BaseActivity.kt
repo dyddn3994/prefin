@@ -1,5 +1,6 @@
 package com.prefin.config
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_FADE
 import com.google.android.material.snackbar.Snackbar
+import com.prefin.util.LoadingDialog
+
 //import com.petmily.R
 //import com.petmily.util.NetworkUtil
 
@@ -15,12 +18,24 @@ abstract class BaseActivity<B : ViewBinding>(private val inflate: (LayoutInflate
     AppCompatActivity() {
     protected lateinit var binding: B
         private set
+    lateinit var mLoadingDialog: LoadingDialog
 
     // 뷰 바인딩 객체를 받아서 inflate해서 화면을 만들어줌.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    fun showLoadingDialog(context: Context) {
+        mLoadingDialog = LoadingDialog(context)
+        mLoadingDialog.show()
+    }
+    // 띄워 놓은 로딩 다이얼로그를 없앰.
+    fun dismissLoadingDialog() {
+        if (mLoadingDialog.isShowing) {
+            mLoadingDialog.dismiss()
+        }
     }
 
 //    fun showSnackbar(message: String) {
