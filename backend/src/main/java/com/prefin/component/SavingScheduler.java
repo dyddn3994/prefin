@@ -24,7 +24,7 @@ public class SavingScheduler {
 
     // 매 1일 이자 입금
     @Transactional
-    @Scheduled(cron = "0 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?" 매 분
+    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")  // "0 * * * * ?" 매 분
     public void MonthlyInterest() {
         // 자녀의 저축금액으로 부모의 이율을 적용해서 돈을 준다.
         List<Child> childList = childRepository.findAll();
@@ -33,10 +33,10 @@ public class SavingScheduler {
         for (Child child : childList) {
             int savedMoney = child.getSavingAmount();
             if (savedMoney != 0) {
-                BigDecimal savingInterst = child.getSavingRate();
+                BigDecimal savingInterest = child.getSavingRate();
                 BigDecimal convertedSM = new BigDecimal(savedMoney);
 
-                BigDecimal result = savingInterst.multiply(convertedSM);
+                BigDecimal result = savingInterest.multiply(convertedSM);
                 int monthlyInterest = result.setScale(0, RoundingMode.FLOOR).intValue();
                 if (monthlyInterest > child.getParent().getMaxSavingAmount()) {
                     monthlyInterest = child.getParent().getMaxSavingAmount();
@@ -47,7 +47,7 @@ public class SavingScheduler {
 
                 // 저축 내역에 추가한다.
                 SavingHistory savingHistory = SavingHistory.builder()
-                        .savingAmount(child.getSavingAmount())
+                        .savingAmount(monthlyInterest)
                         .child(child)
                         .parent(child.getParent())
                         .savingDate(LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli())
