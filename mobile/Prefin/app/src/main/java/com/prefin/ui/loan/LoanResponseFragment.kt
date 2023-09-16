@@ -29,6 +29,7 @@ class LoanResponseFragment : BaseFragment<FragmentLoanResponseBinding>(FragmentL
                 showSnackbar("대출 처리에 실패하였습니다.")
             } else {
                 showSnackbar("대출 처리에 성공하였습니다.")
+                mainActivityViewModel.selectedChild.loanAmount += mainActivityViewModel.selectedLoanHistory.loanAmount
                 findNavController().navigateUp()
             }
         }

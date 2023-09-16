@@ -8,7 +8,7 @@ data class Child(
     var fcmToken: String? = null,
     var id: Long = 0,
     val isQuizSolved: Boolean? = false,
-    val loanAmount: Int = 0,
+    var loanAmount: Int = 0,
     val mascotId: Long? = null,
     var name: String = "",
     var parentId: Long = 0,
@@ -22,4 +22,5 @@ data class Child(
     var allowanceAmount: Int = 0,
     var savingRate: BigDecimal? = BigDecimal("0.0"),
     var loanRate: BigDecimal? = BigDecimal("0.0"),
+    var possibleLoanAmount : Int = 0,
 )
