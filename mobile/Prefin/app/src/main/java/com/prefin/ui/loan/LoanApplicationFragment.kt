@@ -43,14 +43,27 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
             findNavController().navigateUp()
         }
 
+        // 다음 달 용돈은
         fragmentLoanApplicationBeforePinmoneyTextView.text = StringFormatUtil.moneyToWon(
             mainActivityViewModel.selectedChild.allowanceAmount -
                 mainActivityViewModel.selectedChild.loanAmount,
         )
-        fragmentLoanApplicationInterestRateTextView.text = "${mainActivityViewModel.selectedChild.savingRate}%"
+        // 현재 이율은
+        fragmentLoanApplicationInterestRateTextView.text = "${mainActivityViewModel.selectedChild.loanRate?.multiply(BigDecimal(100))?.toFloat()}%"
 
         fragmentLoanApplicationApplyButton.setOnClickListener {
-            openDialog()
+            if (fragmentLoanApplicationAmountEditText.text.isNullOrBlank()) {
+                showSnackbar("대출받을 금액을 입력해주세요.")
+            } else if (fragmentLoanApplicationAmountEditText.text.toString().toInt() < 1) {
+                showSnackbar("금액은 0보다 커야합니다.")
+            } else if (
+                // 최대 이자 설정값 초과
+                false
+            ) {
+                showSnackbar("대출받을 수 있는 금액이 초과하였습니다.")
+            } else {
+                openDialog()
+            }
         }
 
         loanApplicationViewModel.loanApplySuccess.observe(viewLifecycleOwner) {
@@ -74,7 +87,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
                 mainActivityViewModel.selectedChild.loanAmount -
                 binding.fragmentLoanApplicationAmountEditText.text.toString().toInt() -
                 binding.fragmentLoanApplicationAmountEditText.text.toString().toBigDecimal()
-                    .multiply((mainActivityViewModel.selectedChild.loanRate ?: BigDecimal("0.0")).multiply(BigDecimal("0.01")))
+                    .multiply((mainActivityViewModel.selectedChild.loanRate ?: BigDecimal("0.0")))
                     .toInt(),
         )
 

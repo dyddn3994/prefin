@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.prefin.R
 import com.prefin.databinding.ItemSavingHistoryBinding
 import com.prefin.model.dto.SavingHistory
 import com.prefin.util.AdapterUtil
@@ -15,7 +16,20 @@ class SavingHistoryAdapter(var context: Context) : ListAdapter<SavingHistory, Sa
 ) {
     inner class ItemViewHolder(var binding: ItemSavingHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SavingHistory) = with(binding) {
-            itemSavingHistoryTypeTextView.text = data.savingType
+            when (data.savingType) {
+                "DEPOSIT" -> {
+                    itemSavingHistoryTypeTextView.text = "저축"
+                    itemSavingHistoryAmountTextView.setTextColor(context.resources.getColor(R.color.colorPrimary))
+                }
+                "WITHDRAW" -> {
+                    itemSavingHistoryTypeTextView.text = "출금"
+                    itemSavingHistoryAmountTextView.setTextColor(context.resources.getColor(R.color.colorRed))
+                }
+                else -> {
+                    itemSavingHistoryTypeTextView.text = "이자"
+                    itemSavingHistoryAmountTextView.setTextColor(context.resources.getColor(R.color.green))
+                }
+            }
             itemSavingHistoryDateTextView.text = StringFormatUtil.dateTimeToString(data.savingDate)
             itemSavingHistoryAmountTextView.text = data.savingAmount.toString()
         }

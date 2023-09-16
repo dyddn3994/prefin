@@ -304,6 +304,9 @@
         <action
             android:id="@+id/action_LoanHomeFragment_to_LoanApplicationFragment"
             app:destination="@+id/LoanApplicationFragment" />
+        <action
+            android:id="@+id/action_LoanHomeFragment_to_LoanResponseFragment"
+            app:destination="@+id/LoanResponseFragment" />
     </fragment>
 
     <fragment android:id="@+id/QuizFragment"

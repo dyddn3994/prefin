@@ -21,7 +21,7 @@
         android:id="@+id/fragment_loan_application_before_pinmoney_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기존 다음 달 용돈은"
+        android:text="다음 달 용돈은"
         style="@style/Text.regular.Size20"
         android:textColor="@color/gray"
         android:layout_marginStart="48dp"

@@ -10,6 +10,7 @@ import com.prefin.R
 import com.prefin.databinding.ItemLoanHistoryBinding
 import com.prefin.model.dto.AccountHistory
 import com.prefin.util.AdapterUtil
+import com.prefin.util.StringFormatUtil
 
 class AccountHistoryAdapter(var context: Context) : ListAdapter<AccountHistory, AccountHistoryAdapter.ItemViewHolder>(
     AdapterUtil.diffUtilAccountHistory,
@@ -28,13 +29,13 @@ class AccountHistoryAdapter(var context: Context) : ListAdapter<AccountHistory, 
             if (data.deposit == "0") {
                 // -
                 itemLoanHistoryAmountTextView.apply {
-                    text = data.withdraw
+                    text = StringFormatUtil.moneyToWon(data.withdraw.toInt())
                     setTextColor(resources.getColor(R.color.colorRed))
                 }
             } else {
                 // +
                 itemLoanHistoryAmountTextView.apply {
-                    text = data.deposit
+                    text = StringFormatUtil.moneyToWon(data.deposit.toInt())
                     setTextColor(resources.getColor(R.color.colorPrimary))
                 }
             }

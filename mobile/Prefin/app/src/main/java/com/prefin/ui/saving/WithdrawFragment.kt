@@ -29,7 +29,7 @@ class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawB
         fragmentWithdrawBeforeInterestTextView.text = StringFormatUtil.moneyToWon(
             mainActivityViewModel.selectedChild.savingAmount
                 .toBigDecimal()
-                .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")).multiply(BigDecimal("0.01")))
+                .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")))
                 .add(mainActivityViewModel.selectedChild.savingAmount.toBigDecimal())
                 .toInt(),
         )
@@ -42,7 +42,7 @@ class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawB
                 fragmentWithdrawAfterTotalAmountTextView.text = StringFormatUtil.moneyToWon(sub)
                 fragmentWithdrawAfterTotalInterestTextView.text = StringFormatUtil.moneyToWon(
                     sub.toBigDecimal()
-                        .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")).multiply(BigDecimal("0.01")))
+                        .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")))
                         .add(sub.toBigDecimal())
                         .toInt(),
                 )

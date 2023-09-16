@@ -31,7 +31,7 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
         fragmentSavingBeforeInterestTextView.text = StringFormatUtil.moneyToWon(
             mainActivityViewModel.selectedChild.savingAmount
                 .toBigDecimal()
-                .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")).multiply(BigDecimal("0.01")))
+                .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")))
                 .toInt(),
         )
 
@@ -39,11 +39,18 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val sum = mainActivityViewModel.selectedChild.savingAmount + fragmentSavingAmountEditText.text.toString().toInt()
+                val inputNum =
+                    if (fragmentSavingAmountEditText.text.isNullOrBlank()) {
+                        0
+                    } else {
+                        fragmentSavingAmountEditText.text.toString().toInt()
+                    }
+
+                val sum = mainActivityViewModel.selectedChild.savingAmount + inputNum
                 fragmentSavingAfterTotalAmountTextView.text = StringFormatUtil.moneyToWon(sum)
                 fragmentSavingAfterTotalInterestTextView.text = StringFormatUtil.moneyToWon(
                     sum.toBigDecimal()
-                        .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")).multiply(BigDecimal("0.01")))
+                        .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")))
                         .toInt(),
                 )
             }

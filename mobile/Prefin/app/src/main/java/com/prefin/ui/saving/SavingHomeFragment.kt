@@ -3,6 +3,7 @@ package com.prefin.ui.saving
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prefin.MainActivityViewModel
@@ -17,7 +18,9 @@ import java.util.Locale
 class SavingHomeFragment : BaseFragment<FragmentSavingHomeBinding>(FragmentSavingHomeBinding::bind, R.layout.fragment_saving_home) {
 
     private lateinit var savingHistoryAdapter: SavingHistoryAdapter
+
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+    private val savingHomeViewModel by viewModels<SavingHomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,9 +59,15 @@ class SavingHomeFragment : BaseFragment<FragmentSavingHomeBinding>(FragmentSavin
         }
 
         fragmentSavingHomeSavingMoneyTextView.text = StringFormatUtil.moneyToWon(mainActivityViewModel.selectedChild.savingAmount)
+
+        savingHomeViewModel.setSavingHistory(mainActivityViewModel.selectedChild.id)
+        savingHomeViewModel.savingHistories.observe(viewLifecycleOwner) {
+            savingHistoryAdapter.submitList(it.reversed())
+        }
     }
 
     private fun isSavingDay(): Boolean {
-        return SimpleDateFormat("dd", Locale.KOREA).format(System.currentTimeMillis()).toInt() == 1
+//        return SimpleDateFormat("dd", Locale.KOREA).format(System.currentTimeMillis()).toInt() == 1
+        return true
     }
 }
