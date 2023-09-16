@@ -73,4 +73,11 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+
+    <!-- splash -->
+    <style name="Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/colorBackground</item>
+
+    </style>
 </resources>

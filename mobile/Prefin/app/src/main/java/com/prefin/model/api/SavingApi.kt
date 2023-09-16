@@ -1,8 +1,10 @@
 package com.prefin.model.api
 
 import com.prefin.model.dto.SavingHistory
+import com.prefin.model.dto.Parent
 import com.prefin.model.dto.SavingInterestSetRequest
 import com.prefin.model.dto.SavingRequest
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -35,4 +37,10 @@ interface SavingApi {
         @Path("id") id: Long,
         @Body savingInterestSetRequest: SavingInterestSetRequest,
     )
+
+    @PUT("parent/{id}/maxSaving")
+    suspend fun maxSaving(
+        @Path("id") id : Long,
+        @Body parent : Parent
+    ) : Response<Boolean>
 }

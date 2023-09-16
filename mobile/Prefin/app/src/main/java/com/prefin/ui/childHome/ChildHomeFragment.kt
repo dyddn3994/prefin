@@ -1,9 +1,14 @@
 package com.prefin.ui.childHome
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,13 +21,27 @@ import com.prefin.util.StringFormatUtil
 class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHomeBinding::bind, R.layout.fragment_child_home) {
     private val childHomeFragmentViewModel: ChildHomeFragmentViewModel by viewModels()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-
+    private lateinit var cardView1: CardView
+    private lateinit var cardView2: CardView
+    private var isFirstCardVisible = true
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
 
     fun init() {
+
+        cardView1 = binding.fragmentChildHomeCardView
+        cardView2 = binding.fragmentChildHomeCardViewBack
+        cardView2.visibility = View.GONE
+        cardView1.setOnClickListener {
+            flipCards()
+        }
+        cardView2.setOnClickListener{
+            flipCards()
+        }
+
+        // 뒤로가기
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -43,6 +62,7 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
                 mainActivityViewModel.selectedChild = it
                 fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
                 fragmentChildHomeSavingAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.savingAmount)
+                fragmentChildHomeCardViewBackTrustScore.text = "현재 신뢰점수는 \n ${it.trustScore} 점 입니다."
             }
         }
 
@@ -89,5 +109,34 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             }
         }
         childHomeFragmentViewModel.getChild()
+    }
+
+    private fun flipCards() {
+        val currentCard = if (isFirstCardVisible) cardView1 else cardView2
+        val nextCard = if (isFirstCardVisible) cardView2 else cardView1
+
+        val objectAnimatorFirst =
+            ObjectAnimator.ofFloat(currentCard, View.ROTATION_Y, 0f, -90f)
+        objectAnimatorFirst.duration = 500
+        objectAnimatorFirst.start()
+
+        objectAnimatorFirst.addListener(object : AnimatorListenerAdapter() {
+
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+
+                // Hide the current card after the first animation
+                currentCard.visibility = View.INVISIBLE
+                // Show the next card before the second animation
+                nextCard.visibility = View.VISIBLE
+
+                val objectAnimatorSecond =
+                    ObjectAnimator.ofFloat(nextCard, View.ROTATION_Y, 90f, 0f)
+                objectAnimatorSecond.duration = 500
+                objectAnimatorSecond.start()
+
+                isFirstCardVisible = !isFirstCardVisible
+            }
+        })
     }
 }
