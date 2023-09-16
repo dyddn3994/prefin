@@ -16,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -37,8 +35,13 @@ public class ChildService {
     private final SavingRepository savingRepository;
     private final AccountHistoryRepository accountHistoryRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
+
     // 자녀 회원 가입
     public Long signUp(ChildDto child) {
+        // 자녀 중복 조회
+        Child originalChild = childRepository.findByUserId(child.getUserId()).orElse(null);
+
+        if (originalChild != null) return -1L;
 
         // 자녀 저장
         Child newChild = Child.builder().
@@ -165,6 +168,7 @@ public class ChildService {
         if (child == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.updateTrustScore(score);
+
         childRepository.save(child);
 
         return ResponseEntity.ok().body(true);
@@ -304,13 +308,13 @@ public class ChildService {
 
         for (AccountHistory accountHistory : accountHistories) {
             accountHistoryDtos.add(AccountHistoryDto.builder()
-                            .id(accountHistory.getId())
-                            .childId(accountHistory.getChild().getId())
-                            .transactionDate(accountHistory.getTransactionDate())
-                            .transactionTime(accountHistory.getTransactionTime())
-                            .briefs(accountHistory.getBriefs())
-                            .deposit(accountHistory.getDeposit())
-                            .withdraw(accountHistory.getWithdraw())
+                    .id(accountHistory.getId())
+                    .childId(accountHistory.getChild().getId())
+                    .transactionDate(accountHistory.getTransactionDate())
+                    .transactionTime(accountHistory.getTransactionTime())
+                    .briefs(accountHistory.getBriefs())
+                    .deposit(accountHistory.getDeposit())
+                    .withdraw(accountHistory.getWithdraw())
                     .build());
         }
 

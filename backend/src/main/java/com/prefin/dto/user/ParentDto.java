@@ -35,6 +35,8 @@ public class ParentDto {
 
     private int balance;
 
+    private int maxSavingAmount;
+
     private List<ChildDto> childDtoList;
 
     public static ParentDto fromEntity(Parents parent) {
