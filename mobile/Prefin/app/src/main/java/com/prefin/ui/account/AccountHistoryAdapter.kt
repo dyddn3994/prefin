@@ -25,7 +25,7 @@ class AccountHistoryAdapter(var context: Context) : ListAdapter<AccountHistory, 
                 "${data.transactionDate.substring(4..5)}월 " +
                 "${data.transactionDate.substring(6..7)}일 " +
                 "${data.transactionTime.substring(0..1)}:" +
-                "${data.transactionDate.substring(2..3)}"
+                "${data.transactionTime.substring(2..3)}"
             if (data.deposit == "0") {
                 // -
                 itemLoanHistoryAmountTextView.apply {

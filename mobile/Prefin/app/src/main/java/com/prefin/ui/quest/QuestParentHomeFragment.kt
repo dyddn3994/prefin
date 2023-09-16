@@ -43,6 +43,11 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
     }
 
     private fun init() = with(binding) {
+        // 뒤로가기 버튼 클릭
+        fragmentQuestParentHomeBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        
         questParentAdapter = QuestParentAdapter(requireContext())
         fragmentQuestParentHomeQuestListRecyclerView.apply {
             adapter = questParentAdapter

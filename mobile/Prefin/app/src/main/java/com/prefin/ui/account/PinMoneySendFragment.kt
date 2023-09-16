@@ -1,6 +1,7 @@
 package com.prefin.ui.account
 
 import android.os.Bundle
+import android.system.Os.bind
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -51,6 +52,7 @@ class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentP
                 // 용돈 전송 성공
                 showSnackbar("전송에 성공하였습니다.")
                 mainActivityViewModel.selectedChild.balance += fragmentPinMoneyMoneyEditText.text.toString().toInt()
+                findNavController().navigateUp()
                 findNavController().navigateUp()
             }
         }

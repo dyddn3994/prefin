@@ -30,7 +30,13 @@ class AccountHistoryFragment : BaseFragment<FragmentAccountHistoryBinding>(Fragm
 
         accountHistoryViewModel.setAccountHistory(mainActivityViewModel.selectedChild.id)
         accountHistoryViewModel.accountHistory.observe(viewLifecycleOwner) {
-            accountHistoryAdapter.submitList(it)
+            accountHistoryAdapter.submitList(
+                it.sortedByDescending {
+                    it.transactionTime
+                }.sortedByDescending {
+                    it.transactionDate
+                },
+            )
         }
 
         accountHistoryAdapter = AccountHistoryAdapter(requireContext())
