@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -51,6 +52,8 @@ public class ChildService {
                 parent(parentRepository.findById(child.getParentId()).orElse(null)).
                 isQuizSolved(false).
                 trustScore(100).
+                savingRate(BigDecimal.valueOf(0.002)).
+                loanRate(BigDecimal.valueOf(0.09)).
                 quizId(1L).
                 build();
 

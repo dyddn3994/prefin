@@ -38,10 +38,12 @@ public class Child {
 
     private int savingAmount;
 
+    @Column(precision = 5, scale = 4)
     private BigDecimal savingRate;
 
     private int loanAmount;
 
+    @Column(precision = 5, scale = 4)
     private BigDecimal loanRate;
 
     private int balance;
@@ -84,44 +86,44 @@ public class Child {
 
         // 신뢰 점수 변경사항 체크
         if (this.trustScore >= 900)  {
-            this.savingRate = BigDecimal.valueOf(1.8);
-            this.loanRate = BigDecimal.valueOf(1.0);
+            this.savingRate = BigDecimal.valueOf(0.018);
+            this.loanRate = BigDecimal.valueOf(0.01);
         }
         else if (this.trustScore >= 800) {
-            this.savingRate = BigDecimal.valueOf(1.6);
-            this.loanRate = BigDecimal.valueOf(2.0);
+            this.savingRate = BigDecimal.valueOf(0.016);
+            this.loanRate = BigDecimal.valueOf(0.02);
         }
         else if (this.trustScore >= 700) {
-            this.savingRate = BigDecimal.valueOf(1.4);
-            this.loanRate = BigDecimal.valueOf(3.0);
+            this.savingRate = BigDecimal.valueOf(0.014);
+            this.loanRate = BigDecimal.valueOf(0.03);
         }
         else if (this.trustScore >= 600) {
-            this.savingRate = BigDecimal.valueOf(1.2);
-            this.loanRate = BigDecimal.valueOf(4.0);
+            this.savingRate = BigDecimal.valueOf(0.012);
+            this.loanRate = BigDecimal.valueOf(0.04);
         }
         else if (this.trustScore >= 500) {
-            this.savingRate = BigDecimal.valueOf(1.0);
-            this.loanRate = BigDecimal.valueOf(5.0);
+            this.savingRate = BigDecimal.valueOf(0.010);
+            this.loanRate = BigDecimal.valueOf(0.05);
         }
         else if (this.trustScore >= 400) {
-            this.savingRate = BigDecimal.valueOf(0.8);
-            this.loanRate = BigDecimal.valueOf(6.0);
+            this.savingRate = BigDecimal.valueOf(0.008);
+            this.loanRate = BigDecimal.valueOf(0.06);
         }
         else if (this.trustScore >= 300) {
-            this.savingRate = BigDecimal.valueOf(0.6);
-            this.loanRate = BigDecimal.valueOf(7.0);
+            this.savingRate = BigDecimal.valueOf(0.006);
+            this.loanRate = BigDecimal.valueOf(0.07);
         }
         else if (this.trustScore >= 200) {
-            this.savingRate = BigDecimal.valueOf(0.4);
-            this.loanRate = BigDecimal.valueOf(8.0);
+            this.savingRate = BigDecimal.valueOf(0.004);
+            this.loanRate = BigDecimal.valueOf(0.08);
         }
         else if (this.trustScore >= 100) {
-            this.savingRate = BigDecimal.valueOf(0.2);
-            this.loanRate = BigDecimal.valueOf(9.0);
+            this.savingRate = BigDecimal.valueOf(0.002);
+            this.loanRate = BigDecimal.valueOf(0.09);
         }
         else {
             this.savingRate = BigDecimal.valueOf(0.0);
-            this.loanRate = BigDecimal.valueOf(10.0);
+            this.loanRate = BigDecimal.valueOf(0.1);
         }
     }
 
