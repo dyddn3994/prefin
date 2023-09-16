@@ -32,6 +32,7 @@ public class ParentService {
                 password(parent.getPassword()).
                 name(parent.getName()).
                 balance(1000000).
+                maxSavingAmount(30000).
                 build();
 
         return parentRepository.save(newParent).getId();
@@ -103,7 +104,7 @@ public class ParentService {
         Parents parent = parentRepository.findById(id).orElse(null);
 
         if (parent == null) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-        
+
         parent.updateToken(fcmToken);
         parentRepository.save(parent);
 
