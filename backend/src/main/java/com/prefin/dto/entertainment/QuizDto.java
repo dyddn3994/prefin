@@ -13,7 +13,7 @@ public class QuizDto {
 
     private Long id;
 
-    private int answer;
+    private boolean answer;
     private String question;
     private String description;
 }

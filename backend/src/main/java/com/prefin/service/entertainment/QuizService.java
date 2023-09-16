@@ -40,7 +40,7 @@ public class QuizService {
             QuizDto responseDto = QuizDto.builder()
                     .id(todayQuiz.getId())
                     .question(todayQuiz.getQuestion())
-                    .answer(todayQuiz.getAnswer())
+                    .answer(todayQuiz.isAnswer())
                     .description(todayQuiz.getDescription())
                     .build();
 
@@ -54,8 +54,8 @@ public class QuizService {
         Child child = childRepository.findById(childId).orElse(null);
         Quiz quiz = quizRepository.findById(child.getQuizId()).orElse(null);
 
-        int myAnswer = quizDto.getAnswer();  // 내가 입력한 퀴즈 정답과
-        int answer = quiz.getAnswer();  // 실제 정답이 일치하는지 확인
+        boolean myAnswer = quizDto.isAnswer();  // 내가 입력한 퀴즈 정답과
+        boolean answer = quiz.isAnswer();  // 실제 정답이 일치하는지 확인
 
         if (answer == myAnswer) {
             // 문제 풀었다고 표시
