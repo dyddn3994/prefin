@@ -10,18 +10,26 @@ import retrofit2.http.Path
 
 interface LoginApi {
 
-
     // 자녀 로그인
     @POST("child/login")
-    suspend fun childLogin(@Body child: Child) : Child
-
+    suspend fun childLogin(@Body child: Child): Child
 
     @POST("parent/login")
-    suspend fun parentLogin(@Body parent: Parent) : Parent
+    suspend fun parentLogin(@Body parent: Parent): Parent
 
     @PUT("parent/{id}/token")
-    suspend fun parentFcmTokenRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
+    suspend fun parentFcmTokenRegister(@Path("id") id: Long, @Body parent: Parent): Response<Boolean>
 
     @PUT("child/{id}/token")
-    suspend fun childFcmTokenRegister(@Path("id") id : Long, @Body child : Child) : Response<Boolean>
+    suspend fun childFcmTokenRegister(@Path("id") id: Long, @Body child: Child): Response<Boolean>
+
+    @POST("parent/{id}/logout")
+    suspend fun parentLogout(
+        @Path("id") parentId: Long,
+    )
+
+    @POST("child/{id}/logout")
+    suspend fun childLogout(
+        @Path("id") childId: Long,
+    )
 }
