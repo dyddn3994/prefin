@@ -28,6 +28,7 @@ class ChildHomeFragmentViewModel : ViewModel() {
                     _child.value = response
                 }
             } catch (e: Exception) {
+                _child.value = Child()
                 Log.d(TAG, "getChild: 자녀 조회 오류, ${e.message}")
             }
         }
@@ -42,6 +43,7 @@ class ChildHomeFragmentViewModel : ViewModel() {
                     quiz = response
                 }
             } catch (e: Exception) {
+                quiz = Quiz()
                 Log.d(TAG, "getQuiz: 퀴즈 조회 오류, ${e.message}")
             }
         }

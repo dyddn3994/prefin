@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_bottom_sheet_choose_quest_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    >
+
+    <TextView
+        android:id="@+id/dialog_bottom_sheet_choose_quest_quest_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대출 금액"
+        style="@style/Text.regular.Size32"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <TextView
+        android:id="@+id/dialog_bottom_sheet_choose_quest_reward_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="88,600 원"
+        style="@style/Text.regular.Size32"
+        android:textColor="@color/orange"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_bottom_sheet_choose_quest_quest_name_text_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/dialog_bottom_sheet_choose_quest_insert_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="등록"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_bottom_sheet_choose_quest_reward_text_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/dialog_bottom_sheet_choose_quest_remove_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="삭제"
+        style="@style/Text.regular.Size20"
+        android:background="@drawable/button_rectangle_81_color_reversed"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_bottom_sheet_choose_quest_insert_button"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,15 +59,26 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
         Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner) {
-            mainActivityViewModel.parentUser = it
-            binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
-            binding.fragmentParentHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
+            if(it.id != 0L){
+                mainActivityViewModel.parentUser = it
+                binding.fragmentParentHomeMyAccountNameTextView.text = "${it.name}님의 계좌"
+                binding.fragmentParentHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
+            }
+            else{
+                showSnackbar("서버와의 연결이 불안정 합니다.(점검중)")
+            }
+
             mActivity.dismissLoadingDialog()
         }
 
         parentHomeViewModel.childs.observe(viewLifecycleOwner) {
+            if(!it.isEmpty()){
+                adpater.submitList(it)
+            }
+            else{
+                showSnackbar("서버와의 연결이 불안정 합니다. (점검중)")
+            }
 
-            adpater.submitList(it)
         }
 
         binding.apply {

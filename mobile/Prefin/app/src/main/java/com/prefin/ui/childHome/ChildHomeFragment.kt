@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
@@ -62,17 +61,43 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
         childHomeFragmentViewModel.getQuiz()
 
         childHomeFragmentViewModel.child.observe(viewLifecycleOwner) {
-            ApplicationClass.sharedPreferences.addChildUser(it)
-            with(binding) {
-                mainActivityViewModel.selectedChild = it
-                fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
-                fragmentChildHomeSavingAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.savingAmount)
-                fragmentChildHomeCardViewBackTrustScore.text = "현재 신뢰점수는 \n ${it.trustScore} 점 입니다."
+            if(it.id != 0L){
+                ApplicationClass.sharedPreferences.addChildUser(it)
+                with(binding) {
+                    mainActivityViewModel.selectedChild = it
+                    fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
+                    fragmentChildHomeSavingAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.savingAmount)
+                    fragmentChildHomeCardViewBackTrustScore.text = "현재 신뢰점수는 \n ${it.trustScore} 점 입니다."
+
+                    when(it.trustScore){
+                        in 0..200 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level1)
+                        }
+                        in 201..400 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level2)
+                        }
+                        in 401..600 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level3)
+                        }
+                        in 601 .. 800 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level4)
+                        }
+                        in 801..1000 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level5)
+                        }
+                    }
+                }
             }
+            else{
+                showSnackbar("서버와의 요청이 불안정 합니다.(점검중)")
+            }
+
             mActivity.dismissLoadingDialog()
         }
 
         with(binding) {
+
+
             // 계좌 내역 조회
             fragmentChildHomeMyAccountLinearLayout.setOnClickListener {
             }

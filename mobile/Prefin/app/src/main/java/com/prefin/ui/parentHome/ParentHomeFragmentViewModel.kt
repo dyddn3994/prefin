@@ -31,6 +31,7 @@ class ParentHomeFragmentViewModel : ViewModel() {
                 }
             }
         }catch (e : Exception){
+            _parent.value = Parent()
             Log.d(TAG, "getParentData: ${e.message}")
         }
        
