@@ -262,13 +262,14 @@ public class ChildService {
         return ResponseEntity.ok(true);
     }
 
-    // 출금 하기
+    //    출금 하기
     public ResponseEntity<Boolean> withdraw(long id, int balance) throws IOException {
         Child child = childRepository.findById(id).orElse(null);
 
         if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
-        if (child.getParent().getBalance() - balance < 0) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        if (child.getParent().getBalance() - balance < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        if (child.getSavingAmount() - balance < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.getParent().updateBalance(-balance);
         child.updateBalance(balance);
