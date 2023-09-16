@@ -11,6 +11,8 @@ import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSavingHomeBinding
 import com.prefin.util.StringFormatUtil
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class SavingHomeFragment : BaseFragment<FragmentSavingHomeBinding>(FragmentSavingHomeBinding::bind, R.layout.fragment_saving_home) {
 
@@ -43,12 +45,20 @@ class SavingHomeFragment : BaseFragment<FragmentSavingHomeBinding>(FragmentSavin
         }
 
         fragmentSavingHomeSavingButton.setOnClickListener {
-            findNavController().navigate(R.id.action_SavingHomeFragment_to_SavingFragment)
+            if (isSavingDay()) {
+                findNavController().navigate(R.id.action_SavingHomeFragment_to_SavingFragment)
+            } else {
+                showSnackbar("저축은 1일에만 가능합니다.")
+            }
         }
         fragmentSavingHomeWithdrawButton.setOnClickListener {
             findNavController().navigate(R.id.action_SavingHomeFragment_to_WithdrawFragment)
         }
 
         fragmentSavingHomeSavingMoneyTextView.text = StringFormatUtil.moneyToWon(mainActivityViewModel.selectedChild.savingAmount)
+    }
+
+    private fun isSavingDay(): Boolean {
+        return SimpleDateFormat("dd", Locale.KOREA).format(System.currentTimeMillis()).toInt() == 1
     }
 }

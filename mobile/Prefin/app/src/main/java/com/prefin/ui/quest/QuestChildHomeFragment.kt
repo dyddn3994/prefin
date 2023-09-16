@@ -3,7 +3,7 @@ package com.prefin.ui.quest
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -19,7 +19,7 @@ import com.prefin.util.StringFormatUtil
 class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(FragmentQuestChildHomeBinding::bind, R.layout.fragment_quest_child_home) {
     private lateinit var questChildAdapter: QuestChildAdapter
 
-    private val questChildHomeViewModel by activityViewModels<QuestChildHomeViewModel>()
+    private val questChildHomeViewModel by viewModels<QuestChildHomeViewModel>()
 
     // 퀘스트 완료 신청 dialog
     private val dialog: Dialog by lazy {
