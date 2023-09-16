@@ -107,4 +107,6 @@ dependencies {
     // material ui
     implementation 'com.google.android.material:material:1.9.0'
 
+    // TedPermission
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
 }

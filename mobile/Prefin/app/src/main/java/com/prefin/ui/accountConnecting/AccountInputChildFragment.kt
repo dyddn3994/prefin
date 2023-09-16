@@ -14,10 +14,14 @@ import com.prefin.databinding.FragmentAccountInputChildBinding
 
 class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>(FragmentAccountInputChildBinding::bind, R.layout.fragment_account_input_child) {
     private var countDownTimer: CountDownTimer? = null
+
     private val accountInputChildFragmentViewModel: AccountInputChildFragmentViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+
     private val checkText = "신한브로"
-    private lateinit var mActivity : MainActivity
+
+    private lateinit var mActivity: MainActivity
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mActivity = requireActivity() as MainActivity
@@ -49,11 +53,11 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
                 } else {
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog
-//                    if (fragmentAccountInputChildCheckEditText.text.toString() == checkText) {
-                    mainActivityViewModel.childUser!!.account = fragmentAccountInputChildEditText.text.toString()
-                    accountInputChildFragmentViewModel.childAccountRegister(mainActivityViewModel.childUser!!.id, mainActivityViewModel.childUser!!)
-                    mActivity.showLoadingDialog(requireContext())
-//                    }
+                    if (fragmentAccountInputChildCheckEditText.text.toString() == checkText) {
+                        mainActivityViewModel.childUser!!.account = fragmentAccountInputChildEditText.text.toString()
+                        accountInputChildFragmentViewModel.childAccountRegister(mainActivityViewModel.childUser!!.id, mainActivityViewModel.childUser!!)
+                        mActivity.showLoadingDialog(requireContext())
+                    }
                 }
             }
         }

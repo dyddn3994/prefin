@@ -1,10 +1,8 @@
 package com.prefin.ui.loan
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
-import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.DialogLoanApplicationBinding
 import com.prefin.databinding.FragmentLoanApplicationBinding
@@ -27,6 +24,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
     private val loanApplicationViewModel by viewModels<LoanApplicationViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
     private lateinit var mActivity: MainActivity
+
     // 대출 신청 dialog
     private val dialog: Dialog by lazy {
         BottomSheetDialog(requireContext()).apply {
@@ -48,7 +46,6 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         init()
     }
 
-
     private fun init() = with(binding) {
         // 뒤로가기 버튼 클릭
         fragmentLoanApplicationBackButton.setOnClickListener {
@@ -64,7 +61,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         fragmentLoanApplicationInterestRateTextView.text = "${mainActivityViewModel.selectedChild.loanRate?.multiply(BigDecimal(100))?.toFloat()}%"
 
         val canLoanAmount = mainActivityViewModel.selectedChild.possibleLoanAmount
-        fragmentLoanApplicationCanLoanAmountTextView.text = "현재 대출 가능한 금액은 ${canLoanAmount}원 입니다."
+        fragmentLoanApplicationCanLoanAmountTextView.text = "이번 달 대출 가능한 금액은 ${canLoanAmount}원 입니다."
         fragmentLoanApplicationAmountEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -77,17 +74,14 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
                     } else {
                         fragmentLoanApplicationApplyButton.isClickable = true
                         fragmentLoanApplicationApplyButton.backgroundTintList = ColorStateList.valueOf(
-                            resources.getColor(R.color.colorPrimary))
+                            resources.getColor(R.color.colorPrimary),
+                        )
                     }
                 }
-
-
             }
             override fun afterTextChanged(p0: Editable?) {
-
             }
         })
-
 
         fragmentLoanApplicationApplyButton.setOnClickListener {
             if (fragmentLoanApplicationAmountEditText.text.isNullOrBlank()) {
@@ -106,12 +100,11 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
 
         loanApplicationViewModel.loanApplySuccess.observe(viewLifecycleOwner) {
             mActivity.dismissLoadingDialog()
+            dialog.dismiss()
             if (it) {
-                dialog.dismiss()
                 showSnackbar("대출이 신청되었습니다. 부모님 확인 후 금액이 전송됩니다.")
                 findNavController().navigateUp()
-            }
-            else{
+            } else {
                 showSnackbar("대출 신청이 실패되었습니다. 다시 시도해주십시오")
             }
         }

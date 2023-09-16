@@ -91,7 +91,7 @@
         android:id="@+id/fragment_loan_application_can_loan_amount_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="현재 대출 가능 금액은 0원 입니다."
+        android:text="이번 달 대출 가능 금액은 0원 입니다."
         android:textColor="@color/colorRed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

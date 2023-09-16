@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.prefin.R
 import com.prefin.databinding.ItemLoanHistoryBinding
 import com.prefin.model.dto.LoanHistory
 import com.prefin.util.AdapterUtil
@@ -23,7 +24,10 @@ class LoanHistoryAdapter(var context: Context) : ListAdapter<LoanHistory, LoanHi
                     visibility = View.VISIBLE
                 }
             } else {
-                itemLoanHistoryNameTextView.text = "대출 요청"
+                itemLoanHistoryNameTextView.apply {
+                    text = "대출 요청"
+                    setTextColor(context.resources.getColor(R.color.green))
+                }
                 itemLoanHistoryDateTextView.visibility = View.GONE
             }
             itemLoanHistoryAmountTextView.text = StringFormatUtil.moneyToWon(data.loanAmount)

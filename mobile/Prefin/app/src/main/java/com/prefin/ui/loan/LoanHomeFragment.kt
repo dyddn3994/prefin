@@ -21,7 +21,7 @@ class LoanHomeFragment : BaseFragment<FragmentLoanHomeBinding>(FragmentLoanHomeB
     private val loanHomeViewModel by viewModels<LoanHomeViewModel>()
 
     private lateinit var loanHistoryAdapter: LoanHistoryAdapter
-    private lateinit var mActivity : MainActivity
+    private lateinit var mActivity: MainActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
