@@ -18,8 +18,8 @@ class QuestParentHomeFragmentViewModel : ViewModel() {
     private val _questList = MutableLiveData<MutableList<QuestOwnedQuest>>()
     val questList : LiveData<MutableList<QuestOwnedQuest>> get() = _questList
 
-    private val _questCompleteSuccess = MutableLiveData<Boolean>()
-    val questCompleteSuccess : LiveData<Boolean> get() = _questCompleteSuccess
+    private val _questCompleteSuccess = MutableLiveData<Int>()
+    val questCompleteSuccess : LiveData<Int> get() = _questCompleteSuccess
 
     fun getQuestList(id : Long) {
         try {
@@ -45,11 +45,18 @@ class QuestParentHomeFragmentViewModel : ViewModel() {
             try{
                 val response = RetrofitUtil.questApi.questFinishComplete(id)
                 if(response.isSuccessful){
-                    _questCompleteSuccess.value =  response.body()
+                    if(response.body() == true) {
+                        _questCompleteSuccess.value =  1
+                    }
+
+                }
+                else{
+                    _questCompleteSuccess.value = 2
                 }
 
+
             }catch (e : Exception){
-                _questCompleteSuccess.value = false
+                _questCompleteSuccess.value = 3
                 Log.d(TAG, "questComplete: ${e.message}")
             }
         }

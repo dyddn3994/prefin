@@ -51,11 +51,14 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
 
 
         questParentHomeFragmentViewModel.questCompleteSuccess.observe(viewLifecycleOwner){
-            if(it){
+            if(it == 1){
                 questParentHomeFragmentViewModel.getQuestList(mainActivityViewModel.selectedChild.id)
             }
-            else{
-                showSnackbar("퀘스트 완료 처리를 실패했습니다.")
+            else if(it == 2){
+                showSnackbar("퀘스트 완료 처리를 실패했습니다. (잔액 부족)")
+            }
+            else {
+                showSnackbar("서버와의 연결이 불안정 합니다.")
             }
         }
 
@@ -66,7 +69,7 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
                     bottomSheetQuestReward.text = StringFormatUtil.moneyToWon(data.reward)
                     bottomSheetQuestApproveButton.setOnClickListener {
                         if(data.requested){
-                            questParentHomeFragmentViewModel.questComplete(data.questId)
+                            questParentHomeFragmentViewModel.questComplete(data.questOwnedId)
                             dialog.dismiss()
                         }
 
@@ -76,7 +79,7 @@ class QuestParentHomeFragment : BaseFragment<FragmentQuestParentHomeBinding>(Fra
                     }
                 }
 
-                        //bottomSeat 띄우기
+                //bottomSeat 띄우기
                 if(data.requested){
                     dialog.show()
                 }

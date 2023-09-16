@@ -32,6 +32,7 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
 
         Log.d(TAG, "init: ${mainActivityViewModel.selectedQuest}")
         fragmentQuestRegistQuestNameTextView.text = mainActivityViewModel.selectedQuest!!.title
+        selectedDate = System.currentTimeMillis()
 
         fragmentQuestRegistCalendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
             val calendar =  Calendar.getInstance()
