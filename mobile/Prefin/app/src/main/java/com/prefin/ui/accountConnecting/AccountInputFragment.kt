@@ -57,8 +57,9 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
                         mainActivityViewModel.parentUser!!.account = fragmentAccountInputEditText.text.toString()
                         accountInputFragmentViewModel.accountRegister(mainActivityViewModel.parentUser!!.id, mainActivityViewModel.parentUser!!)
                         mActivity.showLoadingDialog(requireContext())
+                    } else {
+                        showSnackbar("입력값을 확인해주세요.")
                     }
-
                 }
             }
         }
