@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView android:layout_marginVertical="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/colorBackground"
+    android:background="@drawable/rectangle_style"
+    android:padding="16dp"
+    app:cardCornerRadius="16dp"
+    app:strokeColor="@color/colorBackground"
+    app:strokeWidth="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/fragment_student_noti_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorBackground"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+               android:gravity="center"
+                >
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/noti_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제목"
+                    style="@style/Text.regular.Size20"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/noti_card_registerTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Text.regular.Size20"
+                    />
+
+                <TextView
+                    android:id="@+id/noti_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Text.regular.Size20"
+                    android:text="완료완료완료완료완료완료완료완료완료완료완료완료완료"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
+

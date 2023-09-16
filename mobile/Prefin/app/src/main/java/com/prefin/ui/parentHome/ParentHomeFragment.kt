@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -37,6 +38,20 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
     }
 
     fun init() {
+
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                // 뒤로가기 동작 수행
+                isEnabled = false
+                requireActivity().onBackPressed()
+                // 앱 종료
+                requireActivity().finish()
+
+            }
+        })
+
         Log.d(TAG, "init: ${ApplicationClass.sharedPreferences.getString("type")}")
 
         parentHomeViewModel.parent.observe(viewLifecycleOwner) {
@@ -76,7 +91,9 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
             fragmentParentHomeChildAccountRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext())
 
-            adpater.submitList(childList) // 테스트 데이터
+            fragmentParentHomeNotiImageView.setOnClickListener {
+                findNavController().navigate(R.id.action_ParentHomeFragment_to_NotiFragment)
+            }
 
             // 퀘스트 화면 이동
             fragmentParentHomeQuestTextView.setOnClickListener {
@@ -104,5 +121,6 @@ class ParentHomeFragment : BaseFragment<FragmentParentHomeBinding>(FragmentParen
         parentHomeViewModel.getParentData()
         parentHomeViewModel.getChildData()
     }
+
 
 }

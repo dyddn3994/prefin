@@ -1,9 +1,11 @@
 package com.prefin.config
 
 import android.app.Application
+import androidx.room.Room
 import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.prefin.model.local.NotiMessageDataBase
 import com.prefin.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,6 +27,8 @@ class ApplicationClass : Application() {
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var retrofit: Retrofit
+
+        lateinit var notiMessageDatabase: NotiMessageDataBase
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.
@@ -32,6 +36,12 @@ class ApplicationClass : Application() {
         super.onCreate()
 
         sharedPreferences = SharedPreferencesUtil(applicationContext)
+
+        notiMessageDatabase = Room.databaseBuilder(
+            applicationContext,
+            NotiMessageDataBase::class.java,
+            "noti.db"
+        ).build()
 
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()

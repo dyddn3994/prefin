@@ -68,14 +68,14 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(FragmentQuizBinding::bind
 
             fragmentQuizAnswerButton.setOnClickListener {
                 var quiz = mainActivityViewModel.quiz
-                quiz!!.answer = 0
+                quiz!!.answer = true
                 quizFragmentViewModel.postAnswer(quiz)
 
-            }
+            } 
 
             fragmentQuizWrongButton.setOnClickListener {
                 var quiz = mainActivityViewModel.quiz
-                quiz!!.answer = 1
+                quiz!!.answer = false
                 quizFragmentViewModel.postAnswer(quiz)
 
             }

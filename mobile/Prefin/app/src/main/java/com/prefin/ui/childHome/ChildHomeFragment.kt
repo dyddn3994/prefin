@@ -3,6 +3,7 @@ package com.prefin.ui.childHome
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,6 +23,19 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
     }
 
     fun init() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // 뒤로가기 동작 수행
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                    // 앱 종료
+                    requireActivity().finish()
+                }
+            },
+        )
+
         childHomeFragmentViewModel.getQuiz()
 
         childHomeFragmentViewModel.child.observe(viewLifecycleOwner) {
@@ -35,6 +49,9 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
         with(binding) {
             // 계좌 내역 조회
             fragmentChildHomeMyAccountLinearLayout.setOnClickListener {
+            }
+            fragmentChildHomeNotiImageView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_NotiFragment)
             }
 
             // 저축 내역 조회
