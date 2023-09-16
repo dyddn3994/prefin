@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -34,12 +35,12 @@ public class AutoTransfer {
         System.out.println("!!자동 이체 실행!!");
         List<Allowance> allowances = allowanceRepository.findAll();
         for (Allowance allowance:allowances) {
-            Integer dayOfToday = LocalDateTime.now().getDayOfMonth();
+            Integer dayOfToday = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getDayOfMonth();
             Long dayOfMonth = Long.valueOf(dayOfToday);
             Long payday = allowance.getPayday();
 
-            int currentYear = LocalDateTime.now().getYear();
-            int currentMonth = LocalDateTime.now().getMonthValue();
+            int currentYear = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getYear();
+            int currentMonth = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getMonthValue();
 
             YearMonth yearMonth = YearMonth.of(currentYear, currentMonth);
             int lastDayOfCurrentMonth = yearMonth.lengthOfMonth();
@@ -81,7 +82,7 @@ public class AutoTransfer {
                         System.out.println("용돈 정상 지급");
 
                         // 거래 내역 추가
-                        LocalDateTime now = LocalDateTime.now();
+                        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
                         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
                         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
