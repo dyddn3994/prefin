@@ -142,4 +142,15 @@ public class ParentService {
 
         return ResponseEntity.ok(true);
     }
+
+    public ResponseEntity<Boolean> logout(Long id) {
+        Parents parent = parentRepository.findById(id).orElse(null);
+
+        if (parent == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        parent.updateToken(null);
+        parentRepository.save(parent);
+
+        return ResponseEntity.ok(true);
+    }
 }

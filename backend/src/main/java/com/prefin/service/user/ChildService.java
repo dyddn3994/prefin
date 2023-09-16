@@ -323,5 +323,17 @@ public class ChildService {
         }
 
         return accountHistoryDtos;
+
+    }
+
+    public ResponseEntity<Boolean> logout(Long id) {
+        Child child = childRepository.findById(id).orElse(null);
+
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        child.updateToken(null);
+        childRepository.save(child);
+
+        return ResponseEntity.ok(true);
     }
 }
