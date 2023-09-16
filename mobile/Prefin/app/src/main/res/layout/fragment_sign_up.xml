@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-
     android:backgroundTint="@color/colorBackground"
     android:padding="16dp"
     tools:context=".ui.signUp.SignUpFragment"
@@ -18,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-
 
     <TextView
         android:layout_marginTop="32dp"
@@ -163,13 +161,14 @@
         />
 
     <android.widget.Button
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:id="@+id/fragment_sign_up_register_button"
         style="@style/Text.regular.Size20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rectangle_81"
         android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/white"
         android:text="회원가입"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

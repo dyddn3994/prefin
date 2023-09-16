@@ -1,9 +1,11 @@
 package com.prefin.ui.accountConnecting
 
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,6 +13,7 @@ import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentAccountInputBinding
+
 
 class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentAccountInputBinding::bind, R.layout.fragment_account_input) {
 
@@ -37,13 +40,15 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
                     // 타이머 설정
                     fragmentAccountInputTimerLinearLayout.visibility = View.VISIBLE
                     startTimer()
+    
+                    fragmentAccountInputCheckEditText.requestFocus()
                 }
             }
             fragmentAccountInputSettingButton.setOnClickListener {
                 if (fragmentAccountInputCheckEditText.text.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "인증 번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+                    showSnackbar("인증 번호를 입력해주세요")
                 } else if (fragmentAccountInputTimerTextView.text == "00:00") {
-                    Toast.makeText(requireContext(), "인증 시간을 초과하였습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    showSnackbar("인증 시간을 초과하였습니다. 다시 시도해주세요")
                 } else {
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog

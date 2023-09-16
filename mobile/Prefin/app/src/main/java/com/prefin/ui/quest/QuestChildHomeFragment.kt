@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,7 +13,6 @@ import com.prefin.config.BaseFragment
 import com.prefin.databinding.DialogChildQuestFinishBinding
 import com.prefin.databinding.FragmentQuestChildHomeBinding
 import com.prefin.databinding.ItemChildQuestBinding
-import com.prefin.model.dto.QuestOwned
 import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.util.StringFormatUtil
 
@@ -65,6 +63,16 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
         fragmentQuestChildHomeBackButton.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        questChildHomeViewModel.questFinishRequestSuccess.observe(viewLifecycleOwner) {
+            if (!it) {
+                showSnackbar("완료 요청에 실패하였습니다.")
+            } else {
+                showSnackbar("퀘스트 완료 요청에 성공하였습니다.")
+                questChildHomeViewModel.getQuestList(ApplicationClass.sharedPreferences.getLong("id"))
+                dialog.dismiss()
+            }
+        }
     }
 
     private fun showDialog(data: QuestOwnedQuest) = with(dialogBinding) {
@@ -72,7 +80,7 @@ class QuestChildHomeFragment : BaseFragment<FragmentQuestChildHomeBinding>(Fragm
         dialogChildQuestFinishMoneyTextView.text = StringFormatUtil.moneyToWon(data.reward)
 
         dialogChildQuestFinishFinishButton.setOnClickListener {
-            questChildHomeViewModel.questFinishRequest(data.questId)
+            questChildHomeViewModel.questFinishRequest(data.questOwnedId)
         }
         dialogLoanApplicationCancelButton.setOnClickListener {
             dialog.dismiss()

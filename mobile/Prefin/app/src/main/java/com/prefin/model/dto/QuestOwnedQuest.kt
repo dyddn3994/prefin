@@ -8,4 +8,5 @@ data class QuestOwnedQuest(
     val reward: Int = 0,
     val startDate: Long = 0L,
     val title: String = "",
+    var questOwnedId: Long = 0L,
 )

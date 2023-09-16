@@ -3,7 +3,6 @@ package com.prefin.ui.accountConnecting
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,17 +31,18 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
 
         binding.apply {
             fragmentAccountInputChildCheckButton.setOnClickListener {
-                if (fragmentAccountInputChildEditText.text.isNullOrEmpty()) {
+                if (!fragmentAccountInputChildEditText.text.isNullOrEmpty()) {
                     // fcm 전송 && 타이머 설정
                     fragmentAccountInputChildTimerLayout.visibility = View.VISIBLE
                     startTimer()
+                    fragmentAccountInputChildCheckEditText.requestFocus()
                 }
             }
             fragmentAccountInputChildSettingButton.setOnClickListener {
                 if (fragmentAccountInputChildCheckEditText.text.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "인증 번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+                    showSnackbar("인증 번호를 입력해주세요")
                 } else if (fragmentAccountInputChildTimerTextView.text == "00:00") {
-                    Toast.makeText(requireContext(), "인증 시간을 초과하였습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    showSnackbar("인증 시간을 초과하였습니다. 다시 시도해주세요")
                 } else {
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog

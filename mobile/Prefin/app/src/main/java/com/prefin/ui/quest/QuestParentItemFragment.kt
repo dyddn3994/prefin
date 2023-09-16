@@ -33,6 +33,11 @@ class QuestParentItemFragment : BaseFragment<FragmentQuestParentItemBinding>(Fra
             layoutManager = LinearLayoutManager(requireContext())
         }
 
+        // 뒤로가기 버튼
+        fragmentQuestParentItemBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         // 퀘스트 생성 버튼 클릭
         fragmentQuestParentItemQuestItemListImageView.setOnClickListener {
             findNavController().navigate(R.id.action_QuestParentItemFragment_to_QuestCreateFragment)
