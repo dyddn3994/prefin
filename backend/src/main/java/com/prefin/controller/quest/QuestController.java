@@ -7,6 +7,7 @@ import com.prefin.repository.quest.QuestRepository;
 import com.prefin.repository.user.ParentRepository;
 import com.prefin.service.quest.QuestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class QuestController {
     }
 
     @DeleteMapping("/quest/{id}")
-    public void deleteQuest(@PathVariable long id) {
-        questService.deleteQuest(id);
+    public ResponseEntity<Boolean> deleteQuest(@PathVariable long id) {
+        return questService.deleteQuest(id);
     }
 
     // QuestDto로 수정하세요
