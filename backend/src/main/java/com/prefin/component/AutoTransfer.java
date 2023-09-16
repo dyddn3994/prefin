@@ -23,7 +23,7 @@ public class AutoTransfer {
     // 자동이체 로직
     // 용돈 설정 후 해당 테이블을 다 돌아보면서
     // 오늘 날짜와 비교, 일치한다면 해당 부모의 계좌에서 자식 계좌로 이체
-    @Scheduled(cron = "* 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
+    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
     @Transactional
     public void autoTransfer() {
         System.out.println("!!자동 이체 실행!!");
@@ -45,7 +45,7 @@ public class AutoTransfer {
                     System.out.println("잔액 부족");
                 } else {
                     // 아래의 식을 계산하면 빌린 돈이 0일 땐 myDebt가 0이고 아니라면 한달치 이자가 나온다.
-                    BigDecimal loanInterst = parent.getLoanRate();
+                    BigDecimal loanInterst = child.getLoanRate();
 
                     BigDecimal bigDebt = new BigDecimal(child.getLoanAmount());
 

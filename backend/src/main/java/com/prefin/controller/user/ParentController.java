@@ -1,7 +1,5 @@
 package com.prefin.controller.user;
 
-import com.prefin.domain.user.Child;
-import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ChildDto;
 import com.prefin.dto.user.ParentDto;
 import com.prefin.service.user.ParentService;
@@ -43,15 +41,15 @@ public class ParentController {
         return parentService.setSimplePassword(id, parentDto.getSimplePass());
     }
 
-    @PutMapping("/parent/{id}/loan")
-    public ResponseEntity<Boolean> setLoanRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
-        return  parentService.setLoanRate(id, parentDto.getLoanRate());
-    }
-
-    @PutMapping("/parent/{id}/saving")
-    public ResponseEntity<Boolean> setSavingRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
-        return parentService.setSavingRate(id, parentDto.getSavingRate());
-    }
+//    @PutMapping("/parent/{id}/loan")
+//    public ResponseEntity<Boolean> setLoanRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
+//        return  parentService.setLoanRate(id, parentDto.getLoanRate());
+//    }
+//
+//    @PutMapping("/parent/{id}/saving")
+//    public ResponseEntity<Boolean> setSavingRate(@PathVariable long id, @RequestBody ParentDto parentDto) {
+//        return parentService.setSavingRate(id, parentDto.getSavingRate());
+//    }
 
     @PutMapping("/parent/{id}/token")
     public ResponseEntity<Boolean> setToken(@PathVariable long id, @RequestBody ParentDto parentDto) {

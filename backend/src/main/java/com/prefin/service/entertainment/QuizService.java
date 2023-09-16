@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +19,8 @@ public class QuizService {
     private final QuizRepository quizRepository;
     private final ChildRepository childRepository;
 
-    @Transactional  // 아이쪽에 등록 되어있는 오늘의 퀴즈를 가져오는 작업
+    // 오늘의 퀴즈 가져오기
+    @Transactional
     public ResponseEntity<QuizDto> todayQuiz(Long childId) {
         Child child = childRepository.findById(childId)
                 .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
@@ -48,7 +48,8 @@ public class QuizService {
         }
     }
 
-    @Transactional  // 문제를 맞췄는지 안 맞췄는지 확인하는 로직
+    // 문제 채점
+    @Transactional
     public ResponseEntity<Boolean> checkAnswer(QuizDto quizDto, Long childId) {
 
         Child child = childRepository.findById(childId).orElse(null);

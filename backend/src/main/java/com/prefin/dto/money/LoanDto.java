@@ -15,6 +15,7 @@ public class LoanDto {
 
     private int loanAmount;
     private Boolean isAccepted;
+    private Long loanDate;
 
     private Long parentId;
     private Long childId;
@@ -24,6 +25,7 @@ public class LoanDto {
                 .loanId(loanHistory.getId())
                 .loanAmount(loanHistory.getLoanAmount())
                 .isAccepted(loanHistory.getIsAccepted())
+                .loanDate(loanHistory.getLoanDate())
                 .parentId(loanHistory.getParent().getId())
                 .childId(loanHistory.getChild().getId())
                 .build();
