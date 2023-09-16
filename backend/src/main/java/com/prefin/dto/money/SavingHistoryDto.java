@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SavingHIstoryDto {
+public class SavingHistoryDto {
     private Long id;
 
     private int savingAmount;
@@ -21,8 +21,8 @@ public class SavingHIstoryDto {
 
     private String savingType;
 
-    public static SavingHIstoryDto fromEntity(SavingHistory savingHistory) {
-        return SavingHIstoryDto.builder()
+    public static SavingHistoryDto fromEntity(SavingHistory savingHistory) {
+        return SavingHistoryDto.builder()
                 .id(savingHistory.getId())
                 .savingAmount(savingHistory.getSavingAmount())
                 .savingDate(savingHistory.getSavingDate())

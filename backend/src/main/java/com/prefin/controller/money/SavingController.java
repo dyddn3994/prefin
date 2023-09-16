@@ -1,6 +1,6 @@
 package com.prefin.controller.money;
 
-import com.prefin.dto.money.SavingHIstoryDto;
+import com.prefin.dto.money.SavingHistoryDto;
 import com.prefin.service.money.SavingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class SavingController {
     private final SavingService savingService;
 
     @GetMapping("/savinghistory/{childId}")
-    public List<SavingHIstoryDto> getSavingHistoryByChildId(@PathVariable Long childId) {
+    public List<SavingHistoryDto> getSavingHistoryByChildId(@PathVariable Long childId) {
         return savingService.getSavingHistory(childId);
     }
 }
