@@ -15,6 +15,10 @@ class QuestParentItemViewModel : ViewModel() {
     val questItemList: LiveData<List<Quest>>
         get() = _questItemList
 
+
+    private val _removeSuccess = MutableLiveData<Boolean>()
+
+    val removeSuccess : LiveData<Boolean> get() = _removeSuccess
     // 퀘스트 아이템 리스트 조회
     fun requestQuestItemList(
         id: Long,
@@ -26,6 +30,22 @@ class QuestParentItemViewModel : ViewModel() {
             } catch (e: Exception) {
                 _questItemList.value = listOf()
                 Log.d(TAG, "requestQuestItemList: 퀘스트 아이템 리스트 조회 실패\n자녀id: $id")
+            }
+        }
+    }
+
+    fun removeQuest(id : Long){
+        viewModelScope.launch {
+            try {
+                val response = RetrofitUtil.questApi.removeQuest(id)
+                if(response.isSuccessful){
+                    _removeSuccess.value = response.body()
+                }
+                else{
+                    _removeSuccess.value = false
+                }
+            }catch (e : Exception){
+                _removeSuccess.value = false
             }
         }
     }
