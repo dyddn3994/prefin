@@ -44,7 +44,10 @@ class AdapterUtil {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: SavingHistory, newItem: SavingHistory): Boolean {
+            override fun areContentsTheSame(
+                oldItem: SavingHistory,
+                newItem: SavingHistory
+            ): Boolean {
                 return oldItem == newItem
             }
         }
@@ -70,11 +73,17 @@ class AdapterUtil {
         }
 
         val diffUtilQuestOwnedQuest = object : DiffUtil.ItemCallback<QuestOwnedQuest>() {
-            override fun areItemsTheSame(oldItem: QuestOwnedQuest, newItem: QuestOwnedQuest): Boolean {
+            override fun areItemsTheSame(
+                oldItem: QuestOwnedQuest,
+                newItem: QuestOwnedQuest
+            ): Boolean {
                 return oldItem.questId == newItem.questId
             }
 
-            override fun areContentsTheSame(oldItem: QuestOwnedQuest, newItem: QuestOwnedQuest): Boolean {
+            override fun areContentsTheSame(
+                oldItem: QuestOwnedQuest,
+                newItem: QuestOwnedQuest
+            ): Boolean {
                 return oldItem == newItem
             }
         }
@@ -90,11 +99,17 @@ class AdapterUtil {
         }
 
         val diffUtilAccountHistory = object : DiffUtil.ItemCallback<AccountHistory>() {
-            override fun areItemsTheSame(oldItem: AccountHistory, newItem: AccountHistory): Boolean {
+            override fun areItemsTheSame(
+                oldItem: AccountHistory,
+                newItem: AccountHistory
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
-        
-            override fun areContentsTheSame(oldItem: AccountHistory, newItem: AccountHistory): Boolean {
+
+            override fun areContentsTheSame(
+                oldItem: AccountHistory,
+                newItem: AccountHistory
+            ): Boolean {
                 return oldItem == newItem
             }
         }
@@ -103,16 +118,22 @@ class AdapterUtil {
             override fun areItemsTheSame(oldItem: LoanHistory, newItem: LoanHistory): Boolean {
                 return oldItem.loanId == newItem.loanId
             }
-        
+
             override fun areContentsTheSame(oldItem: LoanHistory, newItem: LoanHistory): Boolean {
                 return oldItem == newItem
             }
-            
+
+
+        }
         val diffUtilNotiMessage = object : DiffUtil.ItemCallback<NotiMessage>() {
             override fun areItemsTheSame(oldItem: NotiMessage, newItem: NotiMessage): Boolean {
                 return oldItem.id == newItem.id
             }
-            override fun areContentsTheSame(oldItem: NotiMessage, newItem: NotiMessage): Boolean {
+
+            override fun areContentsTheSame(
+                oldItem: NotiMessage,
+                newItem: NotiMessage
+            ): Boolean {
                 return oldItem == newItem
             }
         }

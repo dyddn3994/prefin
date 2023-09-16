@@ -34,8 +34,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="304dp"
+        android:layout_height="304dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/quiz"
         android:gravity="center"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
-
+            android:padding="12dp"
             android:id="@+id/fragment_quiz_question_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
