@@ -12,7 +12,8 @@ data class Parent(
     var password: String = "",
     var savingRate: BigDecimal?,
     var simplePass: String?,
-    var userId: String = ""
+    var userId: String = "",
+    var maxSavingAmount : Int = 0,
 ) {
     constructor(): this(null, 0, null, 0, null, "", "", null, null, "")
 }

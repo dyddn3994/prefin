@@ -94,4 +94,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+
+
+    // gif VIew
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.27'
+
 }

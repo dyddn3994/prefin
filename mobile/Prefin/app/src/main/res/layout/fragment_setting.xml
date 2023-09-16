@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/fragment_setting_title"
         style="@style/Title.Bold.Size32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +25,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+   <LinearLayout
+       android:layout_marginTop="32dp"
+       android:id="@+id/fragment_setting_loan_amount"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/fragment_setting_title"
+       android:orientation="horizontal">
+
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:src="@drawable/ic_load_setting"
+           />
+       <TextView
+          android:layout_marginStart="32dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           style="@style/Text.regular.Size20"
+           android:text="저축 최대 이자 금액 설정하기"
+           />
+
+   </LinearLayout>
 
     <TextView
         android:id="@+id/fragment_setting_logout"

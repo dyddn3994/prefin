@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/prefin_nav_graph"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/LoginFragment">
+    app:startDestination="@+id/LoginFragment"
+    >
 
     <fragment
         android:id="@+id/LoginFragment"
@@ -13,13 +14,25 @@
 
         <action
             android:id="@+id/action_LoginFragment_to_SignUpFragment"
-            app:destination="@+id/SignUpFragment"/>
+            app:destination="@+id/SignUpFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_LoginFragment_to_ParentHomeFragemnt"
-            app:destination="@id/ParentHomeFragment" />
+            app:destination="@id/ParentHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_LoginFragment_to_ChildHomeFragemnt"
-            app:destination="@id/ChildHomeFragment" />
+            app:destination="@id/ChildHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 
@@ -31,10 +44,18 @@
 
         <action
             android:id="@+id/action_SignUpFragment_to_LoginFragment"
-            app:destination="@+id/LoginFragment"/>
+            app:destination="@+id/LoginFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_SignUpFragment_to_AccountInputFragment"
-            app:destination="@id/AccountInputFragment" />
+            app:destination="@id/AccountInputFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 
@@ -45,24 +66,48 @@
 
         <action
             android:id="@+id/action_ParentHomeFragment_to_AccountFragment"
-            app:destination="@+id/AccountFragment" />
+            app:destination="@+id/AccountFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ParentHomeFragment_to_ChildAccountChooseFragment"
-            app:destination="@+id/ChildAccountChooseFragment" />
+            app:destination="@+id/ChildAccountChooseFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ParentHomeFragment_to_QuestParentHomeFragment"
-            app:destination="@+id/QuestParentHomeFragment" />
+            app:destination="@+id/QuestParentHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ParentHomeFragment_to_SettingFragment"
-            app:destination="@id/SettingFragment" />
+            app:destination="@id/SettingFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ParentHomeFragment_to_ChildJoinFragment2"
             app:destination="@id/ChildJoinFragment"
             app:popUpTo="@id/ParentHomeFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ParentHomeFragment_to_NotiFragment"
-            app:destination="@id/NotiFragment" />
+            app:destination="@id/NotiFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
 
     </fragment>
@@ -74,28 +119,60 @@
 
         <action
             android:id="@+id/action_ChildHomeFragment_to_SettingFragment"
-            app:destination="@id/SettingFragment" />
+            app:destination="@id/SettingFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_QuizFragment"
-            app:destination="@id/QuizFragment" />
+            app:destination="@id/QuizFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_QuizAnswerFragment"
-            app:destination="@id/QuizAnswerFragment" />
+            app:destination="@id/QuizAnswerFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_SavingHomeFragment"
-            app:destination="@+id/SavingHomeFragment" />
+            app:destination="@+id/SavingHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_LoanHomeFragment"
-            app:destination="@+id/LoanHomeFragment" />
+            app:destination="@+id/LoanHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_QuestChildHomeFragment"
-            app:destination="@+id/QuestChildHomeFragment" />
+            app:destination="@+id/QuestChildHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_AccountHistoryFragment"
-            app:destination="@+id/AccountHistoryFragment" />
+            app:destination="@+id/AccountHistoryFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildHomeFragment_to_NotiFragment"
-            app:destination="@id/NotiFragment" />
+            app:destination="@id/NotiFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment android:id="@+id/AccountHistoryFragment"
@@ -111,7 +188,11 @@
         tools:layout="@layout/fragment_account_input"
         >
         <action android:id="@+id/action_AccountInputFragment_to_ChildAddFragment"
-            app:destination="@+id/ChildAddFragment"/>
+            app:destination="@+id/ChildAddFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
     
@@ -122,10 +203,18 @@
 
         <action
             android:id="@+id/action_AccountInputChildFragment_to_ChildAddFragment"
-            app:destination="@id/ChildAddFragment" />
+            app:destination="@id/ChildAddFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_AccountInputChildFragment_to_ParentHomeFragment"
-            app:destination="@id/ParentHomeFragment" />
+            app:destination="@id/ParentHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/ChildAddFragment"
@@ -135,10 +224,18 @@
 
         <action
             android:id="@+id/action_ChildAddFragment_to_LoginFragment"
-            app:destination="@id/LoginFragment" />
+            app:destination="@id/LoginFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_ChildAddFragment_to_ChildJoinFragment"
-            app:destination="@id/ChildJoinFragment" />
+            app:destination="@id/ChildJoinFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 
@@ -149,7 +246,11 @@
 
         <action
             android:id="@+id/action_ChildJoinFragment_to_AccountInputChildFragment"
-            app:destination="@id/AccountInputChildFragment" />
+            app:destination="@id/AccountInputChildFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/AccountFragment"
@@ -159,11 +260,19 @@
 
         <action
             android:id="@+id/action_AccountFragment_to_PinMoneyRegistFragment"
-            app:destination="@+id/PinMoneyRegistFragment" />
+            app:destination="@+id/PinMoneyRegistFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/action_AccountFragment_to_PinMoneySendFragment"
-            app:destination="@+id/PinMoneySendFragment" />
+            app:destination="@+id/PinMoneySendFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/PinMoneyRegistFragment"
@@ -185,11 +294,19 @@
 
         <action
             android:id="@+id/action_SavingHomeFragment_to_SavingFragment"
-            app:destination="@+id/SavingFragment" />
+            app:destination="@+id/SavingFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/action_SavingHomeFragment_to_WithdrawFragment"
-            app:destination="@+id/WithdrawFragment" />
+            app:destination="@+id/WithdrawFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/SavingFragment"
@@ -229,7 +346,11 @@
 
         <action
             android:id="@+id/action_QuestParentHomeFragment_to_QuestParentItemFragment"
-            app:destination="@+id/QuestParentItemFragment" />
+            app:destination="@+id/QuestParentItemFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/QuestParentItemFragment"
@@ -239,11 +360,19 @@
 
         <action
             android:id="@+id/action_QuestParentItemFragment_to_QuestCreateFragment"
-            app:destination="@+id/QuestCreateFragment" />
+            app:destination="@+id/QuestCreateFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/action_QuestParentItemFragment_to_QuestRegistFragment"
-            app:destination="@+id/QuestRegistFragment" />
+            app:destination="@+id/QuestRegistFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/QuestCreateFragment"
@@ -266,15 +395,27 @@
 
         <action
             android:id="@+id/action_ChildAccountChooseFragment_to_QuestParentHomeFragment"
-            app:destination="@+id/QuestParentHomeFragment" />
+            app:destination="@+id/QuestParentHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/action_ChildAccountChooseFragment_to_SavingHomeFragment"
-            app:destination="@+id/SavingHomeFragment" />
+            app:destination="@+id/SavingHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/action_ChildAccountChooseFragment_to_LoanHomeFragment"
-            app:destination="@+id/LoanHomeFragment" />
+            app:destination="@+id/LoanHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -292,7 +433,19 @@
             android:id="@+id/action_SettingFragment_to_LoginFragment"
             app:destination="@id/LoginFragment"
             app:popUpTo="@id/SettingFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_SettingFragment_to_SavingAmountSettingFragment"
+            app:destination="@id/SavingAmountSettingFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -303,7 +456,11 @@
 
         <action
             android:id="@+id/action_LoanHomeFragment_to_LoanApplicationFragment"
-            app:destination="@+id/LoanApplicationFragment" />
+            app:destination="@+id/LoanApplicationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/QuizFragment"
@@ -315,7 +472,11 @@
             android:id="@+id/action_QuizFragment_to_QuizAnswerFragment"
             app:destination="@id/QuizAnswerFragment"
             app:popUpTo="@id/QuizFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/QuizAnswerFragment"
@@ -327,7 +488,11 @@
             android:id="@+id/action_QuizAnswerFragment_to_ChildHomeFragment"
             app:destination="@id/ChildHomeFragment"
             app:popUpTo="@id/QuizAnswerFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
 
@@ -335,6 +500,16 @@
         android:name="com.prefin.ui.noti.NotiFragment"
         android:label="noti"
         tools:layout="@layout/fragment_noti">
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/SavingAmountSettingFragment"
+        android:name="com.prefin.ui.setting.SavingAmountSettingFragment"
+        android:label="savingAmountSetting"
+        tools:layout="@layout/fragment_saving_amount_setting">
 
 
     </fragment>

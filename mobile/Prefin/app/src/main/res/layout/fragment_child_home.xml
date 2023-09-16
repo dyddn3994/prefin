@@ -72,6 +72,29 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fragment_child_home_card_view_back"
+            android:layout_width="214dp"
+            android:layout_height="235dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/colorblueBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_child_home_logo_text_image_view">
+
+            <TextView
+                android:gravity="center"
+                android:padding="8dp"
+                android:id="@+id/fragment_child_home_card_view_back_trust_score"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                style="@style/Text.regular.Size20"
+                />
+
+
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/fragment_child_home_pocketmoney_title_text_view"
             style="@style/Title.Bold.Size32"

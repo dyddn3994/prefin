@@ -11,6 +11,7 @@ import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSettingBinding
 
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -49,6 +50,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             }
             fragmentSettingBack.setOnClickListener {
                 findNavController().navigateUp()
+            }
+            fragmentSettingLoanAmount.setOnClickListener {
+                findNavController().navigate(R.id.action_SettingFragment_to_SavingAmountSettingFragment)
             }
         }
     }
