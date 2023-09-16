@@ -24,7 +24,7 @@ public class SavingScheduler {
 
     // 매 1일 이자 입금
     @Transactional
-    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")  // "0 * * * * ?" 매 분
+    @Scheduled(cron = "0 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?" 매 분
     public void MonthlyInterest() {
         // 자녀의 저축금액으로 부모의 이율을 적용해서 돈을 준다.
         List<Child> childList = childRepository.findAll();
