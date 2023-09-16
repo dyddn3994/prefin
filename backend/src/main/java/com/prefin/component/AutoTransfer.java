@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -36,6 +37,16 @@ public class AutoTransfer {
             Integer dayOfToday = LocalDateTime.now().getDayOfMonth();
             Long dayOfMonth = Long.valueOf(dayOfToday);
             Long payday = allowance.getPayday();
+
+            int currentYear = LocalDateTime.now().getYear();
+            int currentMonth = LocalDateTime.now().getMonthValue();
+
+            YearMonth yearMonth = YearMonth.of(currentYear, currentMonth);
+            int lastDayOfCurrentMonth = yearMonth.lengthOfMonth();
+
+            if (payday > lastDayOfCurrentMonth) {
+                payday = (long)lastDayOfCurrentMonth;
+            }
 
             if (dayOfMonth.equals(payday)) {
                 Parents parent = allowance.getParent();
