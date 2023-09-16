@@ -42,8 +42,15 @@ public class SavingScheduler {
                     monthlyInterest = child.getParent().getMaxSavingAmount();
                 }
 
+                if (child.getParent().getBalance()- monthlyInterest < 0) {
+                    return;
+                }
+
                 // 저축 금액에 이자 추가
                 child.updateSavingAmount(monthlyInterest);
+
+                // 부모 돈 변경
+                child.getParent().updateBalance(-monthlyInterest);
 
                 // 저축 내역에 추가한다.
                 SavingHistory savingHistory = SavingHistory.builder()
