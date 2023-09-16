@@ -60,7 +60,7 @@ public class LoanService {
         // FCM
         String token = child.getParent().getFcmToken();
         String title = "대출";
-        String body = loanDto.getLoanAmount() + "원 대출 신청 되었습니다.";
+        String body = child.getName() + "님으로 부터 " + loanDto.getLoanAmount() + "원 대출 신청 되었습니다.";
         firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok("대출 신청 완료");
@@ -131,8 +131,8 @@ public class LoanService {
 
         // FCM
         String token = child.getFcmToken();
-        String title = "대출 완료";
-        String body = loanMoney + "원 대출이 완료되었습니다.";
+        String title = "대출";
+        String body = loanMoney + "원 대출이 완료 되었습니다.";
         firebaseCloudMessageService.sendMessageTo(token, title, body);
 
         return ResponseEntity.ok("대출 완료");
