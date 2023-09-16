@@ -50,7 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "Message data : ${remoteMessage.data}")
         Log.d(TAG, "Message noti : ${remoteMessage.notification}")
 
-        if(remoteMessage.data.isNotEmpty()){
+        if(remoteMessage.data.isNotEmpty() && ApplicationClass.sharedPreferences.getBoolean("fcmFlag")){
             //알림생성
             sendNotification(remoteMessage)
             // ROOM DB 저장

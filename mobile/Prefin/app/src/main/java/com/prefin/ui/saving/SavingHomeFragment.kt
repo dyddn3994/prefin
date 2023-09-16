@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -21,10 +22,10 @@ class SavingHomeFragment : BaseFragment<FragmentSavingHomeBinding>(FragmentSavin
 
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
     private val savingHomeViewModel by viewModels<SavingHomeViewModel>()
-
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -62,8 +63,10 @@ class SavingHomeFragment : BaseFragment<FragmentSavingHomeBinding>(FragmentSavin
 
         savingHomeViewModel.setSavingHistory(mainActivityViewModel.selectedChild.id)
         savingHomeViewModel.savingHistories.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             savingHistoryAdapter.submitList(it.reversed())
         }
+        mActivity.showLoadingDialog(requireContext())
     }
 
     private fun isSavingDay(): Boolean {

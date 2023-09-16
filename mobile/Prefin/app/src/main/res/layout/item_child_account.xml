@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:padding="8dp">
+    android:background="@drawable/edittext_rectangle_24"
+    android:paddingStart="12dp"
+    android:paddingTop="12dp"
+    >
 
     <ImageView
         android:id="@+id/fragment_parent_home_child_account_image_view"

@@ -6,6 +6,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -15,21 +16,23 @@ import com.prefin.databinding.FragmentLoginBinding
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
     private val loginViewModel: LoginViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // 뒤로가기 동작 수행
-                    isEnabled = false
-                    requireActivity().onBackPressed()
-                    // 앱 종료
-                    requireActivity().finish()
-                }
-            },
-        )
+        mActivity = requireActivity() as MainActivity
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                // 뒤로가기 동작 수행
+                isEnabled = false
+                requireActivity().onBackPressed()
+                // 앱 종료
+                requireActivity().finish()
+
+            }
+        })
 
         if (ApplicationClass.sharedPreferences.getString("type") == "parent") {
             findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
@@ -44,7 +47,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
         }
 
         loginViewModel.loginSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (loginViewModel.loginSuccess.value == true) {
+                ApplicationClass.sharedPreferences.addFCMFlag(true)
                 if (binding.fragmentLoginParentRadioButton.isChecked) {
                     findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
                 }
@@ -55,6 +60,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                     } else {
                         findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
                     }
+
                 }
             } else {
                 showSnackbar("입력값을 확인해주세요.")
@@ -84,6 +90,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                             mainActivityViewModel.fcmToken!!,
                         )
                     }
+                    mActivity.showLoadingDialog(requireContext())
                 }
             }
 

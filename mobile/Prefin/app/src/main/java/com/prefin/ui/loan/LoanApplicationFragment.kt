@@ -2,6 +2,7 @@ package com.prefin.ui.loan
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.ApplicationClass
@@ -24,7 +26,7 @@ import java.math.BigDecimal
 class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(FragmentLoanApplicationBinding::bind, R.layout.fragment_loan_application) {
     private val loanApplicationViewModel by viewModels<LoanApplicationViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-
+    private lateinit var mActivity: MainActivity
     // 대출 신청 dialog
     private val dialog: Dialog by lazy {
         BottomSheetDialog(requireContext()).apply {
@@ -35,8 +37,14 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         DialogLoanApplicationBinding.bind(dialog.findViewById(R.id.dialog_loan_application_constraint_layout))
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = requireActivity() as MainActivity
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -80,7 +88,6 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
             }
         })
 
-        fragmentLoanApplicationApplyButton
 
         fragmentLoanApplicationApplyButton.setOnClickListener {
             if (fragmentLoanApplicationAmountEditText.text.isNullOrBlank()) {
@@ -98,11 +105,14 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         }
 
         loanApplicationViewModel.loanApplySuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (it) {
                 dialog.dismiss()
                 showSnackbar("대출이 신청되었습니다. 부모님 확인 후 금액이 전송됩니다.")
-
                 findNavController().navigateUp()
+            }
+            else{
+                showSnackbar("대출 신청이 실패되었습니다. 다시 시도해주십시오")
             }
         }
     }
@@ -128,6 +138,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
                 mainActivityViewModel.selectedChild.parentId,
                 mainActivityViewModel.selectedChild.id,
             )
+            mActivity.showLoadingDialog(requireContext())
         }
         dialogLoanApplicationCancelButton.setOnClickListener {
             dialog.dismiss()

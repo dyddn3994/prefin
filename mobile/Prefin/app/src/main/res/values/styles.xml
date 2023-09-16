@@ -10,7 +10,7 @@
     <style name="Title.Bold.Size32" parent="@style/Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">32sp</item>
-        <item name="fontFamily">@font/maplestory_bold</item>
+        <item name="fontFamily">@font/the_jamsil_4_medium</item>
     </style>
 
 
@@ -18,25 +18,25 @@
     <style name="Text.regular.Size12" parent="@style/Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">12sp</item>
-        <item name="fontFamily">@font/maplestory_light</item>
+        <item name="fontFamily">@font/the_jamsil_3_regular</item>
     </style>
 
     <style name="Text.regular.Size16" parent="@style/Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
-        <item name="fontFamily">@font/maplestory_light</item>
+        <item name="fontFamily">@font/the_jamsil_3_regular</item>
     </style>
 
     <style name="Text.regular.Size20" parent="@style/Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
-        <item name="fontFamily">@font/maplestory_light</item>
+        <item name="fontFamily">@font/the_jamsil_3_regular</item>
     </style>
 
     <style name="Text.regular.Size32" parent="@style/Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">32sp</item>
-        <item name="fontFamily">@font/maplestory_light</item>
+        <item name="fontFamily">@font/the_jamsil_3_regular</item>
     </style>
 
     <!-- BottomSheetDialog -->

@@ -29,6 +29,7 @@ class ChildJoinFragmentViewModel : ViewModel() {
                     _childJoinSuccess.value = false
                 }
             }catch (e : Exception){
+                _childJoinSuccess.value = false
                 Log.d(TAG, "childJoin: 통신 오류")
             }
         }

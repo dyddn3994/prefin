@@ -39,6 +39,7 @@ class SignUpViewModel : ViewModel() {
                 }
             }
             catch (e : Exception){
+                _signUpSuccess.value = false
                 Log.d(TAG, "signUp: 회원가입 실패")
             }
 

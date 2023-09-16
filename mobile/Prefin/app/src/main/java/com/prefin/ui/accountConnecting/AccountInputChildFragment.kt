@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -16,14 +17,16 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
     private val accountInputChildFragmentViewModel: AccountInputChildFragmentViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     private val checkText = "신한브로"
-
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
     fun init() {
         accountInputChildFragmentViewModel.accountChildSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (it) {
                 findNavController().navigate(R.id.action_AccountInputChildFragment_to_ChildAddFragment)
             }
@@ -49,6 +52,7 @@ class AccountInputChildFragment : BaseFragment<FragmentAccountInputChildBinding>
 //                    if (fragmentAccountInputChildCheckEditText.text.toString() == checkText) {
                     mainActivityViewModel.childUser!!.account = fragmentAccountInputChildEditText.text.toString()
                     accountInputChildFragmentViewModel.childAccountRegister(mainActivityViewModel.childUser!!.id, mainActivityViewModel.childUser!!)
+                    mActivity.showLoadingDialog(requireContext())
 //                    }
                 }
             }

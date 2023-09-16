@@ -1,15 +1,12 @@
 package com.prefin.ui.quest
 
-import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.CalendarView
-import android.widget.DatePicker
-import android.widget.DatePicker.OnDateChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -22,9 +19,10 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
     private val questRegistViewModel by viewModels<QuestRegistViewModel>()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
     private var selectedDate = 0L
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -41,6 +39,13 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
             selectedDate = dateInMillis
         }
 
+        val today = Calendar.getInstance()
+        today[Calendar.HOUR_OF_DAY] = 0
+        today[Calendar.MINUTE] = 0
+        today[Calendar.SECOND] = 0
+        today[Calendar.MILLISECOND] = 0
+
+        fragmentQuestRegistCalendarView.setMinDate(today.getTimeInMillis());
 
         fragmentQuestRegistAmountTextView.text = StringFormatUtil.moneyToWon(mainActivityViewModel.selectedQuest!!.reward)
         // 뒤로가기 버튼 클릭
@@ -51,10 +56,12 @@ class QuestRegistFragment : BaseFragment<FragmentQuestRegistBinding>(FragmentQue
         // 등록하기 버튼 클릭
         fragmentQuestRegistRegistButton.setOnClickListener {
             questRegistViewModel.registerQuest(mainActivityViewModel.selectedChild.id, selectedDate, mainActivityViewModel.selectedQuest!!.id, System.currentTimeMillis())
+            mActivity.showLoadingDialog(requireContext())
         }
 
         // 퀘스트 등록 observe
         questRegistViewModel.isQuestRegistSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (!it) {
                 // 퀘스트 등록 실패
                 showSnackbar("퀘스트 등록에 실패하였습니다.")

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -29,6 +30,7 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(FragmentQuizBinding::bind
     private var param2: String? = null
     private val quizFragmentViewModel : QuizFragmentViewModel by viewModels()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +42,31 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(FragmentQuizBinding::bind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity =  requireActivity() as MainActivity
         init()
     }
 
     fun init() {
         quizFragmentViewModel.quiz.observe(viewLifecycleOwner){
-            mainActivityViewModel.quiz = it
-            binding.fragmentQuizQuestionTextView.text = it.question
+
+            if(it.id == 0){
+                mainActivityViewModel.quiz = it
+                binding.fragmentQuizWrongButton.visibility = View.GONE
+                binding.fragmentQuizAnswerButton.visibility = View.GONE
+            }
+            else{
+                mainActivityViewModel.quiz = it
+                binding.fragmentQuizQuestionTextView.text = it.question
+
+                binding.fragmentQuizWrongButton.visibility = View.VISIBLE
+                binding.fragmentQuizAnswerButton.visibility = View.VISIBLE
+            }
+            mActivity.dismissLoadingDialog()
+
         }
 
         quizFragmentViewModel.isCorrected.observe(viewLifecycleOwner){
+            mActivity.dismissLoadingDialog()
             if(it){
                 val customDialog = QuizDialog(requireContext(), it, this)
                 customDialog.show()
@@ -70,6 +87,7 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(FragmentQuizBinding::bind
                 var quiz = mainActivityViewModel.quiz
                 quiz!!.answer = true
                 quizFragmentViewModel.postAnswer(quiz)
+                mActivity.showLoadingDialog(requireContext())
 
             } 
 
@@ -77,12 +95,14 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(FragmentQuizBinding::bind
                 var quiz = mainActivityViewModel.quiz
                 quiz!!.answer = false
                 quizFragmentViewModel.postAnswer(quiz)
+                mActivity.showLoadingDialog(requireContext())
 
             }
 
 
         }
         quizFragmentViewModel.getQuiz()
+        mActivity.showLoadingDialog(requireContext())
 
 
     }

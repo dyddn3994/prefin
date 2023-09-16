@@ -1,11 +1,15 @@
 package com.prefin.ui.setting
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -28,6 +32,7 @@ class SavingAmountSettingFragment : BaseFragment<FragmentSavingAmountSettingBind
     private var param2: String? = null
     private val savingAmountSettingFragmentViewModel : SavingAmountSettingFragmentViewModel by viewModels()
     private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,6 +42,7 @@ class SavingAmountSettingFragment : BaseFragment<FragmentSavingAmountSettingBind
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mActivity = requireActivity() as MainActivity
         super.onViewCreated(view, savedInstanceState)
         init()
 
@@ -46,6 +52,7 @@ class SavingAmountSettingFragment : BaseFragment<FragmentSavingAmountSettingBind
         with(binding){
 
             savingAmountSettingFragmentViewModel.settingSuccess.observe(viewLifecycleOwner){
+                mActivity.dismissLoadingDialog()
                 if(it){
                     showSnackbar("변경이 완료되었습니다.")
                     findNavController().navigateUp()
@@ -65,8 +72,30 @@ class SavingAmountSettingFragment : BaseFragment<FragmentSavingAmountSettingBind
                 if (parentData != null) {
                     parentData.maxSavingAmount = fragmentSavingAmountSettingNextAmountEdit.text.toString().toInt()
                         savingAmountSettingFragmentViewModel.setSavingInterestAmount(parentData)
+                    mActivity.showLoadingDialog(requireContext())
                 }
             }
+
+            fragmentSavingAmountSettingNextAmountEdit.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    var amount = p0.toString().toInt()
+
+                    if(amount > mainActivityViewModel.parentUser!!.balance){
+
+                        amount = mainActivityViewModel.parentUser!!.balance
+                        fragmentSavingAmountSettingNextAmountEdit.setText(amount.toString())
+                    }
+
+
+
+
+                }
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
         }
     }
 

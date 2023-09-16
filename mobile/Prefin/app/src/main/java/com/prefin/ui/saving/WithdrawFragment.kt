@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -17,16 +18,21 @@ import java.math.BigDecimal
 class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawBinding::bind, R.layout.fragment_withdraw) {
     private val withdrawViewModel by viewModels<WithdrawViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         if (mainActivityViewModel.withdrawFragmentWithdrawAmount > 0) {
             withdrawViewModel.withdraw(
                 mainActivityViewModel.selectedChild.id,
                 mainActivityViewModel.withdrawFragmentWithdrawAmount,
             )
+            mActivity.showLoadingDialog(requireContext())
         }
+
+        mActivity =  requireActivity() as MainActivity
+
         init()
     }
 
@@ -68,15 +74,22 @@ class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawB
                 // 입력 오류
                 showSnackbar("입력값을 확인해주세요.")
             } else {
+
                 // 인출 요청
+
                 mainActivityViewModel.withdrawFragmentWithdrawAmount = fragmentWithdrawAmountEditText.text.toString().toInt()
                 mainActivityViewModel.fromFragment = WithdrawFragment::class.simpleName
                 findNavController().navigate(R.id.action_WithdrawFragment_to_SimplePassFragment)
+
+
+
+
             }
         }
 
         // 인출 observe
         withdrawViewModel.isWithdrawSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog() 
             if (!it) {
                 // 인출 실패
                 showSnackbar("인출에 실패하였습니다.")

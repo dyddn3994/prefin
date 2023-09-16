@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -18,16 +19,19 @@ import java.math.BigDecimal
 class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding::bind, R.layout.fragment_saving) {
     private val savingViewModel by viewModels<SavingViewModel>()
     private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
-
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         if (mainActivityViewModel.savingFragmentSavingAmount > 0) {
             savingViewModel.saving(
                 mainActivityViewModel.selectedChild.id,
                 mainActivityViewModel.savingFragmentSavingAmount,
             )
+            mActivity.showLoadingDialog(requireContext())
         }
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -40,6 +44,7 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
                 .multiply((mainActivityViewModel.selectedChild.savingRate ?: BigDecimal("0.0")))
                 .toInt(),
         )
+        fragmentSavingCurrentAmountTextView.text = "현재 계좌 잔액 : ${StringFormatUtil.moneyToWon(mainActivityViewModel.selectedChild.balance)}"
 
         fragmentSavingAmountEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -49,6 +54,11 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
                     if (fragmentSavingAmountEditText.text.isNullOrBlank()) {
                         0
                     } else {
+                        if(p0.toString().toInt() > mainActivityViewModel.selectedChild.balance){
+                            fragmentSavingAmountEditText.setText(mainActivityViewModel.selectedChild.balance.toString())
+                        }
+
+
                         fragmentSavingAmountEditText.text.toString().toInt()
                     }
 
@@ -76,14 +86,18 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 저축 요청
+
                 mainActivityViewModel.fromFragment = SavingFragment::class.simpleName
                 mainActivityViewModel.savingFragmentSavingAmount = fragmentSavingAmountEditText.text.toString().toInt()
                 findNavController().navigate(R.id.action_SavingFragment_to_SimplePassFragment)
+
+
             }
         }
 
         // 저축 observe
         savingViewModel.isSavingSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (!it) {
                 // 저축 실패
                 showSnackbar("저축에 실패하였습니다.")

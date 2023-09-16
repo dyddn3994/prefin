@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prefin.MainActivity
 import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
@@ -16,11 +17,12 @@ import com.prefin.model.dto.Child
 class ChildAccountChooseFragment : BaseFragment<FragmentChildAccountChooseBinding>(FragmentChildAccountChooseBinding::bind, R.layout.fragment_child_account_choose) {
     private val childAccountChooseFragmentViewModel: ChildAccountChooseFragmentViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
-
+    private lateinit var mActivity : MainActivity
     private lateinit var adapter: ChildSelectAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity = requireActivity() as MainActivity
         init()
     }
 
@@ -29,6 +31,7 @@ class ChildAccountChooseFragment : BaseFragment<FragmentChildAccountChooseBindin
 
         childAccountChooseFragmentViewModel.childList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            mActivity.dismissLoadingDialog()
         }
 
         binding.apply {
@@ -55,5 +58,6 @@ class ChildAccountChooseFragment : BaseFragment<FragmentChildAccountChooseBindin
             fragmentChildAccountChooseRecyclerView.adapter = adapter
             fragmentChildAccountChooseRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
+        mActivity.showLoadingDialog(requireContext())
     }
 }
