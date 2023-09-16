@@ -35,10 +35,14 @@ class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentP
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 전송 요청
+                mainActivityViewModel.pinMoneySendFragmentAmount = fragmentPinMoneyMoneyEditText.text.toString().toInt()
+                findNavController().navigate(R.id.action_PinMoneySendFragment_to_SimplePassFragment)
+                
+                
                 pinMoneySendViewModel.pinMoneySend(
                     ApplicationClass.sharedPreferences.getLong("id"),
                     mainActivityViewModel.selectedChild.id,
-                    fragmentPinMoneyMoneyEditText.text.toString().toInt(),
+                    mainActivityViewModel.pinMoneySendFragmentAmount,
                 )
             }
         }

@@ -299,6 +299,14 @@
         android:name="com.prefin.ui.account.PinMoneySendFragment"
         android:label="pinMoneySendFragment"
         tools:layout="@layout/fragment_pin_money_send">
+
+        <action
+            android:id="@+id/action_PinMoneySendFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/SavingHomeFragment"
@@ -342,6 +350,14 @@
         android:name="com.prefin.ui.saving.WithdrawFragment"
         android:label="withdrawFragment"
         tools:layout="@layout/fragment_withdraw">
+
+        <action
+            android:id="@+id/action_WithdrawFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/LoanApplicationFragment"

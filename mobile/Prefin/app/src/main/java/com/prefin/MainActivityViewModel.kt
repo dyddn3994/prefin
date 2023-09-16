@@ -28,4 +28,6 @@ class MainActivityViewModel : ViewModel() {
 
     // SimplePass 이동에 따른 임시 데이터 저장
     var savingFragmentSavingAmount = 0
+    var withdrawFragmentWithdrawAmount = 0
+    var pinMoneySendFragmentAmount = 0
 }

@@ -21,6 +21,12 @@ class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (mainActivityViewModel.withdrawFragmentWithdrawAmount > 0) {
+            withdrawViewModel.withdraw(
+                mainActivityViewModel.selectedChild.id,
+                mainActivityViewModel.withdrawFragmentWithdrawAmount,
+            )
+        }
         init()
     }
 
@@ -63,10 +69,9 @@ class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawB
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 인출 요청
-                withdrawViewModel.withdraw(
-                    mainActivityViewModel.selectedChild.id,
-                    fragmentWithdrawAmountEditText.text.toString().toInt(),
-                )
+                mainActivityViewModel.withdrawFragmentWithdrawAmount = fragmentWithdrawAmountEditText.text.toString().toInt()
+                mainActivityViewModel.fromFragment = WithdrawFragment::class.simpleName
+                findNavController().navigate(R.id.action_WithdrawFragment_to_SimplePassFragment)
             }
         }
 
@@ -80,6 +85,7 @@ class WithdrawFragment : BaseFragment<FragmentWithdrawBinding>(FragmentWithdrawB
                 showSnackbar("성공적으로 인출되었습니다.")
 
                 mainActivityViewModel.selectedChild.savingAmount -= fragmentWithdrawAmountEditText.text.toString().toInt()
+                mainActivityViewModel.withdrawFragmentWithdrawAmount = 0
                 findNavController().navigateUp()
             }
         }
