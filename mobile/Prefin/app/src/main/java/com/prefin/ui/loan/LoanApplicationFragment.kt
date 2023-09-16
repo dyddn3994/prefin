@@ -2,7 +2,11 @@ package com.prefin.ui.loan
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -36,7 +40,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         init()
     }
 
-    @SuppressLint("SetTextI18n")
+
     private fun init() = with(binding) {
         // 뒤로가기 버튼 클릭
         fragmentLoanApplicationBackButton.setOnClickListener {
@@ -50,6 +54,33 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         )
         // 현재 이율은
         fragmentLoanApplicationInterestRateTextView.text = "${mainActivityViewModel.selectedChild.loanRate?.multiply(BigDecimal(100))?.toFloat()}%"
+
+        val canLoanAmount = mainActivityViewModel.selectedChild.possibleLoanAmount
+        fragmentLoanApplicationCanLoanAmountTextView.text = "현재 대출 가능한 금액은 ${canLoanAmount}원 입니다."
+        fragmentLoanApplicationAmountEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val inputAmount = p0.toString().toIntOrNull()
+                if (inputAmount != null) {
+                    if (canLoanAmount < inputAmount) {
+                        fragmentLoanApplicationApplyButton.isClickable = false
+                        fragmentLoanApplicationApplyButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorGray))
+                    } else {
+                        fragmentLoanApplicationApplyButton.isClickable = true
+                        fragmentLoanApplicationApplyButton.backgroundTintList = ColorStateList.valueOf(
+                            resources.getColor(R.color.colorPrimary))
+                    }
+                }
+
+
+            }
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+        fragmentLoanApplicationApplyButton
 
         fragmentLoanApplicationApplyButton.setOnClickListener {
             if (fragmentLoanApplicationAmountEditText.text.isNullOrBlank()) {
@@ -94,7 +125,7 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         dialogLoanApplicationApplyButton.setOnClickListener {
             loanApplicationViewModel.askForMoney(
                 binding.fragmentLoanApplicationAmountEditText.text.toString().toInt(),
-                ApplicationClass.sharedPreferences.getLong("id"),
+                mainActivityViewModel.selectedChild.parentId,
                 mainActivityViewModel.selectedChild.id,
             )
         }
