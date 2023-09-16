@@ -16,7 +16,7 @@ class SavingHistoryAdapter(var context: Context) : ListAdapter<SavingHistory, Sa
     inner class ItemViewHolder(var binding: ItemSavingHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SavingHistory) = with(binding) {
             itemSavingHistoryTypeTextView.text = data.savingType
-            itemSavingHistoryDateTextView.text = StringFormatUtil.dateToString(data.savingDate)
+            itemSavingHistoryDateTextView.text = StringFormatUtil.dateTimeToString(data.savingDate)
             itemSavingHistoryAmountTextView.text = data.savingAmount.toString()
         }
     }
