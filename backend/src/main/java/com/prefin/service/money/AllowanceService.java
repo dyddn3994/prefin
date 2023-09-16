@@ -90,7 +90,7 @@ public class AllowanceService {
 
     // 용돈 수동 이체 로직
     @Transactional
-    public ResponseEntity<String> allowanceTransfer(AllowanceDto requestDto) {  // AllowanceDto 로 받고
+    public ResponseEntity<String> allowanceTransfer(AllowanceDto requestDto, String type) {  // AllowanceDto 로 받고
         // 어떤 부모가 어떤 자식에게 얼마를 보내는 지만 알면 된다.
         int immediateAllowance = requestDto.getAllowanceAmount();
 
@@ -103,31 +103,32 @@ public class AllowanceService {
             child.addMoney(immediateAllowance);
             parent.transfer(immediateAllowance);
 
-            // 거래 내역 추가
-            LocalDateTime now = LocalDateTime.now();
+            if (type.equals("ALLOWANCE")) {
+                // 거래 내역 추가
+                LocalDateTime now = LocalDateTime.now();
 
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
 
-            String formattedDateTime = now.format(dateTimeFormatter);
-            String formattedTime = now.format(timeFormatter);
+                String formattedDateTime = now.format(dateTimeFormatter);
+                String formattedTime = now.format(timeFormatter);
 
-            AccountHistory accountHistory = AccountHistory.builder().
-                    child(child).
-                    transactionDate(formattedDateTime).
-                    transactionTime(formattedTime).
-                    briefs("용돈").
-                    deposit(String.valueOf(requestDto.getAllowanceAmount())).
-                    withdraw("0").
-                    build();
+                AccountHistory accountHistory = AccountHistory.builder().
+                        child(child).
+                        transactionDate(formattedDateTime).
+                        transactionTime(formattedTime).
+                        briefs("용돈").
+                        deposit(String.valueOf(requestDto.getAllowanceAmount())).
+                        withdraw("0").
+                        build();
 
-            accountHistoryRepository.save(accountHistory);
+                accountHistoryRepository.save(accountHistory);
+            }
 
             return ResponseEntity.ok("일반 용돈 지급 완료");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("계좌 잔액이 부족합니다.");
         }
-
     }
 
     // 부모 잔액 조회
