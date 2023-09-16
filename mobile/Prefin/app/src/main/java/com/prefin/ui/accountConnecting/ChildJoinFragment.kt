@@ -53,6 +53,11 @@ class ChildJoinFragment : BaseFragment<FragmentChildJoinBinding>(FragmentChildJo
                 mainActivityViewModel.childUser = childJoinFragmentViewModel.childUser
                 findNavController().navigate(R.id.action_ChildJoinFragment_to_AccountInputChildFragment)
             }
+            else{
+                if(childJoinFragmentViewModel.childUser.id == -1L){
+                    showSnackbar("이미 사용중인 아이디입니다.")
+                }
+            }
         }
         binding.apply {
             fragmentChildJoinJoinButton.setOnClickListener {

@@ -13,6 +13,7 @@ import com.prefin.databinding.FragmentSignUpBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.prefin.MainActivityViewModel
+import java.util.regex.Pattern
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +50,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 mainActivityViewModel.parentUser = signUpViewModel.parentUser
                 findNavController().navigate(R.id.action_SignUpFragment_to_AccountInputFragment)
             }
+            else {
+                val id = signUpViewModel.userId
+                if(id == -1L){
+                    showSnackbar("이미 사용중인 아이디입니다.")
+                }
+            }
         }
 
 
@@ -66,10 +73,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     || fragmentSignUpPasswordCheckEditText.text.isNullOrEmpty()
                     || fragmentSignUpNameEditText.text.isNullOrEmpty()){
 
-                    Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
+                    showSnackbar("비어 있는 부분을 모두 채우고 시도해주세요")
                 }
                 else{
-                    if(fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
+                    if( Pattern.matches("^[a-zA-Z0-9]*\$", fragmentSignUpIdEditText.text.toString()) && fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
                         // 회원가입 구현
                         fragmentSignUpEmailCheckTextView.visibility = View.GONE
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
@@ -82,6 +89,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         signUpViewModel.signUp()
 
 
+                    }
+                    else if(!Pattern.matches("^[a-zA-Z0-9]*\$", fragmentSignUpIdEditText.text.toString())) {
+                        fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE
                     }
 
 

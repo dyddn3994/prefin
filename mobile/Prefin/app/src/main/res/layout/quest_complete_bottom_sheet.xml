@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quest_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -15,7 +16,7 @@
         style="@style/Title.Bold.Size32"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="56dp"
         android:gravity="center_horizontal"
         android:text="Bottom Sheet"
         android:textColor="@android:color/black"
@@ -28,7 +29,7 @@
         android:id="@+id/bottom_sheet_quest_reward"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/maplestory_light"
         android:gravity="end"
         android:text="10000원"
@@ -39,6 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_quest_title" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="24dp"
         android:id="@+id/bottom_sheet_quest_approve_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,22 +48,28 @@
         android:background="@drawable/button_rectangle_81"
         android:backgroundTint="@color/colorPrimary"
         android:text="승낙"
-        android:textColor="@android:color/black"
+
+        android:textColor="@android:color/white"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_quest_refuse_button"
+        style="@style/Text.regular.Size20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_quest_reward"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="24dp"
         android:id="@+id/bottom_sheet_quest_refuse_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:text="취소"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Text.regular.Size20"
+        android:background="@drawable/button_rectangle_81_color_reversed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_quest_approve_button"
+        app:layout_constraintStart_toStartOf="parent"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

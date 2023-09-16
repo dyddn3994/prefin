@@ -5,6 +5,7 @@ import com.prefin.model.dto.QuestCreateRequest
 import com.prefin.model.dto.QuestOwned
 import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.model.dto.QuestRegisterRequest
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -48,5 +49,5 @@ interface QuestApi {
     @PUT("questowned/complete/{id}")
     suspend fun questFinishComplete(
         @Path("id") id: Long,
-    )
+    ) : Response<Boolean>
 }

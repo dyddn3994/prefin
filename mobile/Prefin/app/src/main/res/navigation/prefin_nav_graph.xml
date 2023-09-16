@@ -274,7 +274,9 @@
 
         <action
             android:id="@+id/action_SettingFragment_to_LoginFragment"
-            app:destination="@id/LoginFragment" />
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/SettingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
