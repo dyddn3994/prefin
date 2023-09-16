@@ -23,7 +23,7 @@ public class AutoTransfer {
     // 자동이체 로직
     // 용돈 설정 후 해당 테이블을 다 돌아보면서
     // 오늘 날짜와 비교, 일치한다면 해당 부모의 계좌에서 자식 계좌로 이체
-    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
+    @Scheduled(cron = "0 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?"
     @Transactional
     public void autoTransfer() {
         System.out.println("!!자동 이체 실행!!");
