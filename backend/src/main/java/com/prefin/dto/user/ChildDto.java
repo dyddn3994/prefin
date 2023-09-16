@@ -84,7 +84,7 @@ public class ChildDto {
                 .payday(allowance.getPayday())
                 .savingRate(child.getSavingRate())
                 .loanRate(child.getLoanRate())
-                .possibleLoanAmount((int) (child.getAllowance().getAllowanceAmount() * child.getTrustScore() * 0.05 * 0.01))
+                .possibleLoanAmount((int) (allowance.getAllowanceAmount() * child.getTrustScore() * 0.05 * 0.01))
                 .loanAmount(child.getLoanAmount())
                 .build();
     }
