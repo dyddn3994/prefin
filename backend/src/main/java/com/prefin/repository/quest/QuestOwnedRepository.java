@@ -17,4 +17,9 @@ public interface QuestOwnedRepository extends JpaRepository<QuestOwned, Long> {
             "from QuestOwned questOwned " +
             "where questOwned.child = :child")
     List<QuestOwned> findByChild(@Param("child") Child child);
+
+    @Query(value = "select questOwned " +
+            "from QuestOwned questOwned " +
+            "where questOwned.endDate = :endDate")
+    List<QuestOwned> findByTime(long endDate);
 }
