@@ -41,6 +41,8 @@ public class Parents {
 
     private int balance;
 
+    private int maxSavingAmount;
+
     @OneToMany(mappedBy = "parent")
     private List<Child> childList = new ArrayList<>();
 
@@ -65,4 +67,8 @@ public class Parents {
     }
 
     public void updateBalance(int balance) { this.balance += balance; }
+
+    public void updateMaxSavingAmount(int maxSavingAmount) {
+        this.maxSavingAmount = maxSavingAmount;
+    }
 }

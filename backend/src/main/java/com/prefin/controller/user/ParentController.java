@@ -58,6 +58,11 @@ public class ParentController {
         return parentService.setToken(id, parentDto.getFcmToken());
     }
 
+    @PutMapping("/parent/{id}/maxSaving")
+    public ResponseEntity<Boolean> setMaxSavingAmount(@PathVariable long id, @RequestBody ParentDto parentDto) {
+        return parentService.setMaxSavingAmount(id, parentDto.getMaxSavingAmount());
+    }
+
     @GetMapping("/parent/{id}/getChildren")
     public List<ChildDto> myChildren(@PathVariable Long id) {
         return parentService.myChildren(id);

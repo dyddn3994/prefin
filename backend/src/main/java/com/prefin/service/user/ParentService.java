@@ -24,11 +24,16 @@ public class ParentService {
 
     // 부모 회원 가입
     public Long signUp(ParentDto parent) {
+        // 자녀 중복 조회
+        Parents originalParent = parentRepository.findByUserId(parent.getUserId()).orElse(null);
+
+        if (originalParent != null) return -1L;
 
         Parents newParent = Parents.builder().
                 userId(parent.getUserId()).
                 password(parent.getPassword()).
                 name(parent.getName()).
+                balance(1000000).
                 build();
 
         return parentRepository.save(newParent).getId();
@@ -125,5 +130,17 @@ public class ParentService {
         if (parent == null) return null;
 
         return ParentDto.fromEntity(parent);
+    }
+
+    // 최대 이자금액 설정
+    public ResponseEntity<Boolean> setMaxSavingAmount(long id, int maxSavingAmount) {
+        Parents parent = parentRepository.findById(id).orElse(null);
+
+        if (parent == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        parent.updateMaxSavingAmount(maxSavingAmount);
+        parentRepository.save(parent);
+
+        return ResponseEntity.ok(true);
     }
 }

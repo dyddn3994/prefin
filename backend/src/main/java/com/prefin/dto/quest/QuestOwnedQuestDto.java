@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class QuestOwnedQuestDto {
     private Long questId;
 
+    private Long questOwnedId;
+
     private boolean requested;
 
     private boolean completed;

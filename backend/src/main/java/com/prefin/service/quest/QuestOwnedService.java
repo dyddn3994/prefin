@@ -88,14 +88,11 @@ public class QuestOwnedService {
     public ResponseEntity<Boolean> setQuestCompleted(long id) throws IOException {
         QuestOwned questOwned = questOwnedRepository.findById(id).orElse(null);
 
+
         if (questOwned == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
-        questOwned.updateCompleted(true);
-        questOwnedRepository.save(questOwned);
 
         Quest quest = questOwned.getQuest();
-        quest.updateRegistered(false);
-        questRepository.save(quest);
 
         // 돈 전송
         AllowanceDto allowanceDto = AllowanceDto.builder().
@@ -103,7 +100,19 @@ public class QuestOwnedService {
                 childId(questOwned.getChild().getId()).
                 parentId(quest.getParent().getId()).build();
 
-        allowanceService.allowanceTransfer(allowanceDto);
+        // 돈 체크
+        if (allowanceService.allowanceTransfer(allowanceDto).getBody().equals("계좌 잔액이 부족합니다.")) {
+            System.out.println("잔액부죡");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
+
+        // 퀘스트 변경내역 적용
+        questOwned.updateCompleted(true);
+        questOwnedRepository.save(questOwned);
+
+
+        quest.updateRegistered(false);
+        questRepository.save(quest);
 
         // FCM
         String token = questOwned.getChild().getFcmToken();
@@ -119,6 +128,7 @@ public class QuestOwnedService {
 
         return QuestOwnedQuestDto.builder()
                 .questId(questOwned.getQuest().getId())
+                .questOwnedId(questOwned.getId())
                 .requested(questOwned.isRequested())
                 .completed(questOwned.isCompleted())
                 .startDate(questOwned.getStartDate())
@@ -136,8 +146,11 @@ public class QuestOwnedService {
         List<QuestOwnedQuestDto> questOwnedQuestDtos = new ArrayList<>();
 
         for (QuestOwned questOwned : questOwneds) {
+            if (questOwned.isCompleted() == true) continue;
+
             questOwnedQuestDtos.add(QuestOwnedQuestDto.builder()
                     .questId(questOwned.getQuest().getId())
+                    .questOwnedId(questOwned.getId())
                     .requested(questOwned.isRequested())
                     .completed(questOwned.isCompleted())
                     .startDate(questOwned.getStartDate())
@@ -148,5 +161,20 @@ public class QuestOwnedService {
         }
 
         return questOwnedQuestDtos;
+    }
+
+    // 퀘스트 등록 해제
+    public ResponseEntity<Boolean> unregisterQuestOwned(Long id) {
+        QuestOwned questOwned = questOwnedRepository.findById(id).orElse(null);
+
+        if (questOwned == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        // questOwned의 quest에서 registered를 false로 변경.
+        questOwned.getQuest().updateRegistered(false);
+
+        // questOwned에서 삭제
+        questOwnedRepository.delete(questOwned);
+
+        return ResponseEntity.ok(true);
     }
 }
