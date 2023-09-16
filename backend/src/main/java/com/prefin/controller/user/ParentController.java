@@ -31,6 +31,11 @@ public class ParentController {
         return parentService.login(userId, password);
     }
 
+    @PostMapping("/parent/{id}/logout")
+    public ResponseEntity<Boolean> logout(@PathVariable Long id) {
+        return parentService.logout(id);
+    }
+
     @PutMapping("/parent/{id}/account")
     public ResponseEntity<Boolean> setAccount(@PathVariable long id, @RequestBody ParentDto parentDto) {
         return parentService.setAccount(id, parentDto.getAccount());

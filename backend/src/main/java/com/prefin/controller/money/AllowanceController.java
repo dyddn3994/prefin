@@ -35,7 +35,7 @@ public class AllowanceController {
 
     @PostMapping("/allowance/transfer")  // 용돈 수동 이체
     public ResponseEntity<String> transferAllowance(@RequestBody AllowanceDto requestDto) {
-        return allowanceService.allowanceTransfer(requestDto);
+        return allowanceService.allowanceTransfer(requestDto, "ALLOWANCE");
     }
 
     @GetMapping("/parentBalance/{parentId}")  // 부모 잔액 조회

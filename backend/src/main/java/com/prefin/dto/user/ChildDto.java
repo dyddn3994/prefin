@@ -42,12 +42,16 @@ public class ChildDto {
 
     private long parentId;
 
+    private long loanAmount;
+
+    private int possibleLoanAmount;
+
     // 용돈 관련
     private int allowanceAmount;
 
     private long payday;
 
-    private BigDecimal saveRate;
+    private BigDecimal savingRate;
 
     private BigDecimal loanRate;
 
@@ -78,8 +82,10 @@ public class ChildDto {
                 .parentId(child.getParent().getId())
                 .allowanceAmount(allowance.getAllowanceAmount())
                 .payday(allowance.getPayday())
-                .saveRate(child.getSavingRate())
+                .savingRate(child.getSavingRate())
                 .loanRate(child.getLoanRate())
+                .possibleLoanAmount((int) (allowance.getAllowanceAmount() * child.getTrustScore() * 0.05 * 0.01))
+                .loanAmount(child.getLoanAmount())
                 .build();
     }
 }

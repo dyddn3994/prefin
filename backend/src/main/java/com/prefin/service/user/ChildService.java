@@ -5,6 +5,7 @@ import com.prefin.domain.money.SavingHistory;
 import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
 import com.prefin.dto.bank.AccountInfoDto;
+import com.prefin.dto.bank.Transfer1Dto;
 import com.prefin.dto.money.AccountHistoryDto;
 import com.prefin.dto.user.ChildDto;
 import com.prefin.repository.money.AccountHistoryRepository;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,31 +99,52 @@ public class ChildService {
     private void setAccountHistory(long id, String account) {
         // 자녀 거래내역 저장
         String url = "https://shbhack.shinhan.com/v1/search/transaction";
-
+        String url2 = "https://shbhack.shinhan.com/v1/auth/1transfer";
         RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate2 = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
+        HttpHeaders headers2 = new HttpHeaders();
+
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers2.setContentType(MediaType.APPLICATION_JSON);
 
         // 데이터 본문 생성
         Map<String, Object> dataHeader = new HashMap<>();
+        Map<String, Object> dataHeader2 = new HashMap<>();
+
         dataHeader.put("apikey", "2023_Shinhan_SSAFY_Hackathon");
+        dataHeader2.put("apikey", "2023_Shinhan_SSAFY_Hackathon");
+
 
         Map<String, Object> dataBody = new HashMap<>();
+        Map<String, Object> dataBody2 = new HashMap<>();
+
         dataBody.put("계좌번호", account);
+        dataBody2.put("입금은행코드", "088");
+        dataBody2.put("입금계좌번호", account);
+        dataBody2.put("입금통장메모", "신한브로");
 
         Map<String, Object> requestBody = new HashMap<>();
+        Map<String, Object> requestBody2 = new HashMap<>();
+
         requestBody.put("dataHeader", dataHeader);
+        requestBody2.put("dataHeader", dataHeader2);
         requestBody.put("dataBody", dataBody);
+        requestBody2.put("dataBody", dataBody2);
+
 
         // HTTP 요청 엔터티 생성
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Map<String, Object>> requestEntity2 = new HttpEntity<>(requestBody2, headers2);
 
         // RestTemplate을 사용하여 HTTP POST 요청 보내기
         ResponseEntity<AccountInfoDto> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, AccountInfoDto.class);
+        ResponseEntity<Transfer1Dto> responseEntity2 = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Transfer1Dto.class);
 
         // 응답 처리
         AccountInfoDto accountInfoDto = responseEntity.getBody();
+        Transfer1Dto transfer1Dto = responseEntity2.getBody();
 
         List<AccountInfoDto.TransactionHistory> transactionHistoryList = accountInfoDto.getDataBody().getHistories();
 
@@ -138,6 +161,28 @@ public class ChildService {
 
             accountHistoryRepository.save(accountHistory);
         }
+
+        // 1원 송금
+        LocalDateTime now = LocalDateTime.now();
+
+        // 원하는 날짜 및 시간 형식을 정의합니다.
+        DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HHmmss");
+
+        // LocalDateTime 객체를 문자열로 포맷팅합니다.
+        String formattedDate = now.format(formatterDay);
+        String formattedTime = now.format(formatterTime);
+
+        AccountHistory accountHistory = AccountHistory.builder()
+                .child(childRepository.findById(id).get())
+                .transactionDate(formattedDate)
+                .transactionTime(formattedTime)
+                .briefs("신 한 브 로")
+                .deposit("1")
+                .withdraw("0")
+                .build();
+
+        accountHistoryRepository.save(accountHistory);
     }
 
 
@@ -262,13 +307,14 @@ public class ChildService {
         return ResponseEntity.ok(true);
     }
 
-    // 출금 하기
+    //    출금 하기
     public ResponseEntity<Boolean> withdraw(long id, int balance) throws IOException {
         Child child = childRepository.findById(id).orElse(null);
 
         if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
-        if (child.getParent().getBalance() - balance < 0) ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        if (child.getParent().getBalance() - balance < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        if (child.getSavingAmount() - balance < 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         child.getParent().updateBalance(-balance);
         child.updateBalance(balance);
@@ -323,5 +369,17 @@ public class ChildService {
         }
 
         return accountHistoryDtos;
+
+    }
+
+    public ResponseEntity<Boolean> logout(Long id) {
+        Child child = childRepository.findById(id).orElse(null);
+
+        if (child == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+
+        child.updateToken(null);
+        childRepository.save(child);
+
+        return ResponseEntity.ok(true);
     }
 }

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,26 @@ public class QuestOwnedService {
 
         if (quest == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
+
+        // EndDate의 날짜만 뽑아온다.
+//        long endTime = LocalDateTime.now().minusDays(1).atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
+
+        long endTime = questOwnedDto.getEndDate();
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(endTime), ZoneId.of("Asia/Seoul"));
+
+        // 연월일을 숫자로 표현하기 위해 포맷을 지정합니다. 예: "yyyyMMdd"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+        // LocalDate 객체를 문자열로 변환한 후 long으로 파싱합니다.
+        String formattedDate = ldt.format(formatter);
+
+        LocalDate localDate = LocalDate.parse(formattedDate, formatter);
+
+        ZonedDateTime seoulDateTime = localDate.atStartOfDay(ZoneId.of("Asia/Seoul"));
+        long longDate = seoulDateTime.toInstant().toEpochMilli();
+
+        System.out.println(longDate);
+
         // 퀘스트 소유 생성
         QuestOwned questOwned = QuestOwned.builder().
                 child(child).
@@ -54,7 +74,7 @@ public class QuestOwnedService {
                 requested(false).
                 completed(false).
                 startDate(questOwnedDto.getStartDate()).
-                endDate(questOwnedDto.getEndDate()).
+                endDate(longDate).
                 build();
 
         questOwnedRepository.save(questOwned);
@@ -97,17 +117,15 @@ public class QuestOwnedService {
 
         if (questOwned == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
-
         Quest quest = questOwned.getQuest();
 
-        // 돈 전송
         AllowanceDto allowanceDto = AllowanceDto.builder().
                 allowanceAmount(quest.getReward()).
                 childId(questOwned.getChild().getId()).
                 parentId(quest.getParent().getId()).build();
 
-        // 돈 체크
-        if (allowanceService.allowanceTransfer(allowanceDto).getBody().equals("계좌 잔액이 부족합니다.")) {
+        // 돈 체크 및 전송
+        if (allowanceService.allowanceTransfer(allowanceDto, "QUEST").getBody().equals("계좌 잔액이 부족합니다.")) {
             System.out.println("잔액부죡");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
@@ -120,7 +138,7 @@ public class QuestOwnedService {
         questRepository.save(quest);
 
         // 거래 내역도 추가
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");

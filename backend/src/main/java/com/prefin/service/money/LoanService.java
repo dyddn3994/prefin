@@ -16,9 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,22 +33,40 @@ public class LoanService {
     private final ChildRepository childRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
+    private boolean isMaxLoan(LoanDto loanDto, Child child, int loanWaiting) {
+        BigDecimal maxLoanRate = BigDecimal.valueOf(child.getTrustScore() * (1.0 / 20));
+        BigDecimal allowance = BigDecimal.valueOf(child.getAllowance().getAllowanceAmount());
+        BigDecimal tempMaxLoan = maxLoanRate.multiply(allowance).multiply(new  BigDecimal("0.01"));
+        int maxLoan = tempMaxLoan.setScale(0, RoundingMode.FLOOR).intValue();
+
+        if (maxLoan < loanWaiting + loanDto.getLoanAmount() + child.getLoanAmount()) {
+            return true;
+        }
+        return false;
+    }
+
+    // 대출 신청
     @Transactional
-    public ResponseEntity<String> askForMoney(LoanDto loanDto) throws IOException {  // 대출 신청 기능
+    public ResponseEntity<String> askForMoney(LoanDto loanDto) throws IOException {
         // 부모와 자식의 정보를 가져온다
         // 대출 테이블에 추가하는 느낌
+        Parents parent = parentRepository.findById(loanDto.getParentId())
+                .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));
 
-        Parents parent = null;
-        Child child = null;
+        Child child = childRepository.findById(loanDto.getChildId())
+                .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
 
-        if (loanDto.getParentId() != null) {
-            parent = parentRepository.findById(loanDto.getParentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Parent Not Found"));
+        int loanWaiting = 0;
+
+        List<LoanHistory> loanHistoryList = loanRepository.findAllByChildId(child.getId());
+        for (LoanHistory loanAsked:loanHistoryList){
+            if (!loanAsked.getIsAccepted()) {
+                loanWaiting += loanAsked.getLoanAmount();
+            }
         }
-        if (loanDto.getChildId() != null) {
-            child = childRepository.findById(loanDto.getChildId())
-                    .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
-        }
+
+        if (isMaxLoan(loanDto, child, loanWaiting))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("최대 대출 금액을 벗어납니다.");
 
         // 이렇게 가져온 정보를 dto를 통해 LoanHistory에 넣는다.
         LoanHistory loanHistory = LoanHistory.builder()
@@ -72,9 +93,24 @@ public class LoanService {
         LoanHistory loanRequest = loanRepository.findById(loanDto.getLoanId())
                 .orElseThrow(() -> new EntityNotFoundException("LoanHistory Not Found") );
 
+        Child child = childRepository.findById(loanRequest.getChild().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
+
         if (loanRequest.getIsAccepted()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("이미 처리된 대출 신청입니다.");
         }
+
+        int loanWaiting = 0;
+
+        List<LoanHistory> loanHistoryList = loanRepository.findAllByChildId(child.getId());
+        for (LoanHistory loanAsked:loanHistoryList){
+            if (!Objects.equals(loanAsked.getId(), loanRequest.getId()) && !loanAsked.getIsAccepted()) {
+                loanWaiting += loanAsked.getLoanAmount();
+            }
+        }
+
+        if (isMaxLoan(loanDto, child, loanWaiting))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("최대 대출 금액을 벗어납니다.");
 
         loanRequest.updateLoanRequest(loanDto.getLoanAmount());
 
