@@ -1,7 +1,9 @@
 package com.prefin.util
 
 import androidx.recyclerview.widget.DiffUtil
+import com.prefin.model.dto.AccountHistory
 import com.prefin.model.dto.Child
+import com.prefin.model.dto.LoanHistory
 import com.prefin.model.dto.Quest
 import com.prefin.model.dto.QuestOwned
 import com.prefin.model.dto.QuestOwnedQuest
@@ -82,6 +84,26 @@ class AdapterUtil {
             }
 
             override fun areContentsTheSame(oldItem: Child, newItem: Child): Boolean {
+                return oldItem == newItem
+            }
+        }
+
+        val diffUtilAccountHistory = object : DiffUtil.ItemCallback<AccountHistory>() {
+            override fun areItemsTheSame(oldItem: AccountHistory, newItem: AccountHistory): Boolean {
+                return oldItem.id == newItem.id
+            }
+        
+            override fun areContentsTheSame(oldItem: AccountHistory, newItem: AccountHistory): Boolean {
+                return oldItem == newItem
+            }
+        }
+
+        val diffUtilLoanHistory = object : DiffUtil.ItemCallback<LoanHistory>() {
+            override fun areItemsTheSame(oldItem: LoanHistory, newItem: LoanHistory): Boolean {
+                return oldItem.loanId == newItem.loanId
+            }
+        
+            override fun areContentsTheSame(oldItem: LoanHistory, newItem: LoanHistory): Boolean {
                 return oldItem == newItem
             }
         }

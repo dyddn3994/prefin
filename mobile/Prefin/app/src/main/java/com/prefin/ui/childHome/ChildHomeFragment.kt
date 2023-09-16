@@ -1,8 +1,8 @@
 package com.prefin.ui.childHome
 
 import android.os.Bundle
-import android.view.View
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,12 +23,12 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
 
     fun init() {
         childHomeFragmentViewModel.getQuiz()
-        
-        childHomeFragmentViewModel.child.observe(viewLifecycleOwner){
-            with(binding){
+
+        childHomeFragmentViewModel.child.observe(viewLifecycleOwner) {
+            with(binding) {
                 mainActivityViewModel.selectedChild = it
-                fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon( it.balance)
-                fragmentChildHomeSavingAccountMoneyTextView.text =  StringFormatUtil.moneyToWon(it.savingAmount)
+                fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
+                fragmentChildHomeSavingAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.savingAmount)
             }
         }
 
@@ -47,13 +47,11 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             }
 
             fragmentChildHomeQuizImageView.setOnClickListener {
-                if(childHomeFragmentViewModel.child.value!!.isQuizSolved == true){
-
+                if (childHomeFragmentViewModel.child.value!!.isQuizSolved == true) {
                     Log.d("Quiz", "init: ${childHomeFragmentViewModel.quiz}")
                     mainActivityViewModel.quiz = childHomeFragmentViewModel.quiz
                     findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizAnswerFragment)
-                }
-                else{
+                } else {
                     findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizFragment)
                 }
             }
@@ -62,10 +60,15 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
             fragmentChildHomeQuestTextView.setOnClickListener {
                 findNavController().navigate(R.id.action_ChildHomeFragment_to_QuestChildHomeFragment)
             }
-            
+
             // 용돈 빌리기 버튼
             fragmentChildHomeLoanTextView.setOnClickListener {
                 findNavController().navigate(R.id.action_ChildHomeFragment_to_LoanHomeFragment)
+            }
+
+            // 자녀 계좌 클릭
+            fragmentChildHomeMyAccountLinearLayout.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_AccountHistoryFragment)
             }
         }
         childHomeFragmentViewModel.getChild()

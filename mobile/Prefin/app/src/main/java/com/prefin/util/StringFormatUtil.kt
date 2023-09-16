@@ -12,6 +12,7 @@ class StringFormatUtil {
             val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 ", Locale.KOREA)
             return dateFormat.format(date)
         }
+
         fun dateTimeToString(date: Long): String {
             val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 HH:mm", Locale.KOREA)
             return dateFormat.format(date)

@@ -87,6 +87,16 @@
         <action
             android:id="@+id/action_ChildHomeFragment_to_QuestChildHomeFragment"
             app:destination="@+id/QuestChildHomeFragment" />
+        <action
+            android:id="@+id/action_ChildHomeFragment_to_AccountHistoryFragment"
+            app:destination="@+id/AccountHistoryFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/AccountHistoryFragment"
+        android:name="com.prefin.ui.account.AccountHistoryFragment"
+        android:label="accountHistory"
+        tools:layout="@layout/fragment_account_history"
+        >
     </fragment>
 
     <fragment android:id="@+id/AccountInputFragment"

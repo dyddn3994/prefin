@@ -21,7 +21,7 @@
         android:id="@+id/fragment_account_history_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="저축 내역"
+        android:text="거래 내역"
         style="@style/Text.regular.Size32"
         android:layout_marginTop="60dp"
         android:layout_marginStart="20dp"
@@ -37,7 +37,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/fragment_account_history_title_text_view"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_account_history"
+        tools:listitem="@layout/item_saving_history"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

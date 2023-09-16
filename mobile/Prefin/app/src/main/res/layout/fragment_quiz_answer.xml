@@ -31,10 +31,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_quiz_answer_linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="304dp"
+        android:layout_height="304dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/quiz"
         android:gravity="center"
@@ -45,12 +45,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
-
             android:id="@+id/fragment_quiz_answer_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="" 
+            android:layout_margin="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-    </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

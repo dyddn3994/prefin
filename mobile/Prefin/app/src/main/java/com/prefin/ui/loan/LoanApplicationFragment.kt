@@ -1,5 +1,6 @@
 package com.prefin.ui.loan
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
@@ -35,7 +36,13 @@ class LoanApplicationFragment : BaseFragment<FragmentLoanApplicationBinding>(Fra
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() = with(binding) {
+        // 뒤로가기 버튼 클릭
+        fragmentLoanApplicationBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         fragmentLoanApplicationBeforePinmoneyTextView.text = StringFormatUtil.moneyToWon(
             mainActivityViewModel.selectedChild.allowanceAmount -
                 mainActivityViewModel.selectedChild.loanAmount,

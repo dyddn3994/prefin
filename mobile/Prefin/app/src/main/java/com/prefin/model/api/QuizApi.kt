@@ -11,6 +11,7 @@ interface QuizApi {
 
     @GET("quiz/today/{childId}")
     suspend fun getQuizData(@Path("childId") id : Long) : Quiz
+    
     @POST("quiz/isCorrect/{childId}")
     suspend fun postAnswer(@Path("childId") id : Long, @Body quiz : Quiz) : Response<Boolean>
 }
