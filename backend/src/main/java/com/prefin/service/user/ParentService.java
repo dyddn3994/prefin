@@ -1,6 +1,5 @@
 package com.prefin.service.user;
 
-import com.prefin.domain.user.Child;
 import com.prefin.domain.user.Parents;
 import com.prefin.dto.user.ChildDto;
 import com.prefin.dto.user.ParentDto;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -76,29 +74,29 @@ public class ParentService {
         return ResponseEntity.ok(true);
     }
 
-    // 대출 이율 설정
-    public ResponseEntity<Boolean> setLoanRate(long id, BigDecimal loanRate) {
-        Parents parent = parentRepository.findById(id).orElse(null);
-
-        if (parent == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-
-        parent.updateLoanRate(loanRate);
-        parentRepository.save(parent);
-
-        return ResponseEntity.ok(true);
-    }
-
-    // 저축 이율 설정
-    public ResponseEntity<Boolean> setSavingRate(long id, BigDecimal savingRate) {
-        Parents parent = parentRepository.findById(id).orElse(null);
-
-        if (parent == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-
-        parent.updateSavingRate(savingRate);
-        parentRepository.save(parent);
-
-        return ResponseEntity.ok(true);
-    }
+//    // 대출 이율 설정
+//    public ResponseEntity<Boolean> setLoanRate(long id, BigDecimal loanRate) {
+//        Parents parent = parentRepository.findById(id).orElse(null);
+//
+//        if (parent == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+//
+//        parent.updateLoanRate(loanRate);
+//        parentRepository.save(parent);
+//
+//        return ResponseEntity.ok(true);
+//    }
+//
+//    // 저축 이율 설정
+//    public ResponseEntity<Boolean> setSavingRate(long id, BigDecimal savingRate) {
+//        Parents parent = parentRepository.findById(id).orElse(null);
+//
+//        if (parent == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+//
+//        parent.updateSavingRate(savingRate);
+//        parentRepository.save(parent);
+//
+//        return ResponseEntity.ok(true);
+//    }
 
     // FCM Token 등록
     public ResponseEntity<Boolean> setToken(long id, String fcmToken) {

@@ -38,7 +38,11 @@ public class Child {
 
     private int savingAmount;
 
+    private BigDecimal savingRate;
+
     private int loanAmount;
+
+    private BigDecimal loanRate;
 
     private int balance;
 
@@ -57,57 +61,67 @@ public class Child {
         this.account = account;
     }
 
+    public void updateLoanRate(BigDecimal loanRate) {
+        this.loanRate = loanRate;
+    }
+
+    public void updateSavingRate(BigDecimal savingRate) {
+        this.savingRate = savingRate;
+    }
+
     public void updateSimplePass(String simplePass) {
         this.simplePass = simplePass;
     }
 
     public void updateTrustScore(int score) {
+        if (this.trustScore + score >= 1000) {
+            this.trustScore = 1000;
+            this.savingRate = BigDecimal.valueOf(2.0);
+            this.loanRate = BigDecimal.valueOf(0.0);
+            return;
+        }
         this.trustScore += score;
 
         // 신뢰 점수 변경사항 체크
-        if (trustScore >= 1000)  {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(2.0));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(0.0));
+        if (this.trustScore >= 900)  {
+            this.savingRate = BigDecimal.valueOf(1.8);
+            this.loanRate = BigDecimal.valueOf(1.0);
         }
-        else if (trustScore >= 900)  {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(1.8));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(1.0));
+        else if (this.trustScore >= 800) {
+            this.savingRate = BigDecimal.valueOf(1.6);
+            this.loanRate = BigDecimal.valueOf(2.0);
         }
-        else if (trustScore >= 800) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(1.6));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(2.0));
+        else if (this.trustScore >= 700) {
+            this.savingRate = BigDecimal.valueOf(1.4);
+            this.loanRate = BigDecimal.valueOf(3.0);
         }
-        else if (trustScore >= 700) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(1.4));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(3.0));
+        else if (this.trustScore >= 600) {
+            this.savingRate = BigDecimal.valueOf(1.2);
+            this.loanRate = BigDecimal.valueOf(4.0);
         }
-        else if (trustScore >= 600) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(1.2));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(4.0));
+        else if (this.trustScore >= 500) {
+            this.savingRate = BigDecimal.valueOf(1.0);
+            this.loanRate = BigDecimal.valueOf(5.0);
         }
-        else if (trustScore >= 500) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(1.0));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(5.0));
+        else if (this.trustScore >= 400) {
+            this.savingRate = BigDecimal.valueOf(0.8);
+            this.loanRate = BigDecimal.valueOf(6.0);
         }
-        else if (trustScore >= 400) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(0.8));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(6.0));
+        else if (this.trustScore >= 300) {
+            this.savingRate = BigDecimal.valueOf(0.6);
+            this.loanRate = BigDecimal.valueOf(7.0);
         }
-        else if (trustScore >= 300) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(0.6));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(7.0));
+        else if (this.trustScore >= 200) {
+            this.savingRate = BigDecimal.valueOf(0.4);
+            this.loanRate = BigDecimal.valueOf(8.0);
         }
-        else if (trustScore >= 200) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(0.4));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(8.0));
-        }
-        else if (trustScore >= 100) {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(0.2));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(9.0));
+        else if (this.trustScore >= 100) {
+            this.savingRate = BigDecimal.valueOf(0.2);
+            this.loanRate = BigDecimal.valueOf(9.0);
         }
         else {
-            this.getParent().updateSavingRate(BigDecimal.valueOf(0.0));
-            this.getParent().updateLoanRate(BigDecimal.valueOf(10.0));
+            this.savingRate = BigDecimal.valueOf(0.0);
+            this.loanRate = BigDecimal.valueOf(10.0);
         }
     }
 

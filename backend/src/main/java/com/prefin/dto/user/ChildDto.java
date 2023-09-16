@@ -78,8 +78,8 @@ public class ChildDto {
                 .parentId(child.getParent().getId())
                 .allowanceAmount(allowance.getAllowanceAmount())
                 .payday(allowance.getPayday())
-                .saveRate(parent.getSavingRate())
-                .loanRate(parent.getLoanRate())
+                .saveRate(child.getSavingRate())
+                .loanRate(child.getLoanRate())
                 .build();
     }
 }

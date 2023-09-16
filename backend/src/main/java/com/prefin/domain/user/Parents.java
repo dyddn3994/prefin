@@ -35,10 +35,6 @@ public class Parents {
         this.balance -= money;
     }
 
-    private BigDecimal loanRate;
-
-    private BigDecimal savingRate;
-
     private int balance;
 
     private int maxSavingAmount;
@@ -56,14 +52,6 @@ public class Parents {
 
     public void updateSimplePass(String simplePass) {
         this.simplePass = simplePass;
-    }
-
-    public void updateLoanRate(BigDecimal loanRate) {
-        this.loanRate = loanRate;
-    }
-
-    public void updateSavingRate(BigDecimal savingRate) {
-        this.savingRate = savingRate;
     }
 
     public void updateBalance(int balance) { this.balance += balance; }

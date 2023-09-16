@@ -57,8 +57,7 @@ public class ParentDto {
                 .fcmToken(parent.getFcmToken())
                 .account(parent.getAccount())
                 .simplePass(parent.getSimplePass())
-                .loanRate(parent.getLoanRate())
-                .savingRate(parent.getSavingRate())
+                .maxSavingAmount(parent.getMaxSavingAmount())
                 .balance(parent.getBalance())
                 .childDtoList(childDtos)
                 .build();

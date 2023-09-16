@@ -19,7 +19,7 @@ public class QuestScheduler {
 
     // 매 정각 퀘스트 갱신
     @Transactional
-    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")  // "0 * * * * ?" 매 분, "* 0 0 * * ?" 매 자정
+    @Scheduled(cron = "* 0 0 * * ?", zone = "Asia/Seoul")  // "0 * * * * ?" 매 분, "* 0 0 * * ?" 매 자정
     public void RenewQuest() {
         // 정각 시간을 들고온다.
         Long endDate = LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
