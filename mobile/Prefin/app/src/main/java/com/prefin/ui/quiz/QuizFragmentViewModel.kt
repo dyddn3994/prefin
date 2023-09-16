@@ -9,8 +9,10 @@ import com.prefin.config.ApplicationClass
 import com.prefin.model.dto.Quiz
 import com.prefin.util.RetrofitUtil
 import kotlinx.coroutines.launch
+import java.lang.Exception
+import kotlin.math.log
 
-private const val TAG = "QuizFragmentViewModel"
+private const val TAG = "QuizFragmentViewModel prefin"
 class QuizFragmentViewModel : ViewModel() {
 
     private val _quiz = MutableLiveData<Quiz>()
@@ -30,15 +32,20 @@ class QuizFragmentViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.d(TAG, "getQuiz: 퀴즈 조회 실패\n${e.message}")
             }
+
         }
     }
 
     fun postAnswer(quiz: Quiz) {
         viewModelScope.launch {
-            val id = ApplicationClass.sharedPreferences.getLong("id")
-            val response = RetrofitUtil.quizApi.postAnswer(id, quiz)
-            if (response.isSuccessful) {
-                _isCorrected.value = response.body()
+            try{
+                val id = ApplicationClass.sharedPreferences.getLong("id")
+                val response = RetrofitUtil.quizApi.postAnswer(id, quiz)
+                if(response.isSuccessful){
+                    _isCorrected.value = response.body()
+                }
+            } catch (e : Exception){
+                Log.d(TAG, "postAnswer: ${e.message}")
             }
         }
     }

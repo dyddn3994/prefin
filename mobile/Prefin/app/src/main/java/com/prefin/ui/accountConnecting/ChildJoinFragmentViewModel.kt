@@ -19,10 +19,14 @@ class ChildJoinFragmentViewModel : ViewModel() {
         viewModelScope.launch {
             try{
                 val response = RetrofitUtil.signUpApi.childSignUp(child)
-                if(response != null){
+                if(response != null && response != -1L){
                     childUser = child
                     childUser.id = response
                     _childJoinSuccess.value = true
+                }
+                else if(response == -1L){
+                    childUser.id = response
+                    _childJoinSuccess.value = false
                 }
             }catch (e : Exception){
                 Log.d(TAG, "childJoin: 통신 오류")

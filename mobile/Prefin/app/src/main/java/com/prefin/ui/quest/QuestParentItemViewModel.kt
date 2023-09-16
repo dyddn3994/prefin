@@ -24,6 +24,7 @@ class QuestParentItemViewModel : ViewModel() {
                 _questItemList.value = RetrofitUtil.questApi.parentQuestItemList(id)
                 Log.d(TAG, "requestQuestItemList: ${_questItemList.value}")
             } catch (e: Exception) {
+                _questItemList.value = listOf()
                 Log.d(TAG, "requestQuestItemList: 퀘스트 아이템 리스트 조회 실패\n자녀id: $id")
             }
         }

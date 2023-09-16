@@ -10,6 +10,7 @@ import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildHomeBinding
+import com.prefin.util.StringFormatUtil
 
 class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHomeBinding::bind, R.layout.fragment_child_home) {
     private val childHomeFragmentViewModel: ChildHomeFragmentViewModel by viewModels()
@@ -26,8 +27,8 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
         childHomeFragmentViewModel.child.observe(viewLifecycleOwner){
             with(binding){
                 mainActivityViewModel.selectedChild = it
-                fragmentChildHomeMyAccountMoneyTextView.text = "${it.balance} 원"
-                fragmentChildHomeSavingAccountMoneyTextView.text = "${it.savingAmount} 원"
+                fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon( it.balance)
+                fragmentChildHomeSavingAccountMoneyTextView.text =  StringFormatUtil.moneyToWon(it.savingAmount)
             }
         }
 
