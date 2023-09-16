@@ -52,8 +52,8 @@ public class ChildService {
                 parent(parentRepository.findById(child.getParentId()).orElse(null)).
                 isQuizSolved(false).
                 trustScore(100).
-                savingRate(BigDecimal.valueOf(0.2)).
-                loanRate(BigDecimal.valueOf(9.0)).
+                savingRate(BigDecimal.valueOf(0.002)).
+                loanRate(BigDecimal.valueOf(0.09)).
                 quizId(1L).
                 build();
 

@@ -38,10 +38,12 @@ public class Child {
 
     private int savingAmount;
 
+    @Column(precision = 5, scale = 4)
     private BigDecimal savingRate;
 
     private int loanAmount;
 
+    @Column(precision = 5, scale = 4)
     private BigDecimal loanRate;
 
     private int balance;
