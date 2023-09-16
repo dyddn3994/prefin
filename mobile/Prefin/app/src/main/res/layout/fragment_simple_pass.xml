@@ -10,27 +10,27 @@
         android:id="@+id/fragment_simple_pass_up_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            style="@style/Title.Bold.Size32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
             android:text="간편 비밀번호"
-            style="@style/Title.Bold.Size32"
             android:textColor="@color/white"
             />
 
         <LinearLayout
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="64dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="64dp"
             android:gravity="center_horizontal"
             >
 
@@ -38,232 +38,241 @@
                 android:id="@+id/fragment_simple_pass_first_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:textSize="32sp"
-                android:textColor="@color/white"
-
-                android:gravity="center"
                 android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
                 />
+
             <TextView
-                android:layout_marginStart="16dp"
                 android:id="@+id/fragment_simple_pass_second_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:textSize="32sp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:background="@drawable/simple_pass_box"
-                />
-            <TextView
                 android:layout_marginStart="16dp"
+                android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                />
+
+            <TextView
                 android:id="@+id/fragment_simple_pass_third_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:textSize="32sp"
-                android:textColor="@color/white"
-
-                android:gravity="center"
-                android:background="@drawable/simple_pass_box"
-                />
-            <TextView
                 android:layout_marginStart="16dp"
+                android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                />
+
+            <TextView
                 android:id="@+id/fragment_simple_pass_fourth_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:textSize="32sp"
-                android:textColor="@color/white"
-
-                android:gravity="center"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
                 />
         </LinearLayout>
-
-
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_simple_pass_up_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_simple_pass_up_layout"
         >
 
+        <TextView
+            android:id="@+id/fragment_simple_pass_description_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Text.regular.Size16"
+            tools:text="설명"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="16dp"
+            />
+
         <GridLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rowCount="4"
-            android:columnCount="3"
             android:layout_gravity="center"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:columnCount="3"
+            android:rowCount="4"
             >
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_1"
-                android:text="1"
                 style="@style/Title.Bold.Size32"
-                android:backgroundTint="@color/colorBackground"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="1"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_2"
-                android:text="2"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="0"
                 android:layout_column="1"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="2"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_3"
-                android:text="3"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="0"
                 android:layout_column="2"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="3"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_4"
-                android:text="4"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="1"
                 android:layout_column="0"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="4"
                 />
 
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_5"
-                android:text="5"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="1"
                 android:layout_column="1"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="5"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_6"
-                android:text="6"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="1"
                 android:layout_column="2"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="6"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_7"
-                android:text="7"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="2"
                 android:layout_column="0"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="7"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_8"
-                android:text="8"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="2"
                 android:layout_column="1"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="8"
                 />
 
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_9"
-                android:text="9"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="2"
                 android:layout_column="2"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="9"
                 />
 
             <Button
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="3"
                 android:layout_column="0"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
                 />
 
             <Button
                 android:id="@+id/fragment_simple_pass_button_0"
-                android:text="0"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="3"
                 android:layout_column="1"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="0"
                 />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/fragment_simple_pass_button_erase"
-                android:src="@drawable/erase_button"
-                android:backgroundTint="@color/colorBackground"
                 style="@style/Title.Bold.Size32"
                 android:layout_row="3"
                 android:layout_column="2"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="18dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                >
-            </ImageButton>
+                android:backgroundTint="@color/colorBackground"
+                android:src="@drawable/erase_button"
+                />
         </GridLayout>
 
     </LinearLayout>

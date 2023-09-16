@@ -22,4 +22,10 @@ class MainActivityViewModel : ViewModel() {
     var selectedQuest: Quest? = null
 
     var selectedLoanHistory: LoanHistory = LoanHistory()
+
+    var fromFragment: String? = ""
+    var tempSimplePass = ""
+
+    // SimplePass 이동에 따른 임시 데이터 저장
+    var savingFragmentSavingAmount = 0
 }

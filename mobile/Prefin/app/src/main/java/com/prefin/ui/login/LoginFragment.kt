@@ -18,23 +18,28 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-
-                // 뒤로가기 동작 수행
-                isEnabled = false
-                requireActivity().onBackPressed()
-                // 앱 종료
-                requireActivity().finish()
-
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // 뒤로가기 동작 수행
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                    // 앱 종료
+                    requireActivity().finish()
+                }
+            },
+        )
 
         if (ApplicationClass.sharedPreferences.getString("type") == "parent") {
             findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
         } else if (ApplicationClass.sharedPreferences.getString("type") == "child") {
-            findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+            if (ApplicationClass.sharedPreferences.getString("userSimplePass") == "") {
+                mainActivityViewModel.fromFragment = LoginFragment::class.simpleName
+                findNavController().navigate(R.id.action_LoginFragment_to_SimplePassFragment)
+            } else {
+                findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+            }
         } else {
         }
 
@@ -44,7 +49,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                     findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)
                 }
                 if (binding.fragmentLoginChildRadioButton.isChecked) {
-                    findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+                    if (ApplicationClass.sharedPreferences.getString("userSimplePass") == "") {
+                        mainActivityViewModel.fromFragment = LoginFragment::class.simpleName
+                        findNavController().navigate(R.id.action_LoginFragment_to_SimplePassFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_LoginFragment_to_ChildHomeFragemnt)
+                    }
                 }
             } else {
                 showSnackbar("입력값을 확인해주세요.")
@@ -52,7 +62,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
         }
         binding.apply {
             // 로그인 버튼 클릭 시
-
             fragmentLoginLoginButton.setOnClickListener {
                 if (fragmentLoginIdEditText.text.isNullOrEmpty() ||
                     fragmentLoginPasswordEditText.text.isNullOrEmpty() ||

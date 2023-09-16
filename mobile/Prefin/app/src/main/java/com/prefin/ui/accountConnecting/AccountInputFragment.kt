@@ -1,11 +1,8 @@
 package com.prefin.ui.accountConnecting
 
-import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,7 +10,6 @@ import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentAccountInputBinding
-
 
 class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentAccountInputBinding::bind, R.layout.fragment_account_input) {
 
@@ -31,7 +27,8 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
         binding.apply {
             accountInputFragmentViewModel.accountRegisterSuccess.observe(viewLifecycleOwner) {
                 if (it) {
-                    findNavController().navigate(R.id.action_AccountInputFragment_to_ChildAddFragment)
+                    mainActivityViewModel.fromFragment = AccountInputFragment::class.simpleName
+                    findNavController().navigate(R.id.action_AccountInputFragment_to_SimplePassFragment)
                 }
             }
 
@@ -40,7 +37,7 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
                     // 타이머 설정
                     fragmentAccountInputTimerLinearLayout.visibility = View.VISIBLE
                     startTimer()
-    
+
                     fragmentAccountInputCheckEditText.requestFocus()
                 }
             }
@@ -52,10 +49,10 @@ class AccountInputFragment : BaseFragment<FragmentAccountInputBinding>(FragmentA
                 } else {
                     // 맞는지 확인하기 -> 맞다면 다음 화면
                     // 틀리면 dialog
-//                    if (fragmentAccountInputCheckEditText.text.toString() == checkText) {
-                    mainActivityViewModel.parentUser!!.account = fragmentAccountInputEditText.text.toString()
-                    accountInputFragmentViewModel.accountRegister(mainActivityViewModel.parentUser!!.id, mainActivityViewModel.parentUser!!)
-//                    }
+                    if (fragmentAccountInputCheckEditText.text.toString() == checkText) {
+                        mainActivityViewModel.parentUser!!.account = fragmentAccountInputEditText.text.toString()
+                        accountInputFragmentViewModel.accountRegister(mainActivityViewModel.parentUser!!.id, mainActivityViewModel.parentUser!!)
+                    }
                 }
             }
         }

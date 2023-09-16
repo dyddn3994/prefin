@@ -1,62 +1,179 @@
 package com.prefin.ui.accountConnecting
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSimplePassBinding
+import com.prefin.ui.login.LoginFragment
+import com.prefin.ui.saving.SavingFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SimplePassFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val TAG = "Prefin_SimplePassFragment"
 class SimplePassFragment : BaseFragment<FragmentSimplePassBinding>(FragmentSimplePassBinding::bind, R.layout.fragment_simple_pass) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var numberPadRandomList = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).shuffled()
+    private val passwords = arrayListOf<Int>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+    private val simplePassViewModel by viewModels<SimplePassViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
-    fun init() {
-        
+
+    fun init() = with(binding) {
+        shuffleNumberPad()
+
+        fragmentSimplePassButton0.setOnClickListener {
+            inputPassword(0)
+        }
+        fragmentSimplePassButton1.setOnClickListener {
+            inputPassword(1)
+        }
+        fragmentSimplePassButton2.setOnClickListener {
+            inputPassword(2)
+        }
+        fragmentSimplePassButton3.setOnClickListener {
+            inputPassword(3)
+        }
+        fragmentSimplePassButton4.setOnClickListener {
+            inputPassword(4)
+        }
+        fragmentSimplePassButton5.setOnClickListener {
+            inputPassword(5)
+        }
+        fragmentSimplePassButton6.setOnClickListener {
+            inputPassword(6)
+        }
+        fragmentSimplePassButton7.setOnClickListener {
+            inputPassword(7)
+        }
+        fragmentSimplePassButton8.setOnClickListener {
+            inputPassword(8)
+        }
+        fragmentSimplePassButton9.setOnClickListener {
+            inputPassword(9)
+        }
+
+        fragmentSimplePassButtonErase.setOnClickListener {
+            erasePassword()
+        }
+
+        fragmentSimplePassDescriptionTextView.text =
+            when (mainActivityViewModel.fromFragment) {
+                in listOf(AccountInputFragment::class.simpleName, LoginFragment::class.simpleName) ->
+                    "등록할 간편 비밀번호를 입력하세요."
+                else -> ""
+            }
+
+        simplePassViewModel.childSimplePassRegisterSuccess.observe(viewLifecycleOwner) {
+            if (!it) {
+                fragmentSimplePassDescriptionTextView.text = "다시 입력하세요."
+                clearPasswords()
+            } else {
+                findNavController().navigate(R.id.action_SimplePassFragment_to_ChildHomeFragment)
+            }
+        }
+        simplePassViewModel.parentSimplePassRegisterSuccess.observe(viewLifecycleOwner) {
+            if (!it) {
+                fragmentSimplePassDescriptionTextView.text = "다시 입력하세요."
+                clearPasswords()
+            } else {
+                findNavController().navigate(R.id.action_SimplePassFragment_to_ChildAddFragment)
+            }
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SimplePassFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SimplePassFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun inputPassword(num: Int) = with(binding) {
+        if (passwords.size < 4) {
+            passwords.add(numberPadRandomList[num])
+            when (passwords.size) {
+                1 -> fragmentSimplePassFirstTextView.text = passwords[0].toString()
+                2 -> fragmentSimplePassSecondTextView.text = passwords[1].toString()
+                3 -> fragmentSimplePassThirdTextView.text = passwords[2].toString()
+                4 -> fragmentSimplePassFourthTextView.text = passwords[3].toString()
+            }
+        }
+
+        if (passwords.size == 4) {
+            when (mainActivityViewModel.fromFragment) {
+                in listOf(AccountInputFragment::class.simpleName, LoginFragment::class.simpleName) -> {
+                    mainActivityViewModel.tempSimplePass = passwords.joinToString("")
+                    fragmentSimplePassDescriptionTextView.text = "한번 더 입력하세요."
+                    shuffleNumberPad()
+                    clearPasswords()
+                    mainActivityViewModel.fromFragment = SimplePassFragment::class.simpleName
+                }
+                SimplePassFragment::class.simpleName -> {
+                    Log.d(TAG, "inputPassword: ${passwords.joinToString("")} / ${mainActivityViewModel.tempSimplePass}")
+                    if (passwords.joinToString("") != mainActivityViewModel.tempSimplePass) {
+                        fragmentSimplePassDescriptionTextView.text = "다시 입력하세요."
+                        clearPasswords()
+                        shuffleNumberPad()
+                    } else {
+                        if (ApplicationClass.sharedPreferences.getString("type") == "child") {
+                            simplePassViewModel.setChildSimplePass(
+                                ApplicationClass.sharedPreferences.getLong("id"),
+                                mainActivityViewModel.tempSimplePass,
+                            )
+                        } else {
+                            simplePassViewModel.setParentSimplePass(
+                                mainActivityViewModel.parentUser!!.id,
+                                mainActivityViewModel.tempSimplePass,
+                            )
+                        }
+                    }
+                }
+                else -> {
+                    if (passwords.joinToString("") != ApplicationClass.sharedPreferences.getString("userSimplePass")) {
+                        fragmentSimplePassDescriptionTextView.text = "다시 입력하세요."
+                        clearPasswords()
+                        shuffleNumberPad()
+                    } else {
+                        findNavController().navigateUp()
+                    }
                 }
             }
+        }
+    }
+
+    private fun erasePassword() = with(binding) {
+        if (passwords.size > 0) {
+            when (passwords.size) {
+                1 -> fragmentSimplePassFirstTextView.text = ""
+                2 -> fragmentSimplePassSecondTextView.text = ""
+                3 -> fragmentSimplePassThirdTextView.text = ""
+                4 -> fragmentSimplePassFourthTextView.text = ""
+            }
+            passwords.removeLast()
+        }
+    }
+
+    private fun clearPasswords() = with(binding) {
+        fragmentSimplePassFirstTextView.text = ""
+        fragmentSimplePassSecondTextView.text = ""
+        fragmentSimplePassThirdTextView.text = ""
+        fragmentSimplePassFourthTextView.text = ""
+        passwords.clear()
+    }
+
+    private fun shuffleNumberPad() = with(binding) {
+        numberPadRandomList = numberPadRandomList.shuffled()
+        fragmentSimplePassButton0.text = numberPadRandomList[0].toString()
+        fragmentSimplePassButton1.text = numberPadRandomList[1].toString()
+        fragmentSimplePassButton2.text = numberPadRandomList[2].toString()
+        fragmentSimplePassButton3.text = numberPadRandomList[3].toString()
+        fragmentSimplePassButton4.text = numberPadRandomList[4].toString()
+        fragmentSimplePassButton5.text = numberPadRandomList[5].toString()
+        fragmentSimplePassButton6.text = numberPadRandomList[6].toString()
+        fragmentSimplePassButton7.text = numberPadRandomList[7].toString()
+        fragmentSimplePassButton8.text = numberPadRandomList[8].toString()
+        fragmentSimplePassButton9.text = numberPadRandomList[9].toString()
     }
 }

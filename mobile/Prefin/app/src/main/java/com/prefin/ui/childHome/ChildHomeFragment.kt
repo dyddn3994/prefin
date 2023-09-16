@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildHomeBinding
 import com.prefin.util.StringFormatUtil
@@ -58,6 +59,7 @@ class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHo
         childHomeFragmentViewModel.getQuiz()
 
         childHomeFragmentViewModel.child.observe(viewLifecycleOwner) {
+            ApplicationClass.sharedPreferences.addChildUser(it)
             with(binding) {
                 mainActivityViewModel.selectedChild = it
                 fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)

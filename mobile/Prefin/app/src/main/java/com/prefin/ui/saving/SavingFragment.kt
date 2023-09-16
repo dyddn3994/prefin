@@ -22,6 +22,12 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (mainActivityViewModel.savingFragmentSavingAmount > 0) {
+            savingViewModel.saving(
+                mainActivityViewModel.selectedChild.id,
+                mainActivityViewModel.savingFragmentSavingAmount,
+            )
+        }
         init()
     }
 
@@ -70,10 +76,9 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 저축 요청
-                savingViewModel.saving(
-                    mainActivityViewModel.selectedChild.id,
-                    fragmentSavingAmountEditText.text.toString().toInt(),
-                )
+                mainActivityViewModel.fromFragment = SavingFragment::class.simpleName
+                mainActivityViewModel.savingFragmentSavingAmount = fragmentSavingAmountEditText.text.toString().toInt()
+                findNavController().navigate(R.id.action_SavingFragment_to_SimplePassFragment)
             }
         }
 
@@ -87,6 +92,7 @@ class SavingFragment : BaseFragment<FragmentSavingBinding>(FragmentSavingBinding
                 showSnackbar("성공적으로 저축되었습니다.")
 
                 mainActivityViewModel.selectedChild.savingAmount += fragmentSavingAmountEditText.text.toString().toInt()
+                mainActivityViewModel.savingFragmentSavingAmount = 0
                 findNavController().navigateUp()
             }
         }

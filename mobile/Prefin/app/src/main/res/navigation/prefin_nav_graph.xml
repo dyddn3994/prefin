@@ -33,7 +33,14 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"/>
-
+        <action
+            android:id="@+id/action_LoginFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
     </fragment>
 
     <fragment
@@ -194,6 +201,13 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"/>
 
+        <action android:id="@+id/action_AccountInputFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
     </fragment>
     
     <fragment android:id="@+id/AccountInputChildFragment"
@@ -312,7 +326,16 @@
     <fragment android:id="@+id/SavingFragment"
         android:name="com.prefin.ui.saving.SavingFragment"
         android:label="savingFragment"
-        tools:layout="@layout/fragment_saving">
+        tools:layout="@layout/fragment_saving"
+        >
+
+        <action
+            android:id="@+id/action_SavingFragment_to_SimplePassFragment"
+            app:destination="@+id/SimplePassFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment android:id="@+id/WithdrawFragment"
@@ -422,7 +445,25 @@
         android:id="@+id/SimplePassFragment"
         android:name="com.prefin.ui.accountConnecting.SimplePassFragment"
         android:label="simplePass"
-        tools:layout="@layout/fragment_simple_pass"/>
+        tools:layout="@layout/fragment_simple_pass">
+
+        <action
+            android:id="@+id/action_SimplePassFragment_to_ChildAddFragment"
+            app:destination="@+id/ChildAddFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_SimplePassFragment_to_ChildHomeFragment"
+            app:destination="@+id/ChildHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
+    </fragment>
 
     <fragment android:id="@+id/SettingFragment"
         android:name="com.prefin.ui.setting.SettingFragment"

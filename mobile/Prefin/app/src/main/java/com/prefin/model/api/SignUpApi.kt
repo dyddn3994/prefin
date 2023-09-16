@@ -12,19 +12,21 @@ interface SignUpApi {
 
     // 부모 회원가입
     @POST("parent")
-    suspend fun parentSignUp(@Body parent : Parent) : Response<Long>
+    suspend fun parentSignUp(@Body parent: Parent): Response<Long>
 
     // 자녀 회원가입
     @POST("child")
-    suspend fun childSignUp(@Body child: Child) : Long
+    suspend fun childSignUp(@Body child: Child): Long
 
     @PUT("parent/{id}/account")
-    suspend fun accountRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
+    suspend fun accountRegister(@Path("id") id: Long, @Body parent: Parent): Response<Boolean>
 
     @PUT("child/{id}/account")
-    suspend fun childAccountRegister(@Path("id") id : Long, @Body child : Child) : Response<Boolean>
+    suspend fun childAccountRegister(@Path("id") id: Long, @Body child: Child): Response<Boolean>
 
-    //간편 비밀번호 등록
+    // 간편 비밀번호 등록
     @PUT("parent/{id}/simplepass")
-    suspend fun parentSimplePassRegister(@Path("id") id : Long, @Body parent : Parent) : Response<Boolean>
+    suspend fun parentSimplePassRegister(@Path("id") id: Long, @Body parent: Parent): Response<Boolean>
+    @PUT("child/{id}/simplepass")
+    suspend fun childSimplePassRegister(@Path("id") id: Long, @Body child: Child): Response<Boolean>
 }
