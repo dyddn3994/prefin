@@ -31,10 +31,10 @@ public class AllowanceService {
     private final ChildRepository childRepository;
 
 
-    // 정기 용돈 설정
+    // 정기 용돈 설정 및 수정
     @Transactional
     public ResponseEntity<String> allowanceSetting(AllowanceDto allowanceDto) {
-        // 만약 설정된 정기 용돈 중 중복된 경우가 있다면 에러 발생
+        // 만약 설정된 정기 용돈 중 중복된 경우가 있다면 수정 로직으로
         if (allowanceRepository.findByParentIdAndChildId(
                 allowanceDto.getParentId(), allowanceDto.getChildId()) != null) {
             Allowance allowance = allowanceRepository.findByParentIdAndChildId(
@@ -76,6 +76,14 @@ public class AllowanceService {
 //        return ResponseEntity.status(HttpStatus.OK).body("용돈 수정 완료");
 //    }
 
+    // 정기 용돈 삭제
+    @Transactional
+    public ResponseEntity<String> deleteAutoTransfer(Long allowanceId) {
+        Allowance allowance = allowanceRepository.findById(allowanceId).orElse(null);
+        allowanceRepository.delete(allowance);
+
+        return ResponseEntity.ok("삭제 완료");
+    }
 
     // 용돈 수동 이체 로직
     @Transactional
