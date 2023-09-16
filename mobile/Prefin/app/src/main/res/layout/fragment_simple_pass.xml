@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.accountConnecting.SimplePassFragment">
+
+    <LinearLayout
+        android:id="@+id/fragment_simple_pass_up_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Title.Bold.Size32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="간편 비밀번호"
+            android:textColor="@color/white"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="64dp"
+            android:gravity="center_horizontal"
+            >
+
+            <TextView
+                android:id="@+id/fragment_simple_pass_first_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                />
+
+            <TextView
+                android:id="@+id/fragment_simple_pass_second_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                />
+
+            <TextView
+                android:id="@+id/fragment_simple_pass_third_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                />
+
+            <TextView
+                android:id="@+id/fragment_simple_pass_fourth_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/simple_pass_box"
+                android:gravity="center"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_simple_pass_up_layout"
+        >
+
+        <TextView
+            android:id="@+id/fragment_simple_pass_description_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Text.regular.Size16"
+            tools:text="설명"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="16dp"
+            />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:columnCount="3"
+            android:rowCount="4"
+            >
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_1"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="1"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_2"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="2"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_3"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="3"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_4"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="4"
+                />
+
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_5"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="5"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_6"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="6"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_7"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="7"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_8"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="8"
+                />
+
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_9"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="9"
+                />
+
+            <Button
+                style="@style/Title.Bold.Size32"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                />
+
+            <Button
+                android:id="@+id/fragment_simple_pass_button_0"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:text="0"
+                />
+
+            <ImageView
+                android:id="@+id/fragment_simple_pass_button_erase"
+                style="@style/Title.Bold.Size32"
+                android:layout_row="3"
+                android:layout_column="2"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="18dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorBackground"
+                android:src="@drawable/erase_button"
+                />
+        </GridLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

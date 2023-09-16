@@ -1,59 +1,174 @@
 package com.prefin.ui.childHome
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentChildHomeBinding
+import com.prefin.util.StringFormatUtil
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ChildHomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ChildHomeFragment : BaseFragment<FragmentChildHomeBinding>(FragmentChildHomeBinding::bind, R.layout.fragment_child_home) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private val childHomeFragmentViewModel: ChildHomeFragmentViewModel by viewModels()
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+    private lateinit var cardView1: CardView
+    private lateinit var cardView2: CardView
+    private var isFirstCardVisible = true
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mActivity =  requireActivity() as MainActivity
+        init()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChildHomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChildHomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun init() {
+
+        cardView1 = binding.fragmentChildHomeCardView
+        cardView2 = binding.fragmentChildHomeCardViewBack
+        cardView2.visibility = View.GONE
+        cardView1.setOnClickListener {
+            flipCards()
+        }
+        cardView2.setOnClickListener{
+            flipCards()
+        }
+
+        // 뒤로가기
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // 뒤로가기 동작 수행
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                    // 앱 종료
+                    requireActivity().finish()
+                }
+            },
+        )
+
+        childHomeFragmentViewModel.getQuiz()
+
+        childHomeFragmentViewModel.child.observe(viewLifecycleOwner) {
+            if(it.id != 0L){
+                ApplicationClass.sharedPreferences.addChildUser(it)
+                with(binding) {
+                    mainActivityViewModel.selectedChild = it
+                    fragmentChildHomeMyAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.balance)
+                    fragmentChildHomeSavingAccountMoneyTextView.text = StringFormatUtil.moneyToWon(it.savingAmount)
+                    fragmentChildHomeCardViewBackTrustScore.text = "현재 신뢰점수는 \n ${it.trustScore} 점 입니다."
+
+                    when(it.trustScore){
+                        in 0..200 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level1)
+                        }
+                        in 201..400 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level2)
+                        }
+                        in 401..600 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level3)
+                        }
+                        in 601 .. 800 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level4)
+                        }
+                        in 801..1000 -> {
+                            fragmentChildHomeCharacterImageView.setImageResource(R.drawable.level5)
+                        }
+                    }
                 }
             }
+            else{
+                showSnackbar("서버와의 요청이 불안정 합니다.(점검중)")
+            }
+
+            mActivity.dismissLoadingDialog()
+        }
+
+        with(binding) {
+
+
+            // 계좌 내역 조회
+            fragmentChildHomeMyAccountLinearLayout.setOnClickListener {
+            }
+            fragmentChildHomeNotiImageView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_NotiFragment)
+            }
+
+            // 저축 내역 조회
+            fragmentChildHomeSavingAccountLinearLayout.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_SavingHomeFragment)
+            }
+
+            fragmentChildHomeSettingImageView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_SettingFragment)
+            }
+
+            fragmentChildHomeQuizImageView.setOnClickListener {
+                if (childHomeFragmentViewModel.child.value!!.isQuizSolved == true) {
+                    Log.d("Quiz", "init: ${childHomeFragmentViewModel.quiz}")
+                    mainActivityViewModel.quiz = childHomeFragmentViewModel.quiz
+                    findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizAnswerFragment)
+                } else {
+                    findNavController().navigate(R.id.action_ChildHomeFragment_to_QuizFragment)
+                }
+            }
+
+            // 퀘스트 버튼
+            fragmentChildHomeQuestCardView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_QuestChildHomeFragment)
+            }
+
+            // 용돈 빌리기 버튼
+            fragmentChildHomeLoanCardView.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_LoanHomeFragment)
+            }
+
+            // 자녀 계좌 클릭
+            fragmentChildHomeMyAccountLinearLayout.setOnClickListener {
+                findNavController().navigate(R.id.action_ChildHomeFragment_to_AccountHistoryFragment)
+            }
+        }
+        childHomeFragmentViewModel.getChild()
+        mActivity.showLoadingDialog(requireContext())
+    }
+
+    private fun flipCards() {
+        val currentCard = if (isFirstCardVisible) cardView1 else cardView2
+        val nextCard = if (isFirstCardVisible) cardView2 else cardView1
+
+        val objectAnimatorFirst =
+            ObjectAnimator.ofFloat(currentCard, View.ROTATION_Y, 0f, -90f)
+        objectAnimatorFirst.duration = 500
+        objectAnimatorFirst.start()
+
+        objectAnimatorFirst.addListener(object : AnimatorListenerAdapter() {
+
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+
+                // Hide the current card after the first animation
+                currentCard.visibility = View.INVISIBLE
+                // Show the next card before the second animation
+                nextCard.visibility = View.VISIBLE
+
+                val objectAnimatorSecond =
+                    ObjectAnimator.ofFloat(nextCard, View.ROTATION_Y, 90f, 0f)
+                objectAnimatorSecond.duration = 500
+                objectAnimatorSecond.start()
+
+                isFirstCardVisible = !isFirstCardVisible
+            }
+        })
     }
 }

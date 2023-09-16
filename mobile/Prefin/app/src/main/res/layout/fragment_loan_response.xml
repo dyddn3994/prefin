@@ -34,10 +34,21 @@
         android:id="@+id/fragment_loan_response_loan_amount_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="100,000원 입니다."
+        tools:text="100,000 원"
         style="@style/Text.regular.Size20"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_loan_amount_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_loan_amount_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_loan_amount_postfix_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text=" 입니다."
+        style="@style/Text.regular.Size20"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_loan_response_loan_amount_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_loan_amount_title_text_view"
         />
 
@@ -57,10 +68,21 @@
         android:id="@+id/fragment_loan_response_interest_rate_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="1.2% 입니다."
+        tools:text="1.2%"
         style="@style/Text.regular.Size20"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/fragment_loan_response_interest_rate_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_interest_rate_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/fragment_loan_response_interest_rate_postfix_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text=" 입니다."
+        style="@style/Text.regular.Size20"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_loan_response_interest_rate_text_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_loan_response_interest_rate_title_text_view"
         />
 

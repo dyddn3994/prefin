@@ -1,61 +1,44 @@
 package com.prefin.ui.signUp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
+import com.prefin.MainActivityViewModel
 import com.prefin.R
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentSignUpBinding
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.prefin.MainActivityViewModel
+import java.util.regex.Pattern
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::bind, R.layout.fragment_sign_up) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private val signUpViewModel : SignUpViewModel by viewModels()
-    private val mainActivityViewModel : MainActivityViewModel by activityViewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private val signUpViewModel: SignUpViewModel by viewModels()
+    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+    private lateinit var mActivity : MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        signUpViewModel.signUpSuccess.observe(viewLifecycleOwner){
-            if(signUpViewModel.signUpSuccess.value == true){
+        mActivity = requireActivity() as MainActivity
+        signUpViewModel.signUpSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
+            if (signUpViewModel.signUpSuccess.value == true) {
                 val id = signUpViewModel.userId
                 signUpViewModel.parentUser.id = id
                 mainActivityViewModel.parentUser = signUpViewModel.parentUser
                 findNavController().navigate(R.id.action_SignUpFragment_to_AccountInputFragment)
             }
+            else {
+                val id = signUpViewModel.userId
+                if(id == -1L){
+                    showSnackbar("이미 사용중인 아이디입니다.")
+                }
+            }
         }
 
-
         binding.apply {
-
             // 뒤로가기
-            fragmentSignUpBackButton.setOnClickListener{
+            fragmentSignUpBackButton.setOnClickListener {
                 findNavController().navigateUp()
             }
 
@@ -66,10 +49,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     || fragmentSignUpPasswordCheckEditText.text.isNullOrEmpty()
                     || fragmentSignUpNameEditText.text.isNullOrEmpty()){
 
-                    Toast.makeText(requireContext(), "비어 있는 부분을 모두 채우고 시도해주세요", Toast.LENGTH_SHORT).show()
+                    showSnackbar("비어 있는 부분을 모두 채우고 시도해주세요")
                 }
                 else{
-                    if(fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
+                    if( Pattern.matches("^[a-zA-Z0-9]*\$", fragmentSignUpIdEditText.text.toString()) && fragmentSignUpPasswordEditText.text.toString() == fragmentSignUpPasswordCheckEditText.text.toString()) {
                         // 회원가입 구현
                         fragmentSignUpEmailCheckTextView.visibility = View.GONE
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
@@ -80,46 +63,22 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         signUpViewModel.parentUser.name = fragmentSignUpNameEditText.text.toString()
 
                         signUpViewModel.signUp()
-
+                        mActivity.showLoadingDialog(requireContext())
 
                     }
+                    else if(!Pattern.matches("^[a-zA-Z0-9]*\$", fragmentSignUpIdEditText.text.toString())) {
+                        fragmentSignUpEmailCheckTextView.visibility = View.VISIBLE
+                    }
 
-
-
-                    if(fragmentSignUpPasswordEditText.text.toString() != fragmentSignUpPasswordCheckEditText.text.toString()){
+                    if (fragmentSignUpPasswordEditText.text.toString() != fragmentSignUpPasswordCheckEditText.text.toString()) {
                         fragmentSignUpPasswordConfirmTextView.visibility = View.VISIBLE
                         fragmentSignUpPasswordCheckConfirmTextView.visibility = View.VISIBLE
-                    }
-                    else{
+                    } else {
                         fragmentSignUpPasswordConfirmTextView.visibility = View.GONE
                         fragmentSignUpPasswordCheckConfirmTextView.visibility = View.GONE
                     }
-
-
                 }
-
-
             }
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

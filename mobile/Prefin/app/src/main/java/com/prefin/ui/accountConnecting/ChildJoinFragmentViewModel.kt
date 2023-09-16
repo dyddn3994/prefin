@@ -12,17 +12,24 @@ import kotlinx.coroutines.launch
 private const val TAG = "ChildJoinFragmentViewMo_prefin"
 class ChildJoinFragmentViewModel : ViewModel() {
     private val _childJoinSuccess = MutableLiveData<Boolean>()
+    var childUser = Child()
     val childJoinSuccess : LiveData<Boolean> get() = _childJoinSuccess
-
 
     fun childJoin(child : Child){
         viewModelScope.launch {
             try{
                 val response = RetrofitUtil.signUpApi.childSignUp(child)
-                if(response != null){
+                if(response != null && response != -1L){
+                    childUser = child
+                    childUser.id = response
                     _childJoinSuccess.value = true
                 }
+                else if(response == -1L){
+                    childUser.id = response
+                    _childJoinSuccess.value = false
+                }
             }catch (e : Exception){
+                _childJoinSuccess.value = false
                 Log.d(TAG, "childJoin: 통신 오류")
             }
         }

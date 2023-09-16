@@ -1,19 +1,34 @@
 package com.prefin.ui.account
 
 import android.os.Bundle
+import android.system.Os.bind
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prefin.MainActivity
+import com.prefin.MainActivityViewModel
 import com.prefin.R
+import com.prefin.config.ApplicationClass
 import com.prefin.config.BaseFragment
 import com.prefin.databinding.FragmentPinMoneySendBinding
 
 class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentPinMoneySendBinding::bind, R.layout.fragment_pin_money_send) {
     private val pinMoneySendViewModel by viewModels<PinMoneySendViewModel>()
-
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+    private lateinit var mActivity: MainActivity
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mActivity = requireActivity() as MainActivity
+        if (mainActivityViewModel.pinMoneySendFragmentAmount > 0) {
+            pinMoneySendViewModel.pinMoneySend(
+                ApplicationClass.sharedPreferences.getLong("id"),
+                mainActivityViewModel.selectedChild.id,
+                mainActivityViewModel.pinMoneySendFragmentAmount,
+            )
+            mActivity.showLoadingDialog(requireContext())
+        }
         init()
     }
 
@@ -30,18 +45,24 @@ class PinMoneySendFragment : BaseFragment<FragmentPinMoneySendBinding>(FragmentP
                 showSnackbar("입력값을 확인해주세요.")
             } else {
                 // 전송 요청
-//                accountViewModel.pinMoneySend()
+                mainActivityViewModel.pinMoneySendFragmentAmount = fragmentPinMoneyMoneyEditText.text.toString().toInt()
+                mainActivityViewModel.fromFragment = PinMoneySendFragment::class.simpleName
+                findNavController().navigate(R.id.action_PinMoneySendFragment_to_SimplePassFragment)
             }
         }
 
         // 용돈 전송 observe
         pinMoneySendViewModel.isPinMoneySendSuccess.observe(viewLifecycleOwner) {
+            mActivity.dismissLoadingDialog()
             if (!it) {
                 // 용돈 전송 실패
                 showSnackbar("전송에 실패하였습니다.")
             } else {
                 // 용돈 전송 성공
                 showSnackbar("전송에 성공하였습니다.")
+                mainActivityViewModel.selectedChild.balance += fragmentPinMoneyMoneyEditText.text.toString().toInt()
+                mainActivityViewModel.pinMoneySendFragmentAmount = 0
+                findNavController().navigateUp()
                 findNavController().navigateUp()
             }
         }

@@ -1,8 +1,11 @@
 package com.prefin.config
 
 import android.app.Application
+import androidx.room.Room
+import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.prefin.model.local.NotiMessageDataBase
 import com.prefin.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 // 앱이 실행될때 1번만 실행이 됩니다.
 class ApplicationClass : Application() {
-    val API_URL = "http://172.30.1.72:8080/api/v1/"
+    val API_URL = "http://192.168.8.222:8080/api/v1/"
 
     // 코틀린의 전역변수
     companion object {
@@ -24,6 +27,8 @@ class ApplicationClass : Application() {
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var retrofit: Retrofit
+
+        lateinit var notiMessageDatabase: NotiMessageDataBase
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.
@@ -32,8 +37,16 @@ class ApplicationClass : Application() {
 
         sharedPreferences = SharedPreferencesUtil(applicationContext)
 
+        notiMessageDatabase = Room.databaseBuilder(
+            applicationContext,
+            NotiMessageDataBase::class.java,
+            "noti.db"
+        ).build()
+
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
+
+        FirebaseApp.initializeApp(this)
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.

@@ -2,16 +2,12 @@ package com.prefin.ui.parentHome
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prefin.databinding.ItemChildAccountBinding
 import com.prefin.model.dto.Child
-import com.prefin.model.dto.ChildAccount
-
 import com.prefin.util.AdapterUtil
-
 
 class ChildAccountAdapter(var context: Context) : ListAdapter<Child, ChildAccountAdapter.ItemViewHolder>(AdapterUtil.diffUtilChildAccount) {
 
@@ -24,11 +20,9 @@ class ChildAccountAdapter(var context: Context) : ListAdapter<Child, ChildAccoun
 
                 // 계좌 눌렀을 때 소비 내역으로 가야함
                 fragmentParentHomeChildAccountLinearLayout.setOnClickListener {
-
+                    itemClickListener.onClick(binding, layoutPosition, data)
                 }
             }
-
-
         }
     }
 
@@ -37,8 +31,8 @@ class ChildAccountAdapter(var context: Context) : ListAdapter<Child, ChildAccoun
             ItemChildAccountBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -46,14 +40,8 @@ class ChildAccountAdapter(var context: Context) : ListAdapter<Child, ChildAccoun
         holder.bind(currentList[position])
     }
 
-
-    lateinit var itemClickListener : ItemClickListener
-    interface ItemClickListener{
-        fun onClick(view: View, position: Int, data: Child, checked : Boolean)
+    lateinit var itemClickListener: ItemClickListener
+    interface ItemClickListener {
+        fun onClick(binding: ItemChildAccountBinding, position: Int, data: Child)
     }
 }
-
-
-
-
-

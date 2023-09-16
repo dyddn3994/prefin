@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_child_quest_finish_root_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="32dp"
+    android:paddingVertical="32dp"
+    >
+
+    <TextView
+        android:id="@+id/dialog_child_quest_finish_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="퀘스트를 완료했나요?"
+        style="@style/Text.regular.Size32"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/dialog_child_quest_finish_quest_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="분리수거하기"
+        style="@style/Text.regular.Size32"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_child_quest_finish_title_text_view"
+        />
+
+    <TextView
+        android:id="@+id/dialog_child_quest_finish_money_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1,500 원"
+        style="@style/Text.regular.Size32"
+        android:textColor="@color/green"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_child_quest_finish_quest_name_text_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/dialog_child_quest_finish_finish_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="완료"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle_81"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginTop="68dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_child_quest_finish_money_text_view"
+        />
+
+    <android.widget.Button
+        android:id="@+id/dialog_loan_application_cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        style="@style/Text.regular.Size20"
+        android:background="@drawable/button_rectangle_81_color_reversed"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_child_quest_finish_finish_button"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

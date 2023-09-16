@@ -22,10 +22,15 @@ class SignUpViewModel : ViewModel() {
                 val response = RetrofitUtil.signUpApi.parentSignUp(parentUser)
                 if(response.isSuccessful){
                     val id = response.body()
-                    if(id != null){
+                    if(id != null && id != -1L){
                         userId = id
                         Log.d(TAG, "signUp: 회원가입 성공")
                         _signUpSuccess.value = true
+                    }
+                    else if(id == -1L
+                    ){
+                        userId = id
+                        _signUpSuccess.value = false
                     }
                     else{
                         Log.d(TAG, "signUp: 회원가입 실패")
@@ -34,6 +39,7 @@ class SignUpViewModel : ViewModel() {
                 }
             }
             catch (e : Exception){
+                _signUpSuccess.value = false
                 Log.d(TAG, "signUp: 회원가입 실패")
             }
 

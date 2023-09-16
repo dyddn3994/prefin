@@ -10,6 +10,6 @@ interface ParentHomeApi {
     @GET("parent/{id}/getChildren")
     suspend fun getChildData(@Path("id") id : Long) : List<Child>
 
-    @GET("parent/account/{id}")
+    @GET("parent/{id}")
     suspend fun getParentData(@Path("id") id : Long) : Parent
 }

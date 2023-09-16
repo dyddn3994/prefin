@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prefin.databinding.ItemChildQuestBinding
-import com.prefin.model.dto.QuestOwned
+import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.util.AdapterUtil
 import com.prefin.util.StringFormatUtil
 
-class QuestChildAdapter(var context: Context) : ListAdapter<QuestOwned, QuestChildAdapter.ItemViewHolder>(
-    AdapterUtil.diffUtilQuestOwned,
+class QuestChildAdapter(var context: Context) : ListAdapter<QuestOwnedQuest, QuestChildAdapter.ItemViewHolder>(
+    AdapterUtil.diffUtilQuestOwnedQuest,
 ) {
     inner class ItemViewHolder(var binding: ItemChildQuestBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: QuestOwned) = with(binding) {
-            itemChildQuestQuestNameTextView.text = data.quest.title
-            itemChildQuestAmountTextView.text = StringFormatUtil.moneyToWon(data.quest.reward)
+        fun bind(data: QuestOwnedQuest) = with(binding) {
+            itemChildQuestQuestNameTextView.text = data.title
+            itemChildQuestAmountTextView.text = StringFormatUtil.moneyToWon(data.reward)
 
             // 퀘스트 완료 요청된 상태일 경우 시계 표시
             if (data.requested) {
@@ -26,6 +26,10 @@ class QuestChildAdapter(var context: Context) : ListAdapter<QuestOwned, QuestChi
             } else {
                 // 미요청 상태
                 itemChildQuestTimeImageView.visibility = View.GONE
+            }
+
+            root.setOnClickListener {
+                itemClickListener.onClick(binding, layoutPosition, data)
             }
         }
     }
@@ -42,5 +46,10 @@ class QuestChildAdapter(var context: Context) : ListAdapter<QuestOwned, QuestChi
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
+    }
+
+    lateinit var itemClickListener: ItemClickListener
+    interface ItemClickListener {
+        fun onClick(binding: ItemChildQuestBinding, position: Int, data: QuestOwnedQuest)
     }
 }

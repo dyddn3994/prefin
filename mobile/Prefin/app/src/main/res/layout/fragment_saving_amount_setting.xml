@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".ui.setting.SavingAmountSettingFragment">
+
+
+    <ImageView
+        android:id="@+id/fragment_saving_amount_setting_back"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/fragment_load_amount_setting_title"
+        style="@style/Title.Bold.Size32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="저축 이자 금액 설정"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_saving_amount_current_title_text_view"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 설정 금액"
+        style="@style/Text.regular.Size32"
+        app:layout_constraintStart_toStartOf="@+id/fragment_saving_amount_setting_back"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_load_amount_setting_title"
+
+        />
+
+    <TextView
+        android:layout_marginTop="32dp"
+        android:id="@+id/fragment_saving_amount_setting_current_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_amount_current_title_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text = "40,000원"
+        style="@style/Text.regular.Size32"
+        />
+
+    <TextView
+        android:layout_marginTop="80dp"
+        android:id="@+id/fragment_saving_amount_setting_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="변경할 금액"
+        style="@style/Text.regular.Size32"
+        app:layout_constraintStart_toStartOf="@+id/fragment_saving_amount_current_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_amount_setting_current_amount"
+
+        />
+
+    <EditText
+        android:layout_marginTop="32dp"
+        android:gravity="end|center_vertical"
+        android:id="@+id/fragment_saving_amount_setting_next_amount_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Text.regular.Size32"
+        android:inputType="number"
+        android:background="@drawable/edittext_rectangle_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_amount_setting_next"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_saving_amount_setting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:text="바꾸기"
+        style="@style/Text.regular.Size20"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle_81"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_saving_amount_setting_next_amount_edit" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
