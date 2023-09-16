@@ -7,23 +7,18 @@ import com.prefin.domain.user.Parents;
 import com.prefin.dto.money.AllowanceDto;
 import com.prefin.repository.money.AccountHistoryRepository;
 import com.prefin.repository.money.AllowanceRepository;
-import com.prefin.repository.money.LoanRepository;
 import com.prefin.repository.user.ChildRepository;
 import com.prefin.repository.user.ParentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -105,7 +100,7 @@ public class AllowanceService {
 
             if (type.equals("ALLOWANCE")) {
                 // 거래 내역 추가
-                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
@@ -133,10 +128,10 @@ public class AllowanceService {
 
     // 부모 잔액 조회
     public ResponseEntity<Integer> parentBalance(Long parentId) {
-    Parents parent = parentRepository.findById(parentId)
-            .orElseThrow(() -> new IllegalArgumentException("Parent Not Found"));
+        Parents parent = parentRepository.findById(parentId)
+                .orElseThrow(() -> new IllegalArgumentException("Parent Not Found"));
 
-    return ResponseEntity.ok(parent.getBalance());
+        return ResponseEntity.ok(parent.getBalance());
     }
 
     // 자녀 잔액 조회
