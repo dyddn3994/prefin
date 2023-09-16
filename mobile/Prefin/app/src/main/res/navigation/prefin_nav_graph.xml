@@ -60,6 +60,9 @@
             app:destination="@id/ChildJoinFragment"
             app:popUpTo="@id/ParentHomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_ParentHomeFragment_to_NotiFragment"
+            app:destination="@id/NotiFragment" />
 
 
     </fragment>
@@ -87,6 +90,9 @@
         <action
             android:id="@+id/action_ChildHomeFragment_to_QuestChildHomeFragment"
             app:destination="@+id/QuestChildHomeFragment" />
+        <action
+            android:id="@+id/action_ChildHomeFragment_to_NotiFragment"
+            app:destination="@id/NotiFragment" />
     </fragment>
 
     <fragment android:id="@+id/AccountInputFragment"
@@ -312,5 +318,14 @@
             app:destination="@id/ChildHomeFragment"
             app:popUpTo="@id/QuizAnswerFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+
+
+    <fragment android:id="@+id/NotiFragment"
+        android:name="com.prefin.ui.noti.NotiFragment"
+        android:label="noti"
+        tools:layout="@layout/fragment_noti">
+
+
     </fragment>
 </navigation>

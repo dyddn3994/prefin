@@ -6,6 +6,7 @@ import com.prefin.model.dto.Quest
 import com.prefin.model.dto.QuestOwned
 import com.prefin.model.dto.QuestOwnedQuest
 import com.prefin.model.dto.SavingHistory
+import com.prefin.model.local.NotiMessage
 
 /**
  *         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
@@ -84,6 +85,18 @@ class AdapterUtil {
             override fun areContentsTheSame(oldItem: Child, newItem: Child): Boolean {
                 return oldItem == newItem
             }
+        }
+
+        val diffUtilNotiMessage = object : DiffUtil.ItemCallback<NotiMessage>() {
+            override fun areItemsTheSame(oldItem: NotiMessage, newItem: NotiMessage): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+
+            override fun areContentsTheSame(oldItem: NotiMessage, newItem: NotiMessage): Boolean {
+                return oldItem == newItem
+            }
+
         }
     }
 }

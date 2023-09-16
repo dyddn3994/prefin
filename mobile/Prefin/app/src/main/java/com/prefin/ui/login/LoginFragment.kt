@@ -2,6 +2,7 @@ package com.prefin.ui.login
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                // 뒤로가기 동작 수행
+                isEnabled = false
+                requireActivity().onBackPressed()
+                // 앱 종료
+                requireActivity().finish()
+
+            }
+        })
 
         if (ApplicationClass.sharedPreferences.getString("type") == "parent") {
             findNavController().navigate(R.id.action_LoginFragment_to_ParentHomeFragemnt)

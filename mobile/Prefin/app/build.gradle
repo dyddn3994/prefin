@@ -80,4 +80,18 @@ dependencies {
 
     // retrofit 결과로 String이 올때 에러 처리
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
+
+
+    // Room
+
+    def room_version = "2.4.0" // 버전 정보
+//
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+//
+//    // Kotlin 이용 시 아래의 라인을 추가하세요
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
 }

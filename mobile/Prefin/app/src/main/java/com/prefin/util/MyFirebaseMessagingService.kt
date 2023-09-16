@@ -15,6 +15,8 @@ import com.google.firebase.messaging.RemoteMessage
 import com.prefin.MainActivity
 import com.prefin.R
 import com.prefin.config.ApplicationClass
+import com.prefin.model.local.NotiMessage
+
 private const val TAG = "MyFirebaseMessagingServ_prefin"
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -52,13 +54,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             //알림생성
             sendNotification(remoteMessage)
             // ROOM DB 저장
-//            val title = remoteMessage.data["title"].toString()
-//            val body = remoteMessage.data["body"].toString()
-//            val content = body.split("\n")[1]
-//            val sender = body.split("\n")[0]
-//            val notiMessage = NotiMessage(0, title, content, System.currentTimeMillis(), sender, remoteMessage.data["image"]!!)
-//
-//            ApplicationClass.notiMessageDatabase.notiMessageDao.saveNotiMessage(notiMessage)
+            val title = remoteMessage.data["title"].toString()
+            val body = remoteMessage.data["body"].toString()
+
+            val notiMessage = NotiMessage(0, title, body, System.currentTimeMillis())
+
+            ApplicationClass.notiMessageDatabase.notiMessageDao.saveNotiMessage(notiMessage)
 //            Log.d(TAG, "송신자 : ${body.split("\n")[0]}")
 
 //            Log.d(TAG, remoteMessage.data["title"].toString())
