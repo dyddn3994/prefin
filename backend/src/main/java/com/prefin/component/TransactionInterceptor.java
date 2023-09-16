@@ -11,8 +11,8 @@ public class TransactionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         LocalTime currentTime = LocalTime.now();
-        LocalTime stopTimeStart = LocalTime.of(1, 57);
-        LocalTime stopTimeEnd = LocalTime.of(1, 57);
+        LocalTime stopTimeStart = LocalTime.of(23, 50);
+        LocalTime stopTimeEnd = LocalTime.of(0, 10);
 
         // 거래 중지 시간에 요청이 들어오면 처리를 중단
         if (currentTime.isAfter(stopTimeStart) && currentTime.isBefore(stopTimeEnd)) {
