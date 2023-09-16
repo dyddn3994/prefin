@@ -32,8 +32,9 @@ public class LoanService {
     private final ChildRepository childRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
+    // 대출 신청
     @Transactional
-    public ResponseEntity<String> askForMoney(LoanDto loanDto) throws IOException {  // 대출 신청 기능
+    public ResponseEntity<String> askForMoney(LoanDto loanDto) throws IOException {
         // 부모와 자식의 정보를 가져온다
         // 대출 테이블에 추가하는 느낌
         Parents parent = parentRepository.findById(loanDto.getParentId())
@@ -42,12 +43,12 @@ public class LoanService {
         Child child = childRepository.findById(loanDto.getChildId())
                 .orElseThrow(() -> new EntityNotFoundException("Child Not Found"));
 
-        BigDecimal maxLoanRate = BigDecimal.valueOf(child.getTrustScore() * (1 / 20));
+        BigDecimal maxLoanRate = BigDecimal.valueOf(child.getTrustScore() * (1.0 / 20));
         BigDecimal allowance = BigDecimal.valueOf(child.getAllowance().getAllowanceAmount());
         BigDecimal tempMaxLoan = maxLoanRate.multiply(allowance).multiply(new  BigDecimal("0.01"));
         int maxLoan = tempMaxLoan.setScale(0, RoundingMode.FLOOR).intValue();
 
-        if (maxLoan < loanDto.getLoanAmount()) {
+        if (maxLoan < loanDto.getLoanAmount() + child.getLoanAmount()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("최대 대출 금액을 벗어납니다.");
         }
 
